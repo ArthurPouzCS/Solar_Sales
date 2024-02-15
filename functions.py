@@ -873,3 +873,50 @@ def frame(): #pas encore utilisé
             """
             )
     return stctnr
+
+def tarif(dic):
+    st.write(dic)
+    path = os.path.join(os.path.dirname(__file__), 'ressources','tarifs.xlsx')
+    df = pd.read_excel(path)
+
+    if dic['pv_unitaire']=='375W':
+        if 'Micro onduleurs' in dic['materiels'] or True: #and #passerelles??:
+            df_clean = df.iloc[2:, 0:5].rename(columns=df.iloc[1:, 0:5].iloc[0])
+            ligne = df_clean[df_clean['QTÉ']==dic['nbr_panneaux']]
+            qte, puissance, ttc, edf, tva = ligne.iloc[0,0], ligne.iloc[0,1],ligne.iloc[0,2],ligne.iloc[0,3],ligne.iloc[0,4]
+            if type(tva)==str:
+                tva=0
+            #puissance, ttc, edf, tva
+   # elif dic['pv_unitaire']=='375W' and 'FHE' in dic['materiels']:
+        df_clean = df.iloc[2:,[0,5,6]].rename(columns=df.iloc[1:,[0,5,6]].iloc[0])
+        ligne = df_clean[df_clean['QTÉ']==dic['nbr_panneaux']]
+        qte, ttc_fhe, tva_fhe = ligne.iloc[0,0],ligne.iloc[0,1],ligne.iloc[0,2]
+        if type(tva_fhe)==str:
+            tva_fhe=0
+        #qte_fhe, ttc_fhe, tva_fhe
+
+    elif dic['pv_unitaire']=='500W':
+        if 'Micro onduleurs' in dic['materiels'] or True:
+            df_clean = df.iloc[2:,8:13].rename(columns=df.iloc[1:,8:13].iloc[0])
+            ligne = df_clean[df_clean['QTÉ']==dic['nbr_panneaux']]
+            qte, puissance, ttc, edf, tva = ligne.iloc[0,0], ligne.iloc[0,1],ligne.iloc[0,2],ligne.iloc[0,3],ligne.iloc[0,4]
+            if type(tva)==str:
+                tva=0
+            #puissance, ttc, edf, tva
+    #elif dic['pv_unitaire']=='500W' and 'FHE' in dic['materiels']:
+        df_clean = df.iloc[2:,[8,13,14]].rename(columns=df.iloc[1:,[13,14]].iloc[0])
+        ligne = df_clean[df_clean['PV 500 WATTS SEULS']==dic['nbr_panneaux']] # c'est la colonne quantité juste on la voit pas
+        qte, ttc_fhe, tva_fhe = ligne.iloc[0,0],ligne.iloc[0,1],ligne.iloc[0,2]
+        if type(tva_fhe)==str:
+            tva_fhe=0
+        #qte, tva_fhe, ttc_fhe
+
+    return qte, puissance, ttc, edf, tva, ttc_fhe, tva_fhe # en fait on n'utilise jamais les  x_fhe parce qu'ils sont déjà compris dans les autres
+
+def css_no_display():
+    css = ["""
+            [data-testid="stMarkdownContainer"] > p {
+                display : none;
+                }
+            """]
+    return css
