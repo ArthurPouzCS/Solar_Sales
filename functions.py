@@ -13,7 +13,7 @@ from io import BytesIO
 import os
 from streamlit_extras.switch_page_button import switch_page
 from streamlit_extras.stylable_container import stylable_container
-from streamlit_pdf_viewer import pdf_viewer
+#from streamlit_pdf_viewer import pdf_viewer
 
 
 def no_sidebar():

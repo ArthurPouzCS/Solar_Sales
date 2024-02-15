@@ -296,7 +296,8 @@ def render_page_selection_materiels():
                 if panneaux_sol == 'Non':
                     CEE = aidesCEE(type_menage, materiels)
                     EDF = aidesEDF(puissance_panneaux)
-                    TVA = 0
+                    qte, puissance, ttc, edf, tva, ttc_fhe, tva_fhe = tarif(dic)
+                    TVA = tva
                     credit = 0
                 
                 if val('type_projet')=='Résidence Secondaire':
