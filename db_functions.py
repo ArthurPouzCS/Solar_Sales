@@ -240,7 +240,7 @@ def update_or_insert_data(data_dict):
 def clean_dict(dict):
     clean = True
     for key, value in dict.items():
-        if type(value)== type([]):
+        if type(value)== type([]): 
             if len(list(value))==1:
                 dict[key] = value[0]
                 clean = False
