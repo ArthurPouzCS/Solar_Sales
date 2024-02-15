@@ -65,19 +65,17 @@ def render_page_synchro():
     no_sidebar()
     style_button_synchro()
     css()
-    path_file_csv = os.path.join(os.path.join(os.path.dirname(os.path.dirname(__file__)),'df_to_save'),'zoho_file.csv')
-    df = pd.read_csv(path_file_csv)
-    mail = df.mail.iloc[0]
-    l = (str(mail).split('@')[0]).split('.')
-    prenom, nom = l[0].capitalize(), l[1].capitalize()
+    background('eolienne_rouge.jpg', 'bottom center')
 
     if 'data' in st.session_state:
         dic = st.session_state.data
-    else:
-        dic = {}
-        dic['nom'] = ['Dupont']
-        dic['prenom'] = ['Tom']
-        dic['email'] = ['tom.dupont@gmail.fr']
+        prenom, nom = dic['prenom'], dic['nom']
+        mail = dic['email']
+    #path_file_csv = os.path.join(os.path.join(os.path.dirname(os.path.dirname(__file__)),'df_to_save'),'zoho_file.csv')
+    #df = pd.read_csv(path_file_csv)
+    #mail = df.mail.iloc[0]
+    #l = (str(mail).split('@')[0]).split('.')
+    #prenom, nom = l[0].capitalize(), l[1].capitalize()
 
     connecte_boolean = False
     if test_connexion_internet():

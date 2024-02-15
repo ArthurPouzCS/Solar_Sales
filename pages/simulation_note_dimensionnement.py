@@ -20,6 +20,7 @@ def render_page_note_dimensionnement():
     no_sidebar()
     #styled_button()
     css()
+    background('eoliennes.jpg', 'center center')
 
     if 'data' in st.session_state:
         dic = st.session_state.data

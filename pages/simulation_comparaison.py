@@ -31,23 +31,20 @@ def render_page_comparaison():
 
     tab = valeur_tabulees()
     prix_kwh = tab['prix_kwh']
-    adresse = dic['adresse_postale'][0]
-    try:
-        facture_elec = dic['montant_facture'][0]
-    except:
-        facture_elec = dic['montant_facture']
+    adresse = dic['adresse_postale']
+    facture_elec = dic['montant_facture']
     
     facture_gaz, facture_fioul = 0, 0
-    try:
-        if 'Gaz' in dic['gaz_fioul'][0]:
-            facture_gaz = dic['gaz_facture'][0]
-        if 'Fioul' in dic['gaz_fioul'][0]:
-            facture_fioul = dic['fioul_facture'][0]
-    except:
-        if 'Gaz' in dic['gaz_fioul']:
-            facture_gaz = dic['gaz_facture']
-        if 'Fioul' in dic['gaz_fioul']:
-            facture_fioul = dic['fioul_facture']
+    #try:
+    #    if 'Gaz' in dic['gaz_fioul'][0]:
+    #        facture_gaz = dic['gaz_facture'][0]
+    #    if 'Fioul' in dic['gaz_fioul'][0]:
+    #        facture_fioul = dic['fioul_facture'][0]
+    #except:
+    if 'Gaz' in dic['gaz_fioul']:
+        facture_gaz = dic['gaz_facture']
+    if 'Fioul' in dic['gaz_fioul']:
+        facture_fioul = dic['fioul_facture']
 
     facture_gaz_fioul = facture_gaz + facture_fioul
     facture_total = facture_elec + facture_gaz_fioul

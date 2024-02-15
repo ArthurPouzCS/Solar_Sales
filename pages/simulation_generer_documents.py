@@ -157,7 +157,8 @@ def render_page_generer_documents():
 
     styled_button()
     css()
-
+    background("eoliennes_montagnes.jpg", 'center center')
+    space(5)
     st.subheader("Création des documents réglementaire  📄")
     space(1)
     

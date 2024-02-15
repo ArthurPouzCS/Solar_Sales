@@ -21,7 +21,7 @@ def render_page_rapport_financier():
 
     styled_button()
     css()
-    
+    background('eolienne_mer.jpg', 'center center')
     with stylable_container(
             key='adresse_container',
             css_styles = css_from_function()

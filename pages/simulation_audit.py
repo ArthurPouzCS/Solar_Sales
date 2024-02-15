@@ -20,6 +20,7 @@ def render_page_audit():
     no_sidebar()
     styled_button()
     css()
+    background('eolienne_champs.jpg', 'center center')
     
     with stylable_container(
             key='adresse_container',

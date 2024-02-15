@@ -42,20 +42,19 @@ def render_page_selection_materiels():
         
     if 'data' in st.session_state:
         dic = st.session_state.data
-
-
     else:
         st.write('Valeurs fictives')
         dic = {'adresse_postale': [["425 Route de Soucieu 69440 Saint Laurent d'Agny"]], 'departement': [['01 - Ain']], 'parcelles': [['342']], 'pente_toit': [[None]], 'altitude': [[None]], 'masque_solaire': [['Oui']], 'orientation_toit': [[None]], 'type_personne': [['Particulier']], 'nom': [['']], 'email': [['']], 'prenom': [['']], 'type_projet': [['Résidence Secondaire']], 'nbr_niveaux': [[None]], 'vitrage': [[None]], 'combles': [[None]], 'etat_charpente': [[None]], 'annee_construction': [[1960]], 'type_charpente': [[None]], 'isolation_comble': [['Non']], 'isolation_mur': [['Non']], 'nbr_personne': [[1]], 'temperature': [[18]], 'hauteur_ss_plafond': [[2.0]], 'surface': [[50]], 'surface_chauffer': [[50]], 'equipement_pv_passe': [['Oui']], 'puissance_deja_installee': [[0.0]], 'etude_solaire_passe': [['Oui']], 'dpe_passe': 
         [['Oui']], 'dpe': [[None]], 'puissance_kva': [[None]], 'fournisseur': [[None]], 'compteur': [['Monophasé']], 'abonnement': [[None]], 'montant_facture': [[2000]], 'connaissance_facture_elec': [['Non']], 'chauffage_electrique': [[None]], 'gaz_fioul': [[['Gaz', 'Fioul']]], 'gaz_facture':[[1300]], 'fioul_facture':[[300]], 'fioul_litre':[[2000]],'type_chaudiere': [[None]], 'type_materiel': [[None]], 'age_chaudiere': [[5]], 'chaudiere_electrique': [['Non']], 'autre_systeme_chauffage': [[[]]], 'hauteur_ecs': [[None]], 'ballon_eau_chaude_electrique': [[None]], 'climatisation': [[None]], 'plaque_cuisson': [[None]], 'lave_vaisselle': [[None]], 'seche_linge': [[None]], 'systeme_vmc': [[None]], 'type_four': [[None]], 'lave_linge': [[None]], 'voiture_electrique': [[None]], 'piscine_chauffee': [[None]], 'frigidaire': [[[]]], 'congelateur': [[[]]], 'habitude_conso': [[None]], 'ressources_annuelles': [[20000]], 'interesse': [[[]]], 'id': [0]}
 
 
-
+    
     def val(label):
-        try :
+        if len(dic['adresse_postale'][0])>2: # pour vérifier si c'est une liste ou si ça renvoie juste la premiere lettre (ça bug le type == list)
             return dic[label][0]
-        except:
+        else:
             return dic[label]
+        
     
     tab = valeur_tabulees()
     
@@ -115,7 +114,7 @@ def render_page_selection_materiels():
         with colb:
             st.header("Matériels et Services 🔩")
             option_materiel = ['Micro onduleurs', 'FHE', 'Domotique', 'Ballon thermodynamique', 'Ballon électrique', 'PAC air-air Quadri', 'PAC air-eau', 'Pack LED', 'Passage en triphasé', 'Nettoyage et traitement', 'Pergola solaire', 'Batterie de stockage', 'Borne de recharge véhicule électrique']
-            materiels = st.multiselect('',option_materiel, default=['FHE'])
+            materiels = st.multiselect('',option_materiel)
 
             elec, gaz, fioul, autre = val('montant_facture'), 0, 0, 0
             

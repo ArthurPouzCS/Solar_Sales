@@ -8,7 +8,7 @@ def execute_query(query, params=None, fetch=False):
     url_connexion = "postgres://rptrtffu:qJ9HUKXAgBrlwrJVtDU34C5W8Xu0hk85@dumbo.db.elephantsql.com/rptrtffu"
     connection = psycopg2.connect(url_connexion)
         #user="postgres",
-        #password="*****",
+        #password="******",
         #host="localhost",
         #port="5432",
         #database="postgres",
