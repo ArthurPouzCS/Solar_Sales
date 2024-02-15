@@ -1,0 +1,6 @@
+rules:
+  - name: "Ignore all project files"
+    paths:
+      - "**/*"
+    actions:
+      - ignore

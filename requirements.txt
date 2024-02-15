@@ -1,2 +1,2 @@
-wkhtmltopdf
+streamlit
 streamlit_extras
