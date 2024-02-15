@@ -134,4 +134,4 @@ zipp==3.17.0
 zohocrmsdk2-0==5.1.0
 cryptography==42.0.2
 bcrypt==4.1.2
-psycopg2==2.9.9
+psycopg2-binary==2.9.9
