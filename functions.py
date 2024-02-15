@@ -135,7 +135,7 @@ def show(label, *entries):
     st.markdown("""
         <style>
             .info-box-container {
-                background-color: rgba(21, 67, 96, 0.7);
+                background-color: rgba(21, 67, 96, 0.9);
                 border: 1px solid rgb(0,180,0);
                 padding: 5px 5%;
                 margin: -10px 5px;
@@ -314,7 +314,7 @@ def styled_button():
             margin-top : 30px;
             margin-right : 30px;
             width : 150px;
-            height:55px;
+            height:60px;
             display : inline;
             float: right;
             border : solid lightgreen 1px;
@@ -574,23 +574,45 @@ def css():
     # Appliquer le style global
     #st.markdown(style, unsafe_allow_html=True)
 
-def css_from_function():
+def css_from_function(cadre=False):
+    if cadre:
+        css = ["""
+                .block-container, .st-emotion-cache-z5fcl4, .ea3mdgi2 {
+                    background-color: rgba(100,100,100,0.7);
+                    height:120%;
+                    border: 1px solid rgb(0,180,0);
+                    }
 
-    css = ["""
-            [data-testid="stMarkdownContainer"] > p {
-                font-size : 18px;
-                font-weight : bold;
+                [data-testid="stMarkdownContainer"] > p {
+                    font-size : 18px;
+                    font-weight : bold;
+                    }
+                
+                .st-emotion-cache-q8sbsg > p {
+                    font-size : 18px;
+                    font-weight : bold;
                 }
-            
-            .st-emotion-cache-q8sbsg > p {
-                font-size : 18px;
-                font-weight : bold;
-            }
-            .st-emotion-cache-jnd7a1 p {
-                font-size : 18px;
-                font-weight : bold;
-            }
-            """]
+                .st-emotion-cache-jnd7a1 p {
+                    font-size : 18px;
+                    font-weight : bold;
+                }
+                """]
+    else:
+        css = ["""
+                [data-testid="stMarkdownContainer"] > p {
+                    font-size : 18px;
+                    font-weight : bold;
+                    }
+                
+                .st-emotion-cache-q8sbsg > p {
+                    font-size : 18px;
+                    font-weight : bold;
+                }
+                .st-emotion-cache-jnd7a1 p {
+                    font-size : 18px;
+                    font-weight : bold;
+                }
+                """]
     return css
 
 def convert_pdf_to_images(pdf_path, poppler_path):
@@ -611,13 +633,15 @@ def displayPDF_poppler(pdf_path, width, height):
 
 
 def displayPDF(file, width, height):
+    displayPDF_basse_resol(file, width, height)
     #displayPDF_pdf_viewer(file, width)
     #displayPDF_poppler(file, width, height)
-    with open(file, "rb") as pdf_file:
-        pdf_data = pdf_file.read()
-        base64_pdf = base64.b64encode(pdf_data).decode('utf-8')
-        iframe_code = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width={width} height={height} type="application/pdf" style="margin: auto; display: block; margin-bottom:50px"></iframe>'
-        st.markdown(str(iframe_code), unsafe_allow_html=True)
+    ## en dessous ça marche
+    #with open(file, "rb") as pdf_file:
+        #pdf_data = pdf_file.read()
+        #base64_pdf = base64.b64encode(pdf_data).decode('utf-8')
+        #iframe_code = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width={width} height={height} type="application/pdf" style="margin: auto; display: block; margin-bottom:50px"></iframe>'
+        #st.markdown(str(iframe_code), unsafe_allow_html=True)
     
 
 def background(img_path, position):
@@ -844,7 +868,7 @@ def dont_forget_past_audit():
                 return None
 
 
-    if 'ancien_audit' in st.session_state:
+    if 'ancien_audit' in st.session_state and not('nouvel_audit' in st.session_state):
         dic_ancien_audit = st.session_state.ancien_audit
         st.subheader(f"Audit de {dic_ancien_audit['prenom']} {dic_ancien_audit['nom']}", divider='blue')
         past_audit = True
@@ -875,7 +899,6 @@ def frame(): #pas encore utilisé
     return stctnr
 
 def tarif(dic):
-    st.write(dic)
     path = os.path.join(os.path.dirname(__file__), 'ressources','tarifs.xlsx')
     df = pd.read_excel(path)
 
@@ -913,10 +936,4 @@ def tarif(dic):
 
     return qte, puissance, ttc, edf, tva, ttc_fhe, tva_fhe # en fait on n'utilise jamais les  x_fhe parce qu'ils sont déjà compris dans les autres
 
-def css_no_display():
-    css = ["""
-            [data-testid="stMarkdownContainer"] > p {
-                display : none;
-                }
-            """]
-    return css
+

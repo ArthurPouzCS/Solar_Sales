@@ -21,7 +21,7 @@ def render_page_generer_documents():
     page_title="Simuler votre Projet - Génerer les documents",
     page_icon="📄", layout="wide", initial_sidebar_state="collapsed")
     no_sidebar()
-
+    
     if 'data' in st.session_state:
         dic = st.session_state.data
     else : 
@@ -156,16 +156,31 @@ def render_page_generer_documents():
 
 
     styled_button()
-    css()
+    #css()
     background("eoliennes_montagnes.jpg", 'center center')
-    space(5)
     st.subheader("Création des documents réglementaire  📄")
-    space(1)
     
-
+    space(1)
+    css = ["""
+                [data-testid="stMarkdownContainer"] > p {
+                    font-size : 18px;
+                    font-weight : bold;
+                    color:white !important;
+                    }
+                
+                .st-emotion-cache-q8sbsg > p {
+                    font-size : 18px;
+                    font-weight : bold;
+                }
+                .st-emotion-cache-jnd7a1 p {
+                    font-size : 18px;
+                    font-weight : bold;
+                }
+                """
+                ]
     with stylable_container(
             key='adresse_container',
-            css_styles = css_from_function()
+            css_styles = css
             ):    
         with st.spinner("Création des documents réglementaires ..."):
             audit_path, rapport_path = generer_les_2_pdf(dic)
@@ -174,7 +189,6 @@ def render_page_generer_documents():
                 dic['audit_path'] = audit_path
                 dic['rapport_path'] = rapport_path
                 st.session_state.data = dic
-            
         st.balloons()
         st.success('Documents générés !')
         time.sleep(2)

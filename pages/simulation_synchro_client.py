@@ -41,11 +41,12 @@ def style_button_synchro():
             }
 
             div.stButton > button:first-child {
-                margin-top: 10px;
-                width: 180px;
+                margin-top: 14px;
+                padding-right : -4px;
+                width: 220px;
                 height: 50px;
                 display: inline;
-                margin-left: 20; /* Centrer horizontalement */
+                margin-left: 20px; /* Centrer horizontalement */
             }
 
             div.stButton > button:hover {
@@ -93,7 +94,7 @@ def render_page_synchro():
 
     with stylable_container(
             key='adresse_container',
-            css_styles = css_from_function()
+            css_styles = css_from_function(cadre=True)
             ):    
         st.subheader("Informations clients et session  🧔")
         col1, col2 = st.columns(2)

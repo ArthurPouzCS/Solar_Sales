@@ -171,12 +171,15 @@ with stylable_container(
 
                 with col1:
                     switch_to_simuler = st.button("Saisir vos données")
+                    if 'ancien_audit' in st.session_state:
+                        st.session_state.nouvel_audit = True
                     if switch_to_simuler:
                         switch_page("saisir_donnees_etude_solaire")
 
                     switch_to_simuler = st.button("Réaliser une Garantie")
                     if switch_to_simuler:
-                        switch_page("realiser_garantie")
+                        st.toast("Bientôt disponible")
+                        #switch_page("realiser_garantie")
 
                     
                 with col2:
@@ -189,7 +192,11 @@ with stylable_container(
 
                     switch_to_simuler = st.button("Générer vos documents")
                     if switch_to_simuler:
-                        switch_page("generer_documents")
+                        if 'data' in st.session_state:
+                            switch_page("generer_documents")
+                        else:
+                            st.toast("Vous devez d'abord saisir des informations pour accéder à cet onglet") 
+                        
                 
             with stylable_container(key='bouton_ancien_audit',
             css_styles = ["""

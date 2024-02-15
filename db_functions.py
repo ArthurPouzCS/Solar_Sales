@@ -221,9 +221,8 @@ def update_or_insert_data(data_dict):
     # Vérification si l'email existe déjà dans la table
     email = data_dict.get('email', None)
     if email:
-        query = "SELECT * FROM data_table WHERE email = %s"
+        query = "SELECT adresse_postale FROM data_table WHERE email = %s"
         existing_entry = execute_query(query, (email,), fetch=True)
-
         # Si l'entrée existe, mise à jour des données
         if existing_entry:
             update_query = "UPDATE data_table SET "

@@ -76,6 +76,8 @@ def render_page_anciens_audit():
         css_styles=css):
             if st.button('Voir le formulaire', key=f"audit_{dic_audit['id']}"):
                 st.session_state.ancien_audit = dic_audit
+                if 'nouvel_audit' in st.session_state :
+                    del st.session_state.nouvel_audit
                 switch_page('saisir_donnees_etude_solaire')
             return None
     
