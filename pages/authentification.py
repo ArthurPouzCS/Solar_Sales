@@ -6,8 +6,8 @@ from api_functions import *
 from time import time
 
 st.set_page_config(
-    page_title="Simuler votre Projet - Synchronisation",
-    page_icon="🔄", layout="wide", initial_sidebar_state="collapsed")
+    page_title="SolarSales - Authentification",
+    page_icon="🌞", layout="wide", initial_sidebar_state="collapsed")
 
 no_sidebar()
 css()
@@ -30,6 +30,7 @@ with stylable_container(
                 
             """
             ):
+    
     url = st.experimental_get_query_params()
     if "code" in url:
         st.success('Un dernier ptit effort 😉')
