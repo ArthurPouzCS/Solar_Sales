@@ -67,9 +67,11 @@ with stylable_container(
                         st.session_state.logged_in = True
                         switch_page('Accueil')
             with connexion:
-                mail = st.text_input('Mail')
-                password = st.text_input('Password', type='password')
-                if st.button("Se connecter"):
+                with st.form("connexion"):
+                    mail = st.text_input('Mail')
+                    password = st.text_input('Password', type='password')
+                    submitted_connexion = st.form_submit_button("Se connecter")
+                if submitted_connexion:
                     hashed_password = retrieve_data('user_credentials', mail, 'mdp')
                     if check_password(password, hashed_password):
                         st.success('Connexion réussie')
