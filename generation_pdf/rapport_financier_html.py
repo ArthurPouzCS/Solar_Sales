@@ -271,7 +271,7 @@ def rapport_string_html(dic):
                 <span class="span_accueil"></span>
             </div>
             <div style="margin-top: 200px;text-align: center;">
-                <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/logo_centre_energie.JPG" class="logo_accueil">
+                <img src="{os.path.join(os.path.dirname(__file__),'logo_centre_energie.JPG')}" class="logo_accueil">
             </div>
             <div style="margin-top: 130px; margin-bottom:100px">
                 <section style="text-align: center;">
@@ -285,13 +285,13 @@ def rapport_string_html(dic):
     <table style="border-collapse: collapse; width: 800px; margin: 0 auto; background-color:white">
         <tr>
             <td colspan="3" class="info_accueil" style="text-align: center;">
-                <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/icon_location.png" alt="Département">
+                <img src="{os.path.join(os.path.dirname(__file__),'icon_location.png')}" alt="Département">
             </td>
             <td colspan="3" class="info_accueil" style="text-align: center;">
-                <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/icon_calendar.png" alt="Année de construction">
+                <img src="{os.path.join(os.path.dirname(__file__),'icon_calendar.png')}" alt="Année de construction">
             </td>
             <td colspan="3" class="info_accueil" style="text-align: center;">
-                <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/icon_home.png" alt="Surface habitable">
+                <img src="{os.path.join(os.path.dirname(__file__),'icon_home.png')}" alt="Surface habitable">
             </td>
         </tr>
         <tr>
@@ -322,7 +322,7 @@ def rapport_string_html(dic):
 
             <header style="margin-top:100px; text-align:center">
                 <span>
-                    <img style="margin-left:5px; margin-top:-10px; height:36px; width:auto;" src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/logo_centre_energie.JPG" alt="Votre Logo">
+                    <img style="margin-left:5px; margin-top:-10px; height:36px; width:auto;" src="{os.path.join(os.path.dirname(__file__),'logo_centre_energie.JPG')}" alt="Votre Logo">
                     <h1 style="margin-top:-35px; margin-right:5px; width:750px; font-size:26px">Nos conseils pour vous accompagner dans vos projets</h1>
                 </span>
                 
@@ -330,7 +330,7 @@ def rapport_string_html(dic):
 
             <section>
         
-        <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/image.jpg" alt="Votre Photo">
+        <img src="{os.path.join(os.path.dirname(__file__),'image.jpg')}" alt="Votre Photo">
         <h2>1. Économies et mensualités</h2>
         <h1>A. FINANCEMENT</h1>
         <table>

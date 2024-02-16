@@ -294,7 +294,7 @@ def audit_string_html(dic):
                 <span class="span_accueil"></span>
             </div>
             <div style="margin-top: 200px;text-align: center;">
-                <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/logo_centre_energie.JPG" class="logo_accueil">
+                <img src="{os.path.join(os.path.dirname(__file__),'logo_centre_energie.JPG')}" class="logo_accueil">
             </div>
             <div style="margin-top: 130px; margin-bottom:100px">
                 <section style="text-align: center;">
@@ -308,13 +308,13 @@ def audit_string_html(dic):
     <table style="border-collapse: collapse; width: 800px; margin: 0 auto; background-color:white">
         <tr>
             <td colspan="3" class="info_accueil" style="text-align: center;">
-                <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/icon_location.png" alt="Département">
+                <img src="{os.path.join(os.path.dirname(__file__),'icon_location.png')}" alt="Département">
             </td>
             <td colspan="3" class="info_accueil" style="text-align: center;">
-                <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/icon_calendar.png" alt="Année de construction">
+                <img src="{os.path.join(os.path.dirname(__file__),'icon_calendar.png')}" alt="Année de construction">
             </td>
             <td colspan="3" class="info_accueil" style="text-align: center;">
-                <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/icon_home.png" alt="Surface habitable">
+                <img src="{os.path.join(os.path.dirname(__file__),'icon_home.png')}" alt="Surface habitable">
             </td>
         </tr>
         <tr>
@@ -345,14 +345,14 @@ def audit_string_html(dic):
 
             <header style="margin-top:100px; text-align:center">
                 <span>
-                    <img style="margin-left:60px; margin-top:-10px; width:fit-content" src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/logo_centre_energie.JPG" alt="Votre Logo">
+                    <img style="margin-left:60px; margin-top:-10px; width:fit-content" src="{os.path.join(os.path.dirname(__file__),'logo_centre_energie.JPG')}" alt="Votre Logo">
                     <h1 style="margin-top:-26px; margin-right:1800px">Vous accompagne dans vos projets</h1>
                 </span>
                 
             </header>
 
             <section>
-                <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/image.jpg" alt="Votre Photo">
+                <img src="{os.path.join(os.path.dirname(__file__),'image.jpg')}" alt="Votre Photo">
                 <h1>Le but de ce document</h1>
                 <p>Ce document vous permet de conserver les informations essentielles renseignées lors de l’étude effectuée avec notre
                     conseiller Centre énergie.<br>
@@ -376,10 +376,10 @@ def audit_string_html(dic):
                 <p>Votre projet de rénovation touche à la dimension énérgétique de votre habitat.<br>
                     <span>Cela vous apporte de nombreux avantages :</span>
                 </p>
-                <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/image.jpg" alt="Votre Photo">
+                <img src="{os.path.join(os.path.dirname(__file__),'image.jpg')}" alt="Votre Photo">
                 <div>
                     <span>
-                        <img style="height:auto; margin:5px 15px 10px 30px" src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/logo_centre_energie.JPG" alt="Votre Photo">
+                        <img style="height:auto; margin:5px 15px 10px 30px" src="{os.path.join(os.path.dirname(__file__),'logo_centre_energie.JPG')}" alt="Votre Photo">
                         <p>
                             De plus, vous participez au respect de l'environnement.
                             Avec l'augmentation du prix de l'énergie, ne rien faire revient souvent
@@ -390,7 +390,7 @@ def audit_string_html(dic):
             </section>
             <section>
                 <h1>A. CARACTÉRISTIQUES HABITAT</h1>
-                <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/image.jpg" alt="Votre Photo">
+                <img src="{os.path.join(os.path.dirname(__file__),'image.jpg')}" alt="Votre Photo">
                 <h3>Les informations sur votre habitation son budget et sa consommation</h3>
             
                 <table>
@@ -439,7 +439,7 @@ def audit_string_html(dic):
             </section>
             <section>
                 <h1>B. SÉLECTION DE MATÉRIELS ET SERVICES</h1>
-                <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/image.jpg" alt="Votre Photo">
+                <img src="{os.path.join(os.path.dirname(__file__),'image.jpg')}" alt="Votre Photo">
                 <h2>1. Matériels et services</h2>
                 <p>
                     <span>Liste de matériels et services préconisés pour la rénovation :</span>
@@ -524,7 +524,7 @@ def audit_string_html(dic):
             </section>
             <section>
                 <h1>C.COMPARAISON</h1>
-                <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/image.jpg" alt="Votre Photo">
+                <img src="{os.path.join(os.path.dirname(__file__),'image.jpg')}" alt="Votre Photo">
                 <p>Diagnostic indicatif réalisé selon les dépenses énergétiques liées au chauffage et à l'eau chaude sanitaire. Ce diagnostic,
                     établit ci-dessous ne peut se substituer à un DPE réalisé par un bureau d'étude.
                 </p>
@@ -590,7 +590,7 @@ def audit_string_html(dic):
             </section style="margin-bottom:100px">
             <div style="display: flex; align-items: center;">
             <div style="margin-left: 150px; margin-top:50px; position: relative;">
-                <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/etiquette_energie.png" alt="Image Etiquette Energie" style="width: 300px; height: auto;">
+                <img src="{os.path.join(os.path.dirname(__file__),'etiquette_energie.png')}" alt="Image Etiquette Energie" style="width: 300px; height: auto;">
 
                 <div style="position: absolute; top: {hauteur_avant}px; right: 160px; background-color: {couleur_avant}; text-align: center; padding: 5px; width: 120px; border-radius:5px; font-size:20px">
                     Avant {int(dic['nbr_energie'])}

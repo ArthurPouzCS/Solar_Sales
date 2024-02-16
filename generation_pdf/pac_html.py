@@ -256,7 +256,7 @@ def pac_string_html(dic):
                 <span class="span_accueil"></span>
             </div>
             <div style="margin-top: 200px;text-align: center;">
-                <img src="C:/Users/arthu/OneDrive/Documents 3A CS/Projet dev/streamlit-app/SolarSales/generation_pdf/logo_centre_energie.JPG" class="logo_accueil">
+                <img src="{os.path.join(os.path.dirname(__file__),'logo_centre_energie.JPG')}" class="logo_accueil">
             </div>
             <div style="margin-top: 130px; margin-bottom:100px">
                 <section style="text-align: center;">

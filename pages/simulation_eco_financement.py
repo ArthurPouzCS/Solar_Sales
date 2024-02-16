@@ -139,7 +139,7 @@ def render_page_ecofinancement():
         st.markdown("<p style='font-weight:bold;font-size:110%'>Aides et économies</p>", unsafe_allow_html=True)
         
         economies_sur_6_mois = economie_n_plus_un * int(report_jours/30)
-        st.write("différence méthode edf", dic['EDF'], edf)
+        #st.write("différence méthode edf", dic['EDF'], edf)
         dic['EDF'] = edf
         dic['TVA'] = tva
         total_aides = economies_sur_6_mois+dic['MPR']+dic['CEE']+dic['EDF']+apport

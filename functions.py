@@ -579,7 +579,6 @@ def css_from_function(cadre=False):
         css = ["""
                 .block-container, .st-emotion-cache-z5fcl4, .ea3mdgi2 {
                     background-color: rgba(100,100,100,0.7);
-                    height:120%;
                     border: 1px solid rgb(0,180,0);
                     }
 
