@@ -17,7 +17,8 @@ def render_page_habitat_3():
     no_sidebar()
     styled_button()
     css()
-    background('douche.jpg', 'center right')
+    background('plaque_cuisson.jpg', 'center center')
+
     afficher_frise_chronologique(4)
     
     with stylable_container(

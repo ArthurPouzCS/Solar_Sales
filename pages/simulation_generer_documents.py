@@ -20,6 +20,7 @@ def render_page_generer_documents():
     st.set_page_config(
     page_title="Simuler votre Projet - Génerer les documents",
     page_icon="📄", layout="wide", initial_sidebar_state="collapsed")
+    past_audit, last = dont_forget_past_audit()
     no_sidebar()
     
     if 'data' in st.session_state:
@@ -158,7 +159,7 @@ def render_page_generer_documents():
     styled_button()
     #css()
     background("eoliennes_montagnes.jpg", 'center center')
-    st.subheader("Création des documents réglementaire  📄")
+    #sst.subheader("Création des documents réglementaire  📄")
     
     space(1)
     css = ["""
@@ -189,7 +190,7 @@ def render_page_generer_documents():
                 dic['audit_path'] = audit_path
                 dic['rapport_path'] = rapport_path
                 st.session_state.data = dic
-        st.balloons()
+        #st.balloons()
         st.success('Documents générés !')
         time.sleep(2)
         switch_page('simulation_audit')

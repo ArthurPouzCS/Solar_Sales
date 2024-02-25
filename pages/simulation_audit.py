@@ -12,6 +12,7 @@ def render_page_audit():
     page_title="Simuler votre Projet - Audit énergétique",
     page_icon="⚡", layout="wide", initial_sidebar_state="collapsed")
 
+    past_audit, last = dont_forget_past_audit()
     if 'data' in st.session_state:
         path_pdf = st.session_state.data['audit_path']
         dic = st.session_state.data

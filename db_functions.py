@@ -5,15 +5,22 @@ from cryptography.fernet import Fernet
 import binascii
 
 def execute_query(query, params=None, fetch=False):
-    url_connexion = "postgres://rptrtffu:qJ9HUKXAgBrlwrJVtDU34C5W8Xu0hk85@dumbo.db.elephantsql.com/rptrtffu"
-    connection = psycopg2.connect(url_connexion)
-        #user="postgres",
-        #password="*****",
-        #host="localhost",
-        #port="5432",
-        #database="postgres",
-        #client_encoding="utf-8"
-    #)
+       
+    try:
+        from credentials import MDP
+        password = MDP
+        connection = psycopg2.connect(
+            user="postgres",
+            password=password,
+            host="localhost",
+            port="5432",
+            database="postgres",
+            client_encoding="utf-8"
+        )
+    except:
+        url_connexion = "postgres://rptrtffu:qJ9HUKXAgBrlwrJVtDU34C5W8Xu0hk85@dumbo.db.elephantsql.com/rptrtffu"
+        connection = psycopg2.connect(url_connexion)
+
 
     try:
         with connection.cursor() as cursor:

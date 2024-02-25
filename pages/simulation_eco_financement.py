@@ -104,6 +104,7 @@ def render_page_ecofinancement():
     st.set_page_config(
     page_title="Simuler votre Projet - Eco-Financement",
     page_icon="💰", layout="wide", initial_sidebar_state="collapsed")
+    past_audit, last = dont_forget_past_audit()
     no_sidebar()
     background('argent.jpg', 'center center')
 
@@ -112,7 +113,10 @@ def render_page_ecofinancement():
     else : 
         dic = {'CEE':0, 'MPR':0, 'EDF':0, 'TVA':0}
 
-    qte, puissance, ttc, edf, tva, ttc_fhe, tva_fhe = tarif(dic)
+    try:
+        qte, puissance, ttc, edf, tva, ttc_fhe, tva_fhe = tarif(dic)
+    except:
+        qte, puissance, ttc, edf, tva, ttc_fhe, tva_fhe = 0,0,0,0,0,0,0
     
     styled_button()
     css()

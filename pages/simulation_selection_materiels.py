@@ -17,6 +17,7 @@ def render_page_selection_materiels():
     page_title="Simuler votre Projet - Sélection Matériels et Services",
     page_icon="🛠", layout="wide", initial_sidebar_state="collapsed"
     )
+    past_audit, last = dont_forget_past_audit()
     no_sidebar()
     background('maison_panneaux.jpg', 'top center')
     st.markdown("""
@@ -299,7 +300,10 @@ def render_page_selection_materiels():
                     dic['pv_unitaire'] = pv_unitaire
                     dic['nbr_panneaux'] = nbr_panneaux
                     dic['materiels'] = materiels
-                    qte, puissance, ttc, edf, tva, ttc_fhe, tva_fhe = tarif(dic)
+                    try:
+                        qte, puissance, ttc, edf, tva, ttc_fhe, tva_fhe = tarif(dic)
+                    except:
+                        qte, puissance, ttc, edf, tva, ttc_fhe, tva_fhe = 0,0,0,0,0,0,0
                     TVA = tva
                     credit = 0
                 

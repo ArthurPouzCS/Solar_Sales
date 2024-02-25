@@ -17,6 +17,7 @@ def render_page_note_dimensionnement():
     st.set_page_config(
     page_title="Simuler votre Projet - Note de dimensionnement",
     page_icon="📑", layout="wide", initial_sidebar_state="collapsed")
+    past_audit, last = dont_forget_past_audit()
     no_sidebar()
     #styled_button()
     css()

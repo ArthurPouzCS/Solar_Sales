@@ -936,3 +936,44 @@ def tarif(dic):
     return qte, puissance, ttc, edf, tva, ttc_fhe, tva_fhe # en fait on n'utilise jamais les  x_fhe parce qu'ils sont déjà compris dans les autres
 
 
+
+def eolienne_qui_tourne():
+    import base64
+    from pathlib import Path
+
+    def img_to_bytes(img_path):
+        img_bytes = Path(img_path).read_bytes()
+        encoded = base64.b64encode(img_bytes).decode()
+        return encoded
+
+    def img_to_html(img_path):
+        img_html = """
+        <img src='data:image/png;base64,{}' class='img-fluid'>
+        """.format(
+        img_to_bytes(img_path)
+        )
+        return img_html
+
+    string_css = """
+        <style>
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .img-fluid {
+            max-width: 100%;
+            width: 70px;
+            height: auto;
+            position:absolute;
+            top : -23px;
+            left:46%;
+            animation : rotate 2.5s infinite;
+        }
+        
+        </style>
+        """
+
+    st.markdown(string_css, unsafe_allow_html=True)
+    url = os.path.join(os.path.dirname(__file__), 'ressources','spinner_eolienne.png')
+    st.markdown(img_to_html(url), unsafe_allow_html=True)

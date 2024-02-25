@@ -1,0 +1,382 @@
+<html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Garantie de production</title>
+            <style>
+                .body_accueil {
+                    display: flex;
+                    justify-content: space-between; 
+                    gap: 20px; 
+                }
+
+                .container_accueil {
+                    display: flex;
+                }
+
+                .box_accueil {
+                    color: royalblue;
+                    flex: 1; /* Fait occuper tout l'espace disponible à l'intérieur du conteneur */
+                    padding: 10px; /* Marge intérieure pour l'esthétique */
+                }
+
+                .span_accueil {
+                    width: 0; /* Fait occuper aucun espace horizontal */
+                    height: 100%; /* Occupe toute la hauteur disponible */
+                }
+
+                .logo_accueil {
+                    max-width: 300px;
+                    max-height: 150px;
+                    margin: auto;
+                }
+
+                .info_accueil{
+                    background-color:white;
+                    margin: 10px, 30px;
+                    text-align: left;
+                    align-items: left;
+                    color: royalblue;
+                    font-size: 15px;
+                }
+
+
+                body {
+                    font-family: 'Lato', sans-serif;
+                    font-weight: 300;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                header {
+                    background-color: white;
+                    padding: 20px;
+                    text-align: justify;
+                    margin-bottom: 10px;
+                }
+
+                header img {
+                    max-width: 100px;
+                    max-height: 100px;
+                    float:left;
+                    margin-left: 10px;
+                }
+
+                .logo_droite {
+                    background-color: grey;
+                    max-width: 200px;
+                    max-height: 200px;
+                    float:right;
+                    margin-right: 20%;
+                    margin-top: -140px;
+                }
+
+                div span {
+                    margin-top: 20px;
+                    width: 80%;
+                }
+                span img {
+                    max-width: 100px;
+                    max-height: 50px;
+                    float:left;
+                    margin-right: 160px;
+                    margin-left: 200px;
+                }
+
+                span p {
+                    text-align: center;
+                    float: center;
+                }
+
+                header h1 {
+                    margin: 0;
+                    color:royalblue;
+                    float:right;
+                    margin-right: 25%;
+                    }
+
+                section {
+                    text-align: center;
+                    padding: 20px;
+                    color:darkblue;
+                }
+
+                section h1 {
+                    background-color: royalblue;
+                    border-radius: 5px;
+                    color: white;
+                    padding: 3px 30px 3px 20px;
+                    width: fit-content;
+                    font-size: 26px;
+                    font-weight:lighter;
+                }
+
+                section h2 {
+                    color: royalblue;
+                    padding: 3px 30px 3px 20px;
+                    width: fit-content;
+                    font-size: 20px;
+                    font-weight:lighter;
+                    text-decoration: underline;
+                }
+
+                section h3 {
+                    color: royalblue;
+                    padding: 3px 30px;
+                    width: fit-content;
+                    font-size: 20px;
+                    font-weight: lighter;
+                }
+
+                section img {
+                    width: 70%;
+                    height: 300px;
+                }
+
+                section p {
+                    text-align: left;
+                    width:80%;
+                    margin: 20px 30px;
+                }
+
+                section li {
+                    text-align: left;
+                    margin-left: 50px;
+                }
+
+                section p span {
+                    text-decoration: underline;
+                }
+
+                h2 {
+                    text-align: center;
+                }
+
+                table {
+                    width: 80%;
+                    border-collapse: collapse;
+                    margin: 0 auto; 
+                    background-color: #f8f8f8;
+                    color: black;
+                }
+
+                th {
+                    border: 4px solid white;
+                    padding: 10px;
+                    text-align: center;
+                    font-size: 18px;
+                }
+
+                th {
+                    font-weight: bold;
+                }
+
+                .corps {
+                    font-weight: lighter;
+                    margin-top: 5px;
+                    font-size: 15px;
+                }
+                .logo_energie{
+                    background-color: grey;
+                    float: center;
+                    width:20%;
+                }
+                .conteneur_energie {
+                    align-items: center;
+                    margin-top: -130px;
+                    margin-left: 20%;
+                    width: 60%;
+                    height: 100vh;
+                }
+
+                .image_energie {
+                    
+                    max-width: 40%;
+                    height: auto;
+                }
+
+                .texte_energie_avant {
+                    margin-top : -200px;
+                    margin-right : -200px;
+                    background-color: orange;
+                    padding: 10px 20px;
+                    max-width: 80px;
+                    border-radius: 5px;
+                    text-align: center;
+                }
+                .texte_energie_apres {
+                    
+                    background-color: greenyellow;
+                    padding: 10px 20px;
+                    max-width: 80px;
+                    border-radius: 5px;
+                    text-align: center;
+                }
+
+
+
+                
+        .titre{
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color:#3498db
+        }
+
+        body {
+            font-family: 'calibri', 'Arial', 'sans-serif';
+            margin: 20px;
+            padding: 10px;
+            background-color: white;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .column_text {
+            flex : 2;
+            width: 45%;
+            height: 360px;
+            padding: 10px 0px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            margin-left : 10%;
+            margin-right : 0;
+        }
+
+        .column_horizon {
+            flex : 1;
+            width: 30%;
+            padding: 10px 0px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            margin-left : 0;
+            margin-right : 10%;
+            text-align: center;
+            position:absolute;
+            top:800px;
+            right:20px;
+        }
+
+        .column_bar {
+            margin-top : 100px;
+            width: 60%;
+            height: 200px;
+            padding: 0px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            position: absolute;
+            left: 20%;
+        }
+
+        .blue-bg {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .blue-bg-horizon {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            margin-bottom: -150px;
+            font-weight: bold;
+            position:relative;
+            top:-104px;
+        }
+        .blue-bg-chart {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            margin-top:30px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .bar-chart {
+            width: 600px; /* Ajustez la largeur selon vos besoins */
+            height: 300px;
+            max-width: 800px; 
+            margin-left : -30px;
+            display: block;
+            position: relative;
+            z-index: 4;
+        }
+
+        .horizon-image {
+            width: 280px;
+            height: auto;
+            margin-top:90px;
+        }
+    
+            </style>
+
+        </head>
+        <body>
+
+            <div class="body_accueil">
+                <div class="container_accueil" style="margin-left: 0px;">
+                    <div class="box_accueil">
+                        <div>{nom}</div>
+                        <div>{prenom}</div>
+                    </div>
+                    
+                </div>
+                <span class="span_accueil"></span>
+            </div>
+            <div style="margin-top: 200px;text-align: center;">
+                <img src="{os.path.join(os.path.dirname(__file__),'logo_centre_energie.JPG')}" class="logo_accueil">
+            </div>
+            <div style="margin-top: 130px; margin-bottom:100px">
+                <section style="text-align: center;">
+                    <h2 style="margin: auto;">Garantie de production</h2>
+                    <h3 style="margin: auto;">Simulation réalisée le {date}</h3>
+                </section>
+            </div>
+            <div class="container">
+    <div class="column_text">
+        <div class="blue-bg">Provided inputs</div>
+        <ul>
+            <li>Summary</li>
+            <li>Location [Lat/Lon]: 47.794, 2.472</li>
+            <li>Horizon: Calculated</li>
+            <li>Database used: PVGIS-SARAH2</li>
+            <li>PV technology: Crystalline silicon</li>
+            <li>PV installed [kWp]: 1</li>
+            <li>System loss [%]: 14</li>
+        </ul>
+        
+        <div class="blue-bg">Simulation outputs</div>
+        <ul>
+            <li>Slope angle [°]: 35</li>
+            <li>Azimuth angle [°]: 0</li>
+            <li>Yearly PV energy production [kWh]: 1187.45</li>
+            <li>Yearly in-plane irradiation [kWh/m2]: 1504.58</li>
+            <li>Year-to-year variability [kWh]: 53.41</li>
+            <li>Changes in output due to:</li>
+            <ul>
+                <li>Angle of incidence [%]: -2.95</li>
+                <li>Spectral effects [%]: 1.47</li>
+                <li>Temperature and low irradiance [%]: -6.81</li>
+                <li>Total loss [%]: -21.08</li>
+            </ul>
+        </ul>
+    </div>
+    
+    <div class="column_horizon">
+        <div class="blue-bg-horizon">Outline of horizon</div>
+        <img class="horizon-image" src="{os.path.join(os.path.dirname(__file__),'horizon.png')}" alt="Horizon Outline">
+    </div>
+    
+</div>
+    <div class="column_bar">
+        <div class="blue-bg-chart">Monthly energy output from fix-angle PV system</div>
+        <img class="bar-chart" id="monthly-chart" src="{os.path.join(os.path.dirname(__file__),'bar_chart.png')}" alt="BarChart">
+    </div>
+<div class="container">
+        </body>
+    </html>

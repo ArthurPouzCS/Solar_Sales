@@ -12,6 +12,7 @@ def render_page_rapport_financier():
     st.set_page_config(
     page_title="Simuler votre Projet - Rapport Financier",
     page_icon="📰", layout="wide", initial_sidebar_state="collapsed")
+    past_audit, last = dont_forget_past_audit()
     no_sidebar()
 
     if 'data' in st.session_state:

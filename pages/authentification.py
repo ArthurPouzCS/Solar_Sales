@@ -66,12 +66,10 @@ with stylable_container(
                         st.session_state.mail = mail_inscription ### Primary key
                         st.session_state.logged_in = True
                         switch_page('Accueil')
+
             with connexion:
-                with st.form("connexion"):
-                    mail = st.text_input('Mail')
-                    password = st.text_input('Password', type='password')
-                    submitted_connexion = st.form_submit_button("Se connecter")
-                if submitted_connexion:
+                if 'connexion_mail' in st.session_state:
+                    mail, password = st.session_state.connexion_mail, st.session_state.connexion_password
                     hashed_password = retrieve_data('user_credentials', mail, 'mdp')
                     if check_password(password, hashed_password):
                         st.success('Connexion réussie')
@@ -79,7 +77,29 @@ with stylable_container(
                         st.session_state.logged_in = True
                         switch_page('Accueil')
                     else:
+                        del st.session_state.connexion_mail
+                        del st.session_state.connexion_password
                         st.error('Mot de passe incorrect')
-    
+                else:
+                    with st.form("connexion"):
+                        mail = st.text_input('Mail')
+                        password = st.text_input('Password', type='password')
+                        submitted_connexion = st.form_submit_button("Se connecter")
+                    if submitted_connexion:
+                        if mail_already_exist(mail):
+                            st.session_state.connexion_mail = mail
+                            st.session_state.connexion_password = password
+                            hashed_password = retrieve_data('user_credentials', mail, 'mdp')
+                            if check_password(password, hashed_password):
+                                st.success('Connexion réussie')
+                                st.session_state.mail = mail ### Primary key
+                                st.session_state.logged_in = True
+                                switch_page('Accueil')
+                            else:
+                                st.error('Mot de passe incorrect')
+                                del st.session_state.connexion_mail
+                                del st.session_state.connexion_password
+                        else:
+                            st.error('Mail inconnu, veuillez vous inscrire')
 
-                
+            

@@ -15,6 +15,7 @@ def render_page_comparaison():
     page_title="Simuler votre Projet - Comparaison",
     page_icon="👁‍🗨", layout="wide", initial_sidebar_state="collapsed"
 )
+    past_audit, last = dont_forget_past_audit()
     no_sidebar()
     background('reno.jpg', 'center right')
 

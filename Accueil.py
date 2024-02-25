@@ -14,6 +14,7 @@ from db_functions import *
 
 
 def get_token():
+    return None
     #chemin_fichier = os.path.join(os.path.join(os.path.dirname(__file__),'df_to_save'),'zoho_file.csv')
     #df = pd.read_csv(chemin_fichier)
     mail = st.session_state.mail
@@ -44,7 +45,7 @@ def show_title(text):
             .title {
                 font-size : 400%;
                 font-weight : bold;
-                margin-left : 35%;
+                margin-left : 33%;
             }
         </style>
         """, unsafe_allow_html=True)
@@ -80,9 +81,12 @@ st.set_page_config(page_title="Accueil", page_icon="☀", layout="wide", initial
 no_sidebar()
 
 css()
+past_audit, last = dont_forget_past_audit()
 
 show_title('SolarSales ⚡')
+eolienne_qui_tourne()
 background('pv_sky.jpg', 'center right')
+
 
 with stylable_container(
         key='adresse_container',
@@ -170,27 +174,53 @@ with stylable_container(
                 col1, col2 = st.columns(2)
 
                 with col1:
-                    switch_to_simuler = st.button("Saisir vos données")
                     if 'ancien_audit' in st.session_state:
-                        st.session_state.nouvel_audit = True
-                    if switch_to_simuler:
+                        switch_to_saisir = st.button("Saisir de nouvelles données")
+                    else :
+                        switch_to_saisir = st.button("Saisir vos données")
+                    if switch_to_saisir:
+                        if 'ancien_audit' in st.session_state:
+                            st.session_state.nouvel_audit = True
+                            del st.session_state.ancien_audit
                         switch_page("saisir_donnees_etude_solaire")
-
-                    switch_to_simuler = st.button("Réaliser une Garantie")
+                    
+                    if 'ancien_audit' in st.session_state :
+                        if 'nom' in st.session_state.ancien_audit and 'prenom' in st.session_state.ancien_audit:
+                            nom, prenom = st.session_state.ancien_audit['nom'], st.session_state.ancien_audit['prenom']
+                            switch_to_simuler = st.button(f"Réaliser la Garantie de {prenom} {nom}")
+                        else:
+                            switch_to_simuler = st.button("Réaliser une Garantie")
+                    else:
+                        switch_to_simuler = st.button("Réaliser une Garantie")
                     if switch_to_simuler:
-                        st.toast("Bientôt disponible")
-                        #switch_page("realiser_garantie")
+                        #st.toast("Bientôt disponible")
+                        switch_page("realiser_garantie")
 
                     
                 with col2:
-                    switch_to_simuler = st.button("Simuler votre projet")
+                    if 'ancien_audit' in st.session_state :
+                        if 'nom' in st.session_state.ancien_audit and 'prenom' in st.session_state.ancien_audit:
+                            nom, prenom = st.session_state.ancien_audit['nom'], st.session_state.ancien_audit['prenom']
+                            switch_to_simuler = st.button(f"Simuler le projet de {prenom} {nom}")
+                        else:
+                            switch_to_simuler = st.button("Simuler votre projet")
+                    else:
+                        switch_to_simuler = st.button("Simuler votre projet")
                     if switch_to_simuler:
                         if 'data' in st.session_state:
                             switch_page("simulation_selection_materiels")
                         else:
                             st.toast("Vous devez d'abord saisir des informations pour accéder à cet onglet")                            
 
-                    switch_to_simuler = st.button("Générer vos documents")
+                    if 'ancien_audit' in st.session_state :
+                        if 'nom' in st.session_state.ancien_audit and 'prenom' in st.session_state.ancien_audit:
+                            nom, prenom = st.session_state.ancien_audit['nom'], st.session_state.ancien_audit['prenom']
+                            switch_to_simuler = st.button(f"Générer les documents de {prenom} {nom}")
+                        else:
+                            switch_to_simuler = st.button("Générer vos documents")
+                    else:
+                        switch_to_simuler = st.button("Générer vos documents")
+                    
                     if switch_to_simuler:
                         if 'data' in st.session_state:
                             switch_page("generer_documents")
