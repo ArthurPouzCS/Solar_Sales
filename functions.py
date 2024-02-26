@@ -801,9 +801,11 @@ def dont_forget_past_audit():
                 'facture_autre_syst_chauffage':400,
                 'capacite_eau_chaude_elec':100,
                 'ressources_annuelles':20000,
+                'conso_kwh':5000,
                 }
 
     def last(key, my_type, options=None):
+        try: #attention parfois ça bug
             if my_type in ["text_input", "number_input"]:
                 return dic_ancien_audit[key]
             if my_type in ["radio", "selectbox"]:
@@ -826,6 +828,8 @@ def dont_forget_past_audit():
                     return result 
                 else:
                     return dic_ancien_audit[key]
+        except:
+            return default_dic[key]
 
     def pas_last(key, my_type, options=None):
             if key in default_dic.keys():

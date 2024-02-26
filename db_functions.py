@@ -225,6 +225,7 @@ def create_table_data(): # les multiselect ne sont pas enregistrés comme des []
 def update_or_insert_data(data_dict):
     create_table_data()
     data_dict = clean_dict(data_dict)
+    data_dict.pop('id', None)
     # Vérification si l'email existe déjà dans la table
     email = data_dict.get('email', None)
     if email:

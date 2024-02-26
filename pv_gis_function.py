@@ -55,7 +55,7 @@ def calcul_pvgis(adresse, conso_annuelle_elec):
         solar_data = get_solar_estimation(lat, lon, peak_power, system_loss)
 
         if solar_data:
-            st.success("Données d'estimation solaire PVGIS récupérées avec succès.")
+            #st.success("Données d'estimation solaire PVGIS récupérées avec succès.")
 
             lat, long, alti = solar_data['inputs']['location']['latitude'], solar_data['inputs']['location']['longitude'], solar_data['inputs']['location']['elevation']
             

@@ -19,6 +19,7 @@ def render_page_selection_materiels():
     )
     past_audit, last = dont_forget_past_audit()
     no_sidebar()
+    st.write(st.session_state)
     background('maison_panneaux.jpg', 'top center')
     st.markdown("""
     <style>
@@ -115,7 +116,7 @@ def render_page_selection_materiels():
         with colb:
             st.header("Matériels et Services 🔩")
             option_materiel = ['Micro onduleurs', 'FHE', 'Domotique', 'Ballon thermodynamique', 'Ballon électrique', 'PAC air-air Quadri', 'PAC air-eau', 'Pack LED', 'Passage en triphasé', 'Nettoyage et traitement', 'Pergola solaire', 'Batterie de stockage', 'Borne de recharge véhicule électrique']
-            materiels = st.multiselect('',option_materiel)
+            materiels = st.multiselect('',option_materiel, default=['Micro onduleurs', 'FHE', 'Domotique', 'Ballon thermodynamique'])
 
             elec, gaz, fioul, autre = val('montant_facture'), 0, 0, 0
             
