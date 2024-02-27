@@ -19,7 +19,7 @@ def render_page_selection_materiels():
     )
     past_audit, last = dont_forget_past_audit()
     no_sidebar()
-    st.write(st.session_state)
+    
     background('maison_panneaux.jpg', 'top center')
     st.markdown("""
     <style>
@@ -245,9 +245,9 @@ def render_page_selection_materiels():
             with st.container():
                 show2(("Heures d'ensoleillement", "{:,}".format(int(h_soleil)).replace(",", " ")+' h'))
                 show2(('Puissance restituée', "{:,}".format(int(p_restit)).replace(",", " ")+' kWh'))
-                show2(('Coefficient Météorologique', str(coef_meteo)+'%'))
+                show2(('Coefficient Météorologique', str(int(coef_meteo*100))+'%'))
                 show2(("Coefficient de performance", str(coef_perf)))
-                show2(("Perte du système", str(perte)+'%'))
+                show2(("Perte du système", str(int(perte*100))+'%'))
                 
                 col1, col2 = st.columns(2)
                 with col1:
@@ -278,8 +278,8 @@ def render_page_selection_materiels():
                             prix_revendu = tab['prix_kwh_revendu_pro_9_36']
                         else :
                             prix_revendu = tab['prix_kwh_revendu_pro_36_100']
-
-                    prix_vendu = st.number_input('Revendu (€/kWh)', value=prix_revendu, step=0.01)
+                    
+                    prix_vendu = st.number_input('Revendu (€/kWh)', value=prix_revendu)
             
             space(3)
             mispace()
@@ -354,15 +354,16 @@ def render_page_selection_materiels():
             
             facture_surplus = surplus*prix_vendu
             facture_autoconso = autoconso*prix_achete
+            
 
-            st.write('Indépendance mensuelle: '+str(round(facture_autoconso)) + ' €')
-            st.write('Surplus mensuelle : '+str(round(facture_surplus))+' €')
+            st.write('Indépendance : '+str(round(facture_autoconso*tab['nbr_mois'])) + ' €')
+            st.write('Surplus : '+str(round(facture_surplus*tab['nbr_mois']))+' €')
 
             space(2)
             st.subheader('Prévisions  🔭')
             col1, col2 = st.columns(2)
             with col1:
-                indexation = st.number_input('Indexation (en %/an)', value=4.0, step=0.2)
+                indexation = st.number_input('Indexation (en %/an)', value=4.0, step=0.2, max_value=8.0)
             with col2:
                 annnees_prevision = st.number_input('Prévisions (en annéees)', value=15, step=1)
 

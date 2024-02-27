@@ -641,6 +641,13 @@ def displayPDF(file, width, height):
         #base64_pdf = base64.b64encode(pdf_data).decode('utf-8')
         #iframe_code = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width={width} height={height} type="application/pdf" style="margin: auto; display: block; margin-bottom:50px"></iframe>'
         #st.markdown(str(iframe_code), unsafe_allow_html=True)
+
+def displayPDF_past(file, width, height):
+    with open(file, "rb") as pdf_file:
+        pdf_data = pdf_file.read()
+        base64_pdf = base64.b64encode(pdf_data).decode('utf-8')
+        iframe_code = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width={width} height={height} type="application/pdf" style="margin: auto; display: block; margin-bottom:50px"></iframe>'
+        st.markdown(str(iframe_code), unsafe_allow_html=True)
     
 
 def background(img_path, position):

@@ -18,7 +18,7 @@ def render_page_book():
     background('maison_energie.jpg', 'center right')
     
     path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'book_compressed.pdf')
-    displayPDF(path, 700,400)
+    displayPDF_past(path, 720,570)
 
     if st.button("Retour à l'accueil"):
         switch_page("Accueil")
