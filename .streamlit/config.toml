@@ -1,10 +1,9 @@
 [theme]
 
-primaryColor="royalblue"
+primaryColor="#8080ff"
 backgroundColor="white"
-secondaryBackgroundColor="#2ECC71"
-textColor="darkblue"
-accentColor="royalblue"
+secondaryBackgroundColor="#b366ff"
+textColor="white"
 font="sans serif"
 
 

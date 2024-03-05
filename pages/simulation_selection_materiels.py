@@ -10,6 +10,7 @@ import os
 from api_functions import *
 from streamlit_extras.stylable_container import stylable_container
 from db_functions import *
+from functions import styled_button
 
 def render_page_selection_materiels():
     
@@ -19,7 +20,7 @@ def render_page_selection_materiels():
     )
     past_audit, last = dont_forget_past_audit()
     no_sidebar()
-    
+    styled_button()
     background('maison_panneaux.jpg', 'top center')
     st.markdown("""
     <style>
@@ -44,13 +45,11 @@ def render_page_selection_materiels():
         
     if 'data' in st.session_state:
         dic = st.session_state.data
+        dic = clean_dict(dic)
     else:
-        st.write('Valeurs fictives')
-        dic = {'adresse_postale': [["425 Route de Soucieu 69440 Saint Laurent d'Agny"]], 'departement': [['01 - Ain']], 'parcelles': [['342']], 'pente_toit': [[None]], 'altitude': [[None]], 'masque_solaire': [['Oui']], 'orientation_toit': [[None]], 'type_personne': [['Particulier']], 'nom': [['']], 'email': [['']], 'prenom': [['']], 'type_projet': [['Résidence Secondaire']], 'nbr_niveaux': [[None]], 'vitrage': [[None]], 'combles': [[None]], 'etat_charpente': [[None]], 'annee_construction': [[1960]], 'type_charpente': [[None]], 'isolation_comble': [['Non']], 'isolation_mur': [['Non']], 'nbr_personne': [[1]], 'temperature': [[18]], 'hauteur_ss_plafond': [[2.0]], 'surface': [[50]], 'surface_chauffer': [[50]], 'equipement_pv_passe': [['Oui']], 'puissance_deja_installee': [[0.0]], 'etude_solaire_passe': [['Oui']], 'dpe_passe': 
-        [['Oui']], 'dpe': [[None]], 'puissance_kva': [[None]], 'fournisseur': [[None]], 'compteur': [['Monophasé']], 'abonnement': [[None]], 'montant_facture': [[2000]], 'connaissance_facture_elec': [['Non']], 'chauffage_electrique': [[None]], 'gaz_fioul': [[['Gaz', 'Fioul']]], 'gaz_facture':[[1300]], 'fioul_facture':[[300]], 'fioul_litre':[[2000]],'type_chaudiere': [[None]], 'type_materiel': [[None]], 'age_chaudiere': [[5]], 'chaudiere_electrique': [['Non']], 'autre_systeme_chauffage': [[[]]], 'hauteur_ecs': [[None]], 'ballon_eau_chaude_electrique': [[None]], 'climatisation': [[None]], 'plaque_cuisson': [[None]], 'lave_vaisselle': [[None]], 'seche_linge': [[None]], 'systeme_vmc': [[None]], 'type_four': [[None]], 'lave_linge': [[None]], 'voiture_electrique': [[None]], 'piscine_chauffee': [[None]], 'frigidaire': [[[]]], 'congelateur': [[[]]], 'habitude_conso': [[None]], 'ressources_annuelles': [[20000]], 'interesse': [[[]]], 'id': [0]}
+        st.error("Problème, veuillez saisir les données à nouveau")
 
 
-    
     def val(label):
         if len(dic['adresse_postale'][0])>2: # pour vérifier si c'est une liste ou si ça renvoie juste la premiere lettre (ça bug le type == list)
             return dic[label][0]
@@ -106,6 +105,7 @@ def render_page_selection_materiels():
         puissance_conseillee, independance, surplus, prod_pv_annnee_unit, l_prod_pv_mois_unit = calcul_pvgis(val('adresse_postale'), val('montant_facture')/tab['prix_kwh'])
     else:
         st.error("⛔ Pas de connexion internet, impossible de récupérer les données PVGIS 🌞")
+        mispace()
         puissance_conseillee, independance, surplus, prod_pv_annnee_unit, l_prod_pv_mois_unit = 1,1,1,1,[1,1,1,1,1,1,1,1,1,1,1,1]
     cola, colb = st.columns(2)
 
@@ -114,105 +114,123 @@ def render_page_selection_materiels():
             css_styles = css_from_function()
             ):
         with colb:
-            st.header("Matériels et Services 🔩")
-            option_materiel = ['Micro onduleurs', 'FHE', 'Domotique', 'Ballon thermodynamique', 'Ballon électrique', 'PAC air-air Quadri', 'PAC air-eau', 'Pack LED', 'Passage en triphasé', 'Nettoyage et traitement', 'Pergola solaire', 'Batterie de stockage', 'Borne de recharge véhicule électrique']
-            materiels = st.multiselect('',option_materiel, default=['Micro onduleurs', 'FHE', 'Domotique', 'Ballon thermodynamique'])
+            with stylable_container(key="materiel_style", css_styles=my_style_container()):
+                with st.container():
+                    st.header("Matériels et Services 🔩")
+                    option_materiel = ['Micro onduleurs', 'FHE', 'Domotique', 'Ballon thermodynamique', 'Ballon électrique', 'PAC air-air Quadri', 'PAC air-eau', 'Pack LED', 'Passage en triphasé', 'Nettoyage et traitement', 'Pergola solaire', 'Batterie de stockage', 'Borne de recharge véhicule électrique']
+                    materiels = st.multiselect('',option_materiel, default=['Micro onduleurs', 'FHE', 'Domotique', 'Ballon thermodynamique'])
 
-            elec, gaz, fioul, autre = val('montant_facture'), 0, 0, 0
-            
-            if 'Fioul' in val('gaz_fioul'):
-                fioul = val('fioul_facture')
-            if 'Gaz' in val('gaz_fioul'):
-                gaz = val('gaz_facture')
-            if val('autre_systeme_chauffage') != []:
-                autre = val('facture_autre_syst_chauffage')
-            
-            ############### Attention check les calculs pour les (1-Ri)^n ou Ri^n
-            #st.write(elec, gaz, fioul, autre)
-            total = elec+gaz+fioul+autre
-            conso_init = round(total/tab['prix_kwh'], 1)
-            r = 1
-            for mat in materiels:
-                r*=amelioration(mat, materiels)
+                    elec, gaz, fioul, autre = val('montant_facture'), 0, 0, 0
+                    
+                    
+                    if 'Fioul' in val('gaz_fioul'):
+                        fioul = val('fioul_facture')
+                    if 'Gaz' in val('gaz_fioul'):
+                        gaz = val('gaz_facture')
+                    if val('autre_systeme_chauffage') != []:
+                        autre = val('facture_autre_syst_chauffage')
+                    
+                    ############### Attention check les calculs pour les (1-Ri)^n ou Ri^n
+                    #st.write(elec, gaz, fioul, autre)
+                    total = elec+gaz+fioul+autre
+                    conso_init = round(total/tab['prix_kwh'], 1)
+                    r = 1
+                    for mat in materiels:
+                        r*=amelioration(mat, materiels)
 
-            eco_an_elec = round(elec*(1-r))
-            eco_an_gaz = round(gaz*(1-r))
-            eco_an_autre = round((fioul+autre)*(1-r))
-            eco_total_an = eco_an_elec + eco_an_gaz + eco_an_autre
+                    eco_an_elec = round(elec*(1-r))
+                    if 'gain_elec_par_an_pv' in st.session_state:
+                        eco_an_elec = round(elec*(1-r)) + st.session_state.gain_elec_par_an_pv
+                    eco_an_gaz = round(gaz*(1-r))
+                    eco_an_autre = round((fioul+autre)*(1-r))
+                    eco_total_an = eco_an_elec + eco_an_gaz + eco_an_autre
 
-            ################################## Revoir ça
-            st.subheader('Les chiffres')
-            show("Gains et économies", 
-                    ('Electricité', eco_an_elec, "€"),
-                    ("E.C.S", eco_an_gaz, "€"),
-                    ("Chauffage", eco_an_autre, "€"),
-                    ("Total Minimum N+1", eco_total_an, "€"),
-                    ('Total Minimum/Mois', round(eco_total_an/tab['nbr_mois']), "€"))
+                    ################################## Revoir ça
+                    st.subheader('Les chiffres')
+                    show("Gains et économies", 
+                            ('Electricité', int(eco_an_elec), "€"),
+                            ("E.C.S", int(eco_an_gaz), "€"),
+                            ("Chauffage", int(eco_an_autre), "€"),
+                            ("Total Minimum N+1", int(eco_total_an), "€"),
+                            ('Total Minimum/Mois', round(eco_total_an/tab['nbr_mois']), "€"))
 
         with cola:
-            st.header("Votre Foyer  🏡")
-            space(1)
-            col1,col2 = st.columns(2)
-            with col1:
-                show("Département", ("", val('departement'), ""))
-                show("Compteur / Puissance", ("", str(val('compteur'))+" / "+str(val('puissance_kva')), "kVA"))
-                if val('equipement_pv_passe') == 'Oui':
-                    show("Panneaux solaires installés", ("", val('puissance_deja_installee'), "Wc"))
+            with stylable_container(key="foyer_style", css_styles=my_style_container()):
+                with st.container():
+                    st.header("Votre Foyer  🏡")
+                    space(1)
+                    col1,col2 = st.columns(2)
+                    with col1:
+                        show("Département", ("", val('departement'), ""))
+                        show("Compteur / Puissance", ("", str(val('compteur'))+" / "+str(val('puissance_kva')), "kVA"))
+                        if val('equipement_pv_passe') == 'Oui':
+                            show("Panneaux solaires installés", ("", val('puissance_deja_installee'), "Wc"))
+                        
+                    with col2:
                 
-            with col2:
-        
-                show("Total des dépenses", 
-                    ('Electricité', elec, "€"),
-                    ("Gaz", gaz, "€"),
-                    ("Fioul", fioul, "€"),
-                    ("Autre", autre, "€"),
-                    ('Total', total, "€"))
+                        show("Total des dépenses", 
+                            ('Electricité', elec, "€"),
+                            ("Gaz", gaz, "€"),
+                            ("Fioul", fioul, "€"),
+                            ("Autre", autre, "€"),
+                            ('Total', total, "€"))
 
-                conso_elec = elec/tab['prix_kwh']
-                ameliore = conso_elec #conso_init
-                ameliore*=r ######################################################### NE FONCTIONNE PAS BIEN
-                conso_additionnel = {
-                    "PAC air-air Quadri":tab['conso_pac_air_air'],
-                    "PAC air-eau":tab['conso_pac_air_eau'], 
-                    "Ballon(s)":tab['conso_ballon_thermo']
-                    }  
-                for key in conso_additionnel.keys():
-                    if key in materiels:
-                        ameliore+=conso_additionnel[key]
-                
-                show("Consommation kWh",
-                    ("Initial", "{:,}".format(int(conso_elec)).replace(",", " "), "kWh"),
-                    ("Amélioré", "{:,}".format(int(ameliore)).replace(",", " "), "kWh"))
+                        conso_elec = elec/tab['prix_kwh']
+                        if val("connaissance_facture_elec") == "Oui":
+                            conso_elec = val("conso_kwh")
+                        ameliore = conso_elec #conso_init
+                        ameliore*=r ######################################################### NE FONCTIONNE PAS BIEN
+                        conso_additionnel = {
+                            "PAC air-air Quadri":tab['conso_pac_air_air'],
+                            "PAC air-eau":tab['conso_pac_air_eau'], 
+                            "Ballon(s)":tab['conso_ballon_thermo']
+                            }  
+                        for key in conso_additionnel.keys():
+                            if key in materiels:
+                                ameliore+=conso_additionnel[key]
+                        
+                        ameliore_ici = ameliore
+                        if 'gain_elec_par_an_pv' in st.session_state:
+                            ameliore_ici = max(0, ameliore - st.session_state.gain_elec_par_an_pv/tab['prix_kwh'])
+                        
+                        gaz_kwh, fioul_kwh, autre_kwh = gaz/0.0968, fioul/0.0880, autre/0.09
+                        ameliore_ici = ameliore_ici + gaz_kwh + fioul_kwh + autre_kwh
+                        conso_total_kwh = conso_elec + gaz_kwh + fioul_kwh + autre_kwh
+                        show("Consommation kWh",
+                            ("Initial", "{:,}".format(int(conso_total_kwh)).replace(",", " "), "kWh"),
+                            ("Amélioré", "{:,}".format(int(ameliore_ici)).replace(",", " "), "kWh"))
                     
         
         colx, coly = st.columns(2)
 
         with coly:
-            space(3)
-            st.subheader("Panneaux et revente  🌞")
+            with stylable_container(key="adresse_style", css_styles=my_style_container()):
+                mispace()
+                with st.container():
+                    st.subheader("Panneaux et revente  🌞")
 
-            col1,col2 = st.columns(2)
-            with col1:
-                puissance_panneaux = st.number_input("Puissance des panneaux (kWc)", step=1, value=puissance_conseillee)
-                st.markdown("<sub>Puissance conseillée "+str(puissance_conseillee)+" kWc hors pose sol</sub>", unsafe_allow_html=True)
-                pv_unitaire = st.radio('Puissance unitaire du panneau', ['500W', '375W'])
-                panneaux_sol = st.radio('Pose des panneaux au sol', ['Oui', 'Non'], index=1)
-                nbr_panneaux = int(puissance_panneaux*1000/int(pv_unitaire.split('W')[0]))
-                surface_panneaux = nbr_panneaux*tab["surface_panneau"]
-            st.markdown("<sub>Quantité panneau et superficie : "+str(nbr_panneaux)+" panneaux ("+str(round(surface_panneaux,1))+"m²)</sub>", unsafe_allow_html=True)
-            if val('compteur')=='Monophasé':
-                st.markdown("<div style=color:red;font-size:12px><bold>Compteur en monophasé : Raccordement réseau plafonné à 6.0 kWc</bold></div>", unsafe_allow_html=True)
-                if puissance_panneaux>=6:    
-                    revente = 6 
-                    injection_dir = puissance_panneaux-6
-                else:
-                    revente = puissance_panneaux
-                    injection_dir = puissance_panneaux
-            else:
-                revente = puissance_panneaux
-                injection_dir = puissance_panneaux
+                    col1,col2 = st.columns(2)
+                    with col1:
+                        puissance_panneaux = st.number_input("Puissance des panneaux (kWc)", step=1, value=puissance_conseillee)
+                        st.markdown("<sub>Puissance conseillée "+str(puissance_conseillee)+" kWc hors pose sol</sub>", unsafe_allow_html=True)
+                        pv_unitaire = st.radio('Puissance unitaire du panneau', ['500W', '375W'])
+                        panneaux_sol = st.radio('Pose des panneaux au sol', ['Oui', 'Non'], index=1)
+                        nbr_panneaux = int(puissance_panneaux*1000/int(pv_unitaire.split('W')[0]))
+                        surface_panneaux = nbr_panneaux*tab["surface_panneau"]
+                    st.markdown("<sub>Quantité panneau et superficie : "+str(nbr_panneaux)+" panneaux ("+str(round(surface_panneaux,1))+"m²)</sub>", unsafe_allow_html=True)
+                    if val('compteur')=='Monophasé':
+                        st.markdown("<div style=color:red;font-size:12px><bold>Compteur en monophasé : Raccordement réseau plafonné à 6.0 kWc</bold></div>", unsafe_allow_html=True)
+                        if puissance_panneaux>=6:    
+                            revente = 6 
+                            injection_dir = puissance_panneaux-6
+                        else:
+                            revente = puissance_panneaux
+                            injection_dir = puissance_panneaux
+                    else:
+                        revente = puissance_panneaux
+                        injection_dir = puissance_panneaux
 
-            st.markdown("<div><sub>* Votre installation : "+str(revente)+" kWc en revente partielle et "+str(injection_dir)+" kWc en injection directe.</sub></div>", unsafe_allow_html=True)
+                    st.markdown("<div><sub>* Votre installation : "+str(revente)+" kWc en revente partielle et "+str(injection_dir)+" kWc en injection directe.</sub></div>", unsafe_allow_html=True)
 
             coef_mult_choisi = puissance_panneaux
             #################################### A REFAIRE BIEEEN
@@ -235,33 +253,44 @@ def render_page_selection_materiels():
             surplus = surplus_prct*prod_pv_annnee_unit
             autoconso = autoconso_prct*prod_pv_annnee_unit
         
-            with col2:    
-                st.button("Favoriser revente")
-                st.button("Modifier puissance")
+            with col2:   
+                with stylable_container(key="bouton_reglage_pv", css_styles="""
+                div.stButton > button:first-child {
+                    margin-right:0px;
+                    background-color: #b366ff;
+                    }
+                    """): 
+                    st.button("Favoriser revente")
+                    st.button("Modifier puissance")
             
-            space(5)
+            
             mispace()
-            st.subheader('Données Techniques  📰')
-            with st.container():
-                show2(("Heures d'ensoleillement", "{:,}".format(int(h_soleil)).replace(",", " ")+' h'))
-                show2(('Puissance restituée', "{:,}".format(int(p_restit)).replace(",", " ")+' kWh'))
-                show2(('Coefficient Météorologique', str(int(coef_meteo*100))+'%'))
-                show2(("Coefficient de performance", str(coef_perf)))
-                show2(("Perte du système", str(int(perte*100))+'%'))
-                
-                col1, col2 = st.columns(2)
-                with col1:
-                    st.markdown('<div><br><div>', unsafe_allow_html=True)
-                    mispace()
-                    with stylable_container(
-                    key='authenthif',
-                    css_styles = """
-                    div.stButton > button:first-child {
-                        height:70px;
-                        }
-                    """
-                    ):
-                        st.button("Actualiser le coût du kwH")
+            with stylable_container(key="adresse_style", css_styles=my_style_container()):
+                with st.container():
+                    st.subheader('Données Techniques  📰')
+                    with st.container():
+                        show2(("Heures d'ensoleillement", "{:,}".format(int(h_soleil)).replace(",", " ")+' h'))
+                        show2(('Puissance restituée', "{:,}".format(int(p_restit)).replace(",", " ")+' kWh'))
+                        show2(('Coefficient Météorologique', str(int(coef_meteo*100))+'%'))
+                        show2(("Coefficient de performance", str(coef_perf)))
+                        show2(("Perte du système", str(int(perte*100))+'%'))
+                        
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            st.markdown('<div><br><div>', unsafe_allow_html=True)
+                            mispace()
+                            with stylable_container(
+                            key='authenthif',
+                            css_styles = """
+                            div.stButton > button:first-child {
+                                height:70px;
+                                background-color : #b366ff;
+                                position : absolute;
+                                left : -10px;
+                                }
+                            """
+                            ):
+                                st.button("Actualiser le coût du kwH")
                     
                 with col2:
                     mispace()
@@ -269,7 +298,7 @@ def render_page_selection_materiels():
                     prix_achete = st.number_input('Consommé (€/kWh)', value=tab['prix_kwh'], step=0.01)
 
                     prix_revendu = tab['prix_kwh_revendu_part']
-                    if val('type_personne')=='Professionnel':
+                    if val('type_personne')=='Professionnel' or val('type_personne')=="Particulier" or True: #en fait ça change rien maintenant et a aussi 'Autres'
                         if puissance_panneaux <=3:
                             prix_revendu = tab['prix_kwh_revendu_pro_0_3']
                         elif puissance_panneaux <=9:
@@ -281,121 +310,136 @@ def render_page_selection_materiels():
                     
                     prix_vendu = st.number_input('Revendu (€/kWh)', value=prix_revendu)
             
-            space(3)
-            mispace()
+            
             with st.container():
-                st.subheader('Vos aides  💰')
-                st.markdown('<sub>Les aides auxquelles vous avez droit :</sub>', unsafe_allow_html=True)
-                cola,colb = st.columns(2)
-                
-                avis_imposition = val('ressources_annuelles')
-                nbr_personnes = val('nbr_personne')
-                depart = val('departement')
-                
-                type_menage = type_menage_fct(avis_imposition, nbr_personnes, depart)
-                MPR = aidesMPR(type_menage, materiels)
-                CEE, EDF, TVA, credit = 0, 0, 0, 0
-                if panneaux_sol == 'Non':
-                    CEE = aidesCEE(type_menage, materiels)
-                    EDF = aidesEDF(puissance_panneaux)
-                    dic['pv_unitaire'] = pv_unitaire
-                    dic['nbr_panneaux'] = nbr_panneaux
-                    dic['materiels'] = materiels
-                    try:
-                        qte, puissance, ttc, edf, tva, ttc_fhe, tva_fhe = tarif(dic)
-                    except:
-                        qte, puissance, ttc, edf, tva, ttc_fhe, tva_fhe = 0,0,0,0,0,0,0
-                    TVA = tva
-                    credit = 0
-                
-                if val('type_projet')=='Résidence Secondaire':
-                    MPR = 0
-                
-                total_aides = MPR + CEE + EDF + TVA + credit
-                ## Finiiiir aides !!
+                with stylable_container(key="adresse_style", css_styles=my_style_container()):
+                    with st.container():
+                        mispace()
+                        st.subheader('Vos aides  💰')
+                        st.markdown('<sub>Les aides auxquelles vous avez droit :</sub>', unsafe_allow_html=True)
+                        cola,colb = st.columns(2)
+                        
+                        avis_imposition = val('ressources_annuelles')
+                        nbr_personnes = val('nbr_personne')
+                        depart = val('departement')
+                        
+                        type_menage = type_menage_fct(avis_imposition, nbr_personnes, depart)
+                        MPR = aidesMPR(type_menage, materiels)
+                        CEE, EDF, TVA, credit = 0, 0, 0, 0
+                        if panneaux_sol == 'Non':
+                            CEE = aidesCEE(type_menage, materiels)
+                            EDF = aidesEDF(puissance_panneaux)
+                            dic['pv_unitaire'] = pv_unitaire
+                            dic['nbr_panneaux'] = nbr_panneaux
+                            dic['materiels'] = materiels
+                            try:
+                                qte, puissance, ttc, edf, tva, ttc_fhe, tva_fhe = tarif(dic)
+                            except:
+                                qte, puissance, ttc, edf, tva, ttc_fhe, tva_fhe = 0,0,0,0,0,0,0
+                            TVA = tva
+                            credit = 0
+                        
+                        if val('type_projet')=='Résidence Secondaire':
+                            MPR = 0
+                        
+                        total_aides = MPR + CEE + EDF + TVA + credit
+                        ## Finiiiir aides !!
+                        MPR, CEE, EDF, TVA, credit, total_aides = int(MPR), int(CEE), int(EDF), int(TVA), int(credit), int(total_aides)
+                        style_table([
+                            ['MaPrimeRénov',str(MPR)+'€'],
+                            ['CEE',str(CEE)+'€'],
+                            ['EDF', str(EDF)+'€'],
+                            ['Récupération de la TVA',str(TVA)+'€'],
+                            ["Déduction crédit d'impôts", str(credit)+'€'],
+                            ['Total',str(total_aides)+'€']
+                            ])
 
-                style_table([
-                    ['MaPrimeRénov',str(MPR)+'€'],
-                    ['CEE',str(CEE)+'€'],
-                    ['EDF', str(EDF)+'€'],
-                    ['Récupération de la TVA',str(TVA)+'€'],
-                    ["Déduction crédit d'impôts", str(credit)+'€'],
-                    ['Total',str(total_aides)+'€']
-                    ])
 
-
-                st.markdown("<sub>Les aides CEE et MaPrimeRénov sont exclusivement disponible dans le cadre de l'installation d'un ballon thermodynamique et/ou d'une pompe à chaleur</sub>", unsafe_allow_html=True)
-                st.markdown("<a href='wwww.example.com'>Consultez le document explicatif</a>", unsafe_allow_html=True)
+                        st.markdown("<sub>Les aides CEE et MaPrimeRénov sont exclusivement disponible dans le cadre de l'installation d'un ballon thermodynamique et/ou d'une pompe à chaleur</sub>", unsafe_allow_html=True)
+                        st.markdown("<a href='wwww.example.com'>Consultez le document explicatif</a>", unsafe_allow_html=True)
 
 
                 
 
         with colx:
-            space(3)
+            with stylable_container(key="transition_style", css_styles=my_style_container()):
+                with st.container():
+                    st.subheader("Transition Energétique  🌱")
+                    
+                    labels = ['Surplus', 'Indépendance']
+                    sizes = [round(surplus_prct*100,1), round(autoconso_prct*100,1)]
+                    
+                    fig, ax = plt.subplots()
+                    wedgeprops = {'edgecolor': 'white', 'linewidth': 1, 'antialiased': True}
+                    colors = ['#6eb52f', "#e0e0ef", 'lightcoral']
+                    pie = ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, wedgeprops=wedgeprops, colors=colors)
+                    for label in pie[1]:
+                        label.set_color('white')
+                    ax.axis('equal')  # Equal 
+                    fig.set_facecolor((1,1,1,0))  
+                    st.pyplot(fig)
 
-            st.subheader("Transition Energétique  🌱")
-            
-            labels = ['Surplus', 'Indépendance']
-            sizes = [round(surplus_prct*100,1), round(autoconso_prct*100,1)]
-            
-            fig, ax = plt.subplots()
-            wedgeprops = {'edgecolor': 'white', 'linewidth': 1, 'antialiased': True}
-            colors = ['#6eb52f', "#e0e0ef", 'lightcoral']
-            pie = ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, wedgeprops=wedgeprops, colors=colors)
-            for label in pie[1]:
-                label.set_color('darkblue')
-            ax.axis('equal')  # Equal 
-            fig.set_facecolor((1,1,1,0))  
-            st.pyplot(fig)
+                    path_fig = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'generation_pdf\\pie_chart.png')
+                    fig.set_facecolor("white")  
+                    fig.savefig(path_fig)
+                    
+                    facture_surplus = surplus*prix_vendu
+                    facture_autoconso = autoconso*prix_achete
+                    
 
-            path_fig = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'generation_pdf\\pie_chart.png')
-            fig.set_facecolor("white")  
-            fig.savefig(path_fig)
-            
-            facture_surplus = surplus*prix_vendu
-            facture_autoconso = autoconso*prix_achete
-            
+                    st.write('Indépendance : '+str(round(facture_autoconso*tab['nbr_mois'])) + ' €')
+                    st.write('Surplus : '+str(round(facture_surplus*tab['nbr_mois']))+' €')
 
-            st.write('Indépendance : '+str(round(facture_autoconso*tab['nbr_mois'])) + ' €')
-            st.write('Surplus : '+str(round(facture_surplus*tab['nbr_mois']))+' €')
-
-            space(2)
-            st.subheader('Prévisions  🔭')
-            col1, col2 = st.columns(2)
-            with col1:
-                indexation = st.number_input('Indexation (en %/an)', value=4.0, step=0.2, max_value=8.0)
-            with col2:
-                annnees_prevision = st.number_input('Prévisions (en annéees)', value=15, step=1)
-
-            #facture €/an = total
-            
-            fig, ax = plt.subplots()
-            wedgeprops = {'edgecolor': 'grey', 'linewidth': 2, 'antialiased': True}
-            colors = ['#6eb52f', "#e0e0ef", 'lightcoral']
-            sizes = [elec*(1+i)**(indexation/100) for i in range(annnees_prevision)]
-            ax.bar(range(annnees_prevision),sizes)
-            ax.set_ylim(0, max(sizes) * 1.3)
-            ax.axis('on')  # Equal 
-            fig.set_facecolor((1,1,1,0))  
-            st.pyplot(fig)
-
-            st.markdown("<sub>Evolution de la facture énergétique mensuelle</sub>", unsafe_allow_html=True)
-            
-            st.subheader("Economies  🤑")
-            economie_par_an = elec #*r  #Pas sur que ce soit la bonne chose
-            economie_total = sum([economie_par_an*(1+i)**(indexation/100) for i in range(annnees_prevision)])
-            economie_par_an_moyen = economie_total/annnees_prevision
-            economie_par_mois_moyen = economie_par_an_moyen/tab['nbr_mois']
-
-            show2(('Total/an', str(round(economie_par_an_moyen))+' €'))
-            show2(('Total/mois', str(round(economie_par_mois_moyen))+' €'))
-            show2(('Total des gains et économies sur '+ str(annnees_prevision) +' ans', str(round(economie_total))+' €'))
-            space(3)
             mispace()
-            st.info("""
-            #### Avant de continuer n'oubliez pas 
-            ###### Un projet bien défini c'est des économies garanties ⚡
-            """)
+            with stylable_container(key="prévision_style", css_styles=my_style_container()):
+                with st.container():
+                    st.subheader('Prévisions  🔭')
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        indexation = st.number_input('Indexation (en %/an)', value=4.0, step=0.2, max_value=8.0)
+                        indexation = indexation+3
+                    with col2:
+                        annnees_prevision = st.number_input('Prévisions (en annéees)', value=15, step=1)
+
+                    #facture €/an = total
+                    
+                    fig, ax = plt.subplots()
+                    wedgeprops = {'edgecolor': 'grey', 'linewidth': 2, 'antialiased': True}
+                    colors = ['#6eb52f', "#e0e0ef", 'lightcoral']
+                    sizes = [elec*(1+indexation/100)**i for i in range(annnees_prevision)]
+                    bars = ax.bar(range(annnees_prevision),sizes)
+                    ax.set_ylim(min(sizes) * 0.6, max(sizes) * 1.05)
+
+                    for i, bar in enumerate(bars):
+                        if i % 2 == 0:  # Pour chaque deuxième barre
+                            height = bar.get_height()
+                            ax.text(bar.get_x() + bar.get_width() / 2, height, f'{height:.0f}', ha='center', va='bottom')
+
+                    ax.axis('on')  # Equal 
+                    fig.set_facecolor((1,1,1,0))  
+                    st.pyplot(fig)
+
+                    st.markdown("<sub>Evolution de la facture énergétique mensuelle</sub>", unsafe_allow_html=True)
+            
+            with stylable_container(key="economies_style", css_styles=my_style_container()):
+                with st.container():
+                    mispace()
+                    st.subheader("Economies  🤑")
+                    economie_par_an = elec #*r  #Pas sur que ce soit la bonne chose
+                    economie_total = sum([economie_par_an*(1+i)**(indexation/100) for i in range(annnees_prevision)])
+                    economie_par_an_moyen = economie_total/annnees_prevision
+                    economie_par_mois_moyen = economie_par_an_moyen/tab['nbr_mois']
+
+                    show2(('Total/an', str(round(economie_par_an_moyen))+' €'))
+                    show2(('Total/mois', str(round(economie_par_mois_moyen))+' €'))
+                    show2(('Total des gains et économies sur '+ str(annnees_prevision) +' ans', str(round(economie_total))+' €'))
+                    space(1)
+                    mispace()
+                    st.info("""
+                    #### Avant de continuer n'oubliez pas 
+                    ###### Un projet bien défini c'est des économies garanties ⚡
+                    """)
+                    mispace()
             
 
         nvl_conso_elec_kwh_ameliore_materiels_sans_pv = ameliore            #La consommation d'élec en kwh après avoir ajouté le matos, pac, ballon, domotique
@@ -403,12 +447,24 @@ def render_page_selection_materiels():
         nvl_facture_gaz = gaz - eco_an_gaz                                  # Nouvelle facture de gaz
         nvl_facture_fioul_autre = (autre + fioul) - eco_an_autre            # Nouvelle facture de fioul et autre
         prod_total_annee = prod_pv_annnee_unit*puissance_panneaux           #La production en kwh de l'installation PV choisie
-        economies_annnuelles_pv_autoconso = facture_autoconso*12            # Les économies estimées grâce à ce qui est autoconsomé en PV (l'élec qu'on génère au lieu de l'acheter)
-        gains_annnuelles_pv_surplus = facture_surplus*12                    # Les gains réalisés en vendant le surplus
+        economies_annnuelles_pv_autoconso = facture_autoconso*tab['nbr_mois']           # Les économies estimées grâce à ce qui est autoconsomé en PV (l'élec qu'on génère au lieu de l'acheter)
+        gains_annnuelles_pv_surplus = facture_surplus*tab['nbr_mois']                   # Les gains réalisés en vendant le surplus
         
 
-
+        ancienne_facture_elec = val('montant_facture')
         
+        eco_elec_par_an = (ancienne_facture_elec - nvl_facture_elec_ameliore_materiels_sans_pv)
+        gain_elec_par_an_pv = economies_annnuelles_pv_autoconso + gains_annnuelles_pv_surplus
+        
+        
+        if 'gain_elec_par_an_pv' not in st.session_state:
+            st.session_state.gain_elec_par_an_pv = gain_elec_par_an_pv
+            st.rerun()
+        else:
+            st.session_state.gain_elec_par_an_pv = gain_elec_par_an_pv
+        gain_et_eco_elec_par_an = eco_elec_par_an + gain_elec_par_an_pv
+        
+    
         if st.button("Suivant"):
             if 'data' in st.session_state:
                 dic = st.session_state.data
@@ -437,11 +493,7 @@ def render_page_selection_materiels():
                 dic['prix_achete'] = prix_achete
                 dic['prix_revendu'] = prix_revendu
 
-                ancienne_facture_elec = val('montant_facture')
                 
-                eco_elec_par_an = (ancienne_facture_elec - nvl_facture_elec_ameliore_materiels_sans_pv)
-                gain_elec_par_an_pv = economies_annnuelles_pv_autoconso + gains_annnuelles_pv_surplus
-                gain_et_eco_elec_par_an = eco_elec_par_an + gain_elec_par_an_pv
                 dic['gain_et_eco_elec_par_an'] = gain_et_eco_elec_par_an
 
                 eco_gaz_fioul_autres = (gaz+fioul+autre) - (nvl_facture_gaz + nvl_facture_fioul_autre)
@@ -453,10 +505,10 @@ def render_page_selection_materiels():
                 dic['economie_par_an_moyen'] = economie_par_an_moyen
                 dic['economie_par_mois_moyen'] = economie_par_mois_moyen
 
-                dic['MPR'] = MPR
-                dic['CEE'] = CEE
-                dic['EDF'] = EDF
-                dic['TVA'] = TVA
+                dic['mpr'] = MPR
+                dic['cee'] = CEE
+                dic['edf'] = EDF
+                dic['tva'] = TVA
                 dic['credit'] = credit
                 dic['total_aides'] = total_aides
 

@@ -27,7 +27,9 @@ def render_page_audit():
             key='adresse_container',
             css_styles = css_from_function()
             ):    
-        st.subheader('Audit énergétique à consulter  ⚡')
+        with stylable_container(key="materiel_style", css_styles=my_style_container()):
+            with st.container():
+                st.subheader('Audit énergétique à consulter  ⚡')
         col1, col2 = st.columns(2)
         with col1:
             real_path = os.path.join(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'generation_pdf'),path_pdf)

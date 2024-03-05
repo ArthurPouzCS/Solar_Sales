@@ -26,7 +26,7 @@ def no_sidebar():
 
        
 def custom_success(message):
-    st.markdown(f'<p style="color: green; font-size: 14px;">{message}</p>', unsafe_allow_html=True)
+    st.markdown(f'<p style="color: white; font-size: 14px;">{message}</p>', unsafe_allow_html=True)
 
 def custom_warning(message):
     st.markdown(f'<p style="color: orange; font-size: 14px;">{message}</p>', unsafe_allow_html=True)
@@ -135,8 +135,8 @@ def show(label, *entries):
     st.markdown("""
         <style>
             .info-box-container {
-                background-color: rgba(21, 67, 96, 0.9);
-                border: 1px solid rgb(0,180,0);
+                background-color: rgba(102, 0, 204, 0.8);
+                border: 1px solid rgb(130,0,255);
                 padding: 5px 5%;
                 margin: -10px 5px;
                 border-radius: 8px;
@@ -145,7 +145,7 @@ def show(label, *entries):
             .label {
                 font-weight: bold;
                 font-size: 110%;
-                color: rgb(240, 240, 240);
+                color: rgb(255, 255, 255);
             }
 
             .entry {
@@ -317,12 +317,21 @@ def styled_button():
             height:60px;
             display : inline;
             float: right;
-            border : solid lightgreen 1px;
+            border : solid violet 1px;
+            background-color : rgba(102, 0, 204, 0.8);
         }
         div.stButton > button:hover {
-            background-color : #f2f2f2;
-            border : solid gray 1px;
+            background-color : #b366ff;
+            border : solid violet 2px;
             float: right;
+        }
+        
+        .st-emotion-cache-kjgucs {
+            color : rgba(102, 0, 204, 1);
+        }
+
+        div.stButton > .e1nzilvr5{
+            color:white;
         }
     </style>
     
@@ -333,10 +342,10 @@ def valeur_tabulees():
         'prix_kwh':0.23, #prix_kwh_consomme_part
         'prix_kwh_revendu_part':0.10, #Fait
 
-        'prix_kwh_revendu_pro_0_3':0.1735, #Fait
-        'prix_kwh_revendu_pro_3_9':0.1474, #Fait
-        'prix_kwh_revendu_pro_9_36':0.1382, #Fait
-        'prix_kwh_revendu_pro_36_100':0.1202, #Fait
+        'prix_kwh_revendu_pro_0_3':0.13, #Fait
+        'prix_kwh_revendu_pro_3_9':0.13, #Fait
+        'prix_kwh_revendu_pro_9_36':0.078, #Fait
+        'prix_kwh_revendu_pro_36_100':0.078, #Fait
 
 
         'rendement_paneaux':0.14,
@@ -578,7 +587,7 @@ def css_from_function(cadre=False):
     if cadre:
         css = ["""
                 .block-container, .st-emotion-cache-z5fcl4, .ea3mdgi2 {
-                    background-color: rgba(100,100,100,0.7);
+                    
                     border: 1px solid rgb(0,180,0);
                     }
 
@@ -685,6 +694,16 @@ def background(img_path, position):
     """
     st.markdown(img_css, unsafe_allow_html=True)
 
+def backgroundColor(color):
+    style = f"""
+        <style>
+            [data-testid="stAppViewContainer"] > .main, [data-testid="stHeader"], [data-testid= "stNotification"] {{
+                background-color: {color};
+            }}
+        </style>
+    """
+    st.markdown(style, unsafe_allow_html=True)
+
 
 def afficher_frise_chronologique_outdated(partie_actuelle):
     # -> peut etre faire columns avec switch button
@@ -701,7 +720,7 @@ def afficher_frise_chronologique_outdated(partie_actuelle):
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    background-color: rgb(20,150,70,0.8);
+                    background-color: rgb(153,50,255,0.8);
                     padding: 2px 15px 2px 15px;
                     border-radius: 20px;
                     position: relative;
@@ -717,7 +736,7 @@ def afficher_frise_chronologique_outdated(partie_actuelle):
                 }}
 
                 .partie.actuelle {{
-                    background-color: rgb(0,0,100,0.7);
+                    background-color: rgb(102,0,204,0.7);
                     color: #fff;
                 }}
             </style>
@@ -746,7 +765,7 @@ def afficher_frise_chronologique(numero):
                 float: center;
                 position: relative;
                 top: -50px;
-                background-color: rgb(0,150,49,1);
+                background-color: rgb(153,50,255);
                 color: white;
             }
 
@@ -763,9 +782,10 @@ def afficher_frise_chronologique(numero):
                 float: center;
                 position: relative;
                 top: -50px;
-                background-color: rgb(150,200,100,1);
+                background-color: rgb(102,0,204);
                 color: white;
             }
+            
             """
 
     for i,col in list(enumerate(st.columns(5))):
@@ -801,7 +821,9 @@ def dont_forget_past_audit():
                 'nbr_personne':2,
                 'montant_facture':2000,
                 'conso_kwh':10000,
+                'autre_systeme_chauffage':"Non",
                 'gaz_facture':500,
+                'gaz_fioul':["Non"],
                 'fioul_facture':500,
                 'fioul_litre':2000,
                 'age_chaudiere':5,
@@ -809,6 +831,7 @@ def dont_forget_past_audit():
                 'capacite_eau_chaude_elec':100,
                 'ressources_annuelles':20000,
                 'conso_kwh':5000,
+                'pente_toit':0
                 }
 
     def last(key, my_type, options=None):
@@ -834,7 +857,8 @@ def dont_forget_past_audit():
                     result =  result.split(',')
                     return result 
                 else:
-                    return dic_ancien_audit[key]
+                    if dic_ancien_audit[key]!='{}':
+                        return dic_ancien_audit[key]
         except:
             return default_dic[key]
 
@@ -880,7 +904,24 @@ def dont_forget_past_audit():
 
     if 'ancien_audit' in st.session_state and not('nouvel_audit' in st.session_state):
         dic_ancien_audit = st.session_state.ancien_audit
-        st.subheader(f"Audit de {dic_ancien_audit['prenom']} {dic_ancien_audit['nom']}", divider='blue')
+
+        st.markdown(f"""
+            <dic id="ancien_audit_name" style="
+            width : 300px;
+            height: 50px; 
+            font-size:25px; 
+            font-style:semi-bold;
+            background-color: rgba(191, 128, 255, 0.8); 
+            padding: 10px 20px; 
+            border-radius: 10px; 
+            color: white;
+            margin-bottom : 40px;
+            ">
+                Audit de {dic_ancien_audit['prenom']} {dic_ancien_audit['nom']}
+            </div>
+        """, unsafe_allow_html=True)
+        space(1)
+        mispace()
         past_audit = True
 
         return past_audit, last
@@ -959,7 +1000,9 @@ def eolienne_qui_tourne():
 
     def img_to_html(img_path):
         img_html = """
+        <div class='container' style="margin-top:-30px">
         <img src='data:image/png;base64,{}' class='img-fluid'>
+        </div>
         """.format(
         img_to_bytes(img_path)
         )
@@ -972,13 +1015,16 @@ def eolienne_qui_tourne():
             100% { transform: rotate(360deg); }
         }
 
+        .container {
+            width : 100%;
+            height : 90%;
+            text-align: center;
+            }
         .img-fluid {
             max-width: 100%;
-            width: 70px;
+            width: 40%;
             height: auto;
-            position:absolute;
-            top : -23px;
-            left:46%;
+            margin :auto;
             animation : rotate 2.5s infinite;
         }
         
@@ -988,3 +1034,28 @@ def eolienne_qui_tourne():
     st.markdown(string_css, unsafe_allow_html=True)
     url = os.path.join(os.path.dirname(__file__), 'ressources','spinner_eolienne.png')
     st.markdown(img_to_html(url), unsafe_allow_html=True)
+
+
+def my_style_container():
+    css_styles = """
+    .st-emotion-cache-0.e1f1d6gn0 {
+                background-color: rgba(102, 0, 204, 0.8);
+                padding: 5px 15px 20px 15px;
+                border-radius: 10px;
+            }
+
+    [data-testid="baseButton-secondary"]{
+        color:#5900b3;
+    }
+    [data-testid="stVirtualDropdown"]{
+        background-color : rgba(102, 0, 204, 0.8);
+    }
+    .st-emotion-cache-kjgucs, .e1nzilvr5 >p {
+        color : white;
+    }
+    
+    div[data-testid="stVerticalBlock"]:has(> div.element-container > div.stMarkdown > div[data-testid="stMarkdownContainer"] > p > span.carte) div.stButton > button:first-child {
+        background-color : #b366ff;
+    }
+    """
+    return css_styles

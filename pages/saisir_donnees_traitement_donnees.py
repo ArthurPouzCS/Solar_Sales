@@ -18,6 +18,8 @@ def render_page_traitement_donnees():
     styled_button()
     css()
 
+    eolienne_qui_tourne()
+    space(1)
     #background('eolienne.jpg', 'center center')
     
     if 'data' in st.session_state : ## à regarder
@@ -51,17 +53,17 @@ def render_page_traitement_donnees():
         #with st.status("Récupération et traitement des données...", expanded=True) as status:
             #with st.spinner('En attente...'):
 
-        time.sleep(0.5)
-        st.write("Récupération des données Météo France...")
-        time.sleep(0.5)
-        st.write("Détection des ombrages grâce aux données NASA et IGN...")
-        time.sleep(0.5)
-        st.write("Dimensionnement de l'installation photovoltaïque...")
-        time.sleep(0.5)
-        st.write("Calcul de votre production électrique solaire...")
-        time.sleep(0.5)
-        st.write("Calcul de vos économies...")
-        time.sleep(0.5)
+        #time.sleep(0.5)
+        #st.write("Récupération des données Météo France...")
+        #time.sleep(0.5)
+        #st.write("Détection des ombrages grâce aux données NASA et IGN...")
+        #time.sleep(0.5)
+        #st.write("Dimensionnement de l'installation photovoltaïque...")
+        time.sleep(2)
+        #st.write("Calcul de votre production électrique solaire...")
+        #time.sleep(0.5)
+        #st.write("Calcul de vos économies...")
+        #time.sleep(0.5)
         #status.update(label="Traitement terminé !", state="complete", expanded=False)
         
         switch_page("saisir_donnees_book")

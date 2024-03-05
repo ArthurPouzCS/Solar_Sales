@@ -350,10 +350,10 @@ def rapport_string_html(dic):
         <table>
             <tr>
                 <th>Économies sur 6 mois<div class="corps">{dic['economies_sur_6_mois']} €</div></th>
-                <th>Ma prime rénov<div class="corps">{dic['MPR']} €</div></th>
-                <th>Prime coup de pouce (CEE)<div class="corps">{dic['CEE']} €</div></th>
-                <th>EDF<div class="corps">{dic['EDF']} €</div></th>
-                <th>Récupération TVA<div class="corps">{dic['TVA']} €</div></th>
+                <th>Ma prime rénov<div class="corps">{dic['mpr']} €</div></th>
+                <th>Prime coup de pouce (CEE)<div class="corps">{dic['cee']} €</div></th>
+                <th>EDF<div class="corps">{dic['edf']} €</div></th>
+                <th>Récupération TVA<div class="corps">{dic['tva']} €</div></th>
             </tr>
             <tr>
                 <th>Déduction crédit d'impôts<div class="corps">??? €</div></th>

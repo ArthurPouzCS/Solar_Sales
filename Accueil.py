@@ -34,8 +34,8 @@ def show_title(text):
     st.markdown("""
         <style>
             .info-box-container {
-                background-color: rgba(255, 255, 255, 0.8);
-                
+                background-color: rgba(255, 255, 255, 0.5);
+                background: linear-gradient(to right, transparent, rgba(174, 0, 255, 0.8), transparent);                
                 padding: 5px 10px;
                 margin: 0px 5px 20px 5px;
                 border-radius: 8px;
@@ -62,11 +62,20 @@ def style_button():
                 margin : auto;
                 margin-top : 5px;
                 display:block;
+                background-color : rgba(174, 0, 255, 0.8);
+                color:white;
             }
             div.stButton > button:hover {
-                background-color : #f2f2f2;
+                background-color : rgba(174, 0, 255, 0.8);
                 border : solid gray 2px;
+                color : white;
             }
+            .st-emotion-cache-1vm1bj5:focus:not(:active) {
+                background-color : rgba(174, 0, 255, 1);
+                border : solid white 2px;
+                color : white;
+            }
+
         </style>
         
         """, unsafe_allow_html=True)
@@ -83,9 +92,12 @@ no_sidebar()
 css()
 past_audit, last = dont_forget_past_audit()
 
-show_title('SolarSales ⚡')
-eolienne_qui_tourne()
-background('pv_sky.jpg', 'center right')
+
+show_title('FranceAudit ⚡')
+# eolienne_qui_tourne()
+#background('violet2.jpg', 'center right')
+backgroundColor("#F0B2FC")
+
 
 
 with stylable_container(
@@ -174,14 +186,16 @@ with stylable_container(
                 col1, col2 = st.columns(2)
 
                 with col1:
-                    if 'ancien_audit' in st.session_state:
-                        switch_to_saisir = st.button("Saisir de nouvelles données")
-                    else :
-                        switch_to_saisir = st.button("Saisir vos données")
-                    if switch_to_saisir:
-                        if 'ancien_audit' in st.session_state:
-                            st.session_state.nouvel_audit = True
-                            del st.session_state.ancien_audit
+                    if 'ancien_audit' in st.session_state :
+                        if 'nom' in st.session_state.ancien_audit and 'prenom' in st.session_state.ancien_audit:
+                            nom, prenom = st.session_state.ancien_audit['nom'], st.session_state.ancien_audit['prenom']
+                            switch_to_simuler = st.button(f"Modifier les données de {prenom} {nom}")
+                        else:
+                            switch_to_simuler = st.button("Saisir vos données")
+                    else:
+                        switch_to_simuler = st.button("Saisir vos données")
+                    if switch_to_simuler:
+                        #st.toast("Bientôt disponible")
                         switch_page("saisir_donnees_etude_solaire")
                     
                     if 'ancien_audit' in st.session_state :
@@ -193,8 +207,10 @@ with stylable_container(
                     else:
                         switch_to_simuler = st.button("Réaliser une Garantie")
                     if switch_to_simuler:
-                        #st.toast("Bientôt disponible")
-                        switch_page("realiser_garantie")
+                        if 'data' in st.session_state:
+                            switch_page("realiser_garantie")
+                        else:
+                            st.toast("Vous devez d'abord saisir des informations pour accéder à cet onglet")  
 
                     
                 with col2:
@@ -240,7 +256,31 @@ with stylable_container(
                 }
             """]):
                 if st.button("Accéder à vos anciens audits"):
+                    if 'ancien_audit' in st.session_state :
+                        del st.session_state.ancien_audit
+                        del st.session_state.data
                     switch_page("audit_anciens")
+
+                if 'ancien_audit' in st.session_state :
+                    if st.button("Procéder à un nouvel audit"):
+                        del st.session_state.ancien_audit
+                        del st.session_state.data
+                        switch_page('Accueil')
+
+            with stylable_container(key='bouton_reglages',
+            css_styles = ["""
+            div.stButton > button:first-child  {
+                width : 10%;
+                height : 20px;
+                font-size : 25px;
+                font-weight : semi-bold;
+                font-family: 'Calibri', sans-serif; 
+                text-align:center;
+                }
+            """]):
+                if st.button("Réglages"):
+                    switch_page("reglages")
+
 
             # if st.button('Configurations'):
             #     connected = True
@@ -267,6 +307,7 @@ with stylable_container(key='titre_center', css_styles="""
 }
 """):
     st.subheader('Par Voltico Developpement')
+
     #st.caption('_Developped_ by :blue[ArthurPouz] 🔥')
 
 
@@ -287,3 +328,4 @@ with stylable_container(key='titre_center', css_styles="""
 #secondaryBackgroundColor="#586e75"
 #textColor="#fafafa"
 #font="sans serif"
+

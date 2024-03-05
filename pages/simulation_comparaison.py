@@ -49,7 +49,10 @@ def render_page_comparaison():
 
     facture_gaz_fioul = facture_gaz + facture_fioul
     facture_total = facture_elec + facture_gaz_fioul
+    
     kwh_elec = facture_elec/prix_kwh
+    if dic["connaissance_facture_elec"] == "Oui":
+        kwh_elec = dic["conso_kwh"]
     
     if test_connexion_internet():
         result = obtenir_dpe_par_adresse(adresse)
@@ -83,6 +86,8 @@ def render_page_comparaison():
 
     ratio_perf_matos_elec = nvl_conso_elec/kwh_elec
     nv_dpe, nv_ges = nbr_energie*ratio_perf_matos_elec, nbr_ges*ratio_perf_matos_elec
+    nv_dpe -= (economies_annnuelles_pv_autoconso/tab['prix_kwh'])/dic['surface']
+    nv_ges -= ((economies_annnuelles_pv_autoconso/tab['prix_kwh'])/dic['surface'])*0.059  #0,059kg CO2 eq/kWh
     
     etiquettes_dpe = {50:'A', 90:'B', 150:'C', 230:'D', 330:'E', 450:'F'}
     etiquettes_ges = {5:'A', 10:'B', 20:'C', 35:'D', 55:'E', 80:'F'}
@@ -103,43 +108,51 @@ def render_page_comparaison():
             key='adresse_container',
             css_styles = this_css_style
             ):
+        space(1)
         col1, col2 = st.columns(2)
         with col1:
-            st.header("Avant rénovation  ⏪")
-            tab1, tab2, tab3 = st.tabs(['Résumé', 'Energie', 'GES'])
-            with tab1:
-                show('',('Consommation électrique',"{:,}".format(int(kwh_elec)).replace(",", " "), 'kwH'))
-                show('',('Facture électrique actuelle',"{:,}".format(int(facture_elec)).replace(",", " "), '€'))
-                show('',('Facture gaz/fioul actuelle',"{:,}".format(int(facture_gaz_fioul)).replace(",", " "), '€'))
-                show('',('Total des dépenses énergies',"{:,}".format(int(facture_total)).replace(",", " "), '€'))
-            with tab2:
-                show('',('Etiquette énergétique',classe_dpe, ''))
-                show('',('Consommation énergétique', round(nbr_energie), 'kWh/m².an'))
-                show('',(commentaire_batiment, '', ''))
-                show('',(commentaire_performance, '', ''))
-            with tab3:
-                show('',('Classe GES',classe_dpe_ges, ''))
-                show('',('Emission GES',nbr_ges, 'kCO2/m².an'))
-                show('',(commentaire_ges,'', ''))
+            with stylable_container(key="economies_style", css_styles=my_style_container()):
+                with st.container():
+                    st.header("Avant rénovation  ⏪")
+                    tab1, tab2, tab3 = st.tabs(['Résumé', 'Energie', 'GES'])
+                    with tab1:
+                        show('',('Consommation électrique',"{:,}".format(int(kwh_elec)).replace(",", " "), 'kwH'))
+                        show('',('Facture électrique actuelle',"{:,}".format(int(facture_elec)).replace(",", " "), '€'))
+                        show('',('Facture gaz/fioul actuelle',"{:,}".format(int(facture_gaz_fioul)).replace(",", " "), '€'))
+                        show('',('Total des dépenses énergies',"{:,}".format(int(facture_total)).replace(",", " "), '€'))
+                    with tab2:
+                        show('',('Etiquette énergétique',classe_dpe, ''))
+                        show('',('Consommation énergétique', round(nbr_energie), 'kWh/m².an'))
+                        show('',(commentaire_batiment, '', ''))
+                        show('',(commentaire_performance, '', ''))
+                    with tab3:
+                        show('',('Classe GES',classe_dpe_ges, ''))
+                        show('',('Emission GES',nbr_ges, 'kCO2/m².an'))
+                        show('',(commentaire_ges,'', ''))
         with col2:
-            st.header("Après rénovation  ⏩")
-            tab1, tab2, tab3 = st.tabs(['Résumé', 'Energie', 'GES'])
-            with tab1:
-                show('',('Votre nouvelle consommation électrique',"{:,}".format(int(nvl_conso_elec)).replace(",", " "), 'kwH'))
-                show('',('Nouvelle facture électricité gaz/fioul',"{:,}".format(int(nvl_facture_total)).replace(",", " "), '€'))
-                show('',('Production solaire',"{:,}".format(int(prod_total_annee)).replace(",", " "), 'kwH'))
-                show('',('Economies autoconso',"{:,}".format(int(economies_annnuelles_pv_autoconso)).replace(",", " "), '€'))
-                show('',('Revente de surplus',"{:,}".format(int(gains_annnuelles_pv_surplus)).replace(",", " "), '€'))
-                show('',('Total économies + gains',"{:,}".format(int(economies_tout_confondu)).replace(",", " "), '€/an'))
-            with tab2:
-                show('',('Etiquette énergétique',nv_dpe_lettre, ''))
-                show('',('Consommation énergétique', round(nv_dpe), 'kWh/m².an'))
-                show('',(nv_commentaire_batiment, '', ''))
-                show('',(nv_commentaire_performance, '', ''))
-            with tab3:
-                show('',('Classe GES',nv_ges_lettre, ''))
-                show('',('Emission GES',round(nv_ges), 'kCO2/m².an'))
-                show('',(nv_commentaire_ges,'', ''))
+            with stylable_container(key="economies_style", css_styles=my_style_container()):
+                with st.container():
+                    st.header("Après rénovation  ⏩")
+                    tab1, tab2, tab3 = st.tabs(['Résumé', 'Energie', 'GES'])
+                    with tab1:
+                        nvl_conso_avec_pv_autoconso = nvl_conso_elec-(dic['economies_annnuelles_pv_autoconso']/dic['prix_achete'])
+                        nvl_conso_avec_pv_autoconso = max(0, nvl_conso_avec_pv_autoconso) # d'elec uniquement hein
+                        nvl_facture_total_avec_pv_autoconso = nvl_conso_avec_pv_autoconso+nvl_facture_gaz+nvl_facture_fioul_autre
+                        show('',('Votre nouvelle consommation électrique',"{:,}".format(int(nvl_conso_avec_pv_autoconso)).replace(",", " "), 'kwH'))
+                        show('',('Nouvelle facture électricité + gaz + fioul',"{:,}".format(int(nvl_facture_total)).replace(",", " "), '€'))
+                        show('',('Production solaire',"{:,}".format(int(prod_total_annee)).replace(",", " "), 'kwH'))
+                        show('',('Economies autoconso',"{:,}".format(int(economies_annnuelles_pv_autoconso)).replace(",", " "), '€'))
+                        show('',('Revente de surplus',"{:,}".format(int(gains_annnuelles_pv_surplus)).replace(",", " "), '€'))
+                        show('',('Total économies + gains',"{:,}".format(int(economies_tout_confondu)).replace(",", " "), '€/an'))
+                    with tab2:
+                        show('',('Etiquette énergétique',nv_dpe_lettre, ''))
+                        show('',('Consommation énergétique', round(nv_dpe), 'kWh/m².an'))
+                        show('',(nv_commentaire_batiment, '', ''))
+                        show('',(nv_commentaire_performance, '', ''))
+                    with tab3:
+                        show('',('Classe GES',nv_ges_lettre, ''))
+                        show('',('Emission GES',round(nv_ges), 'kCO2/m².an'))
+                        show('',(nv_commentaire_ges,'', ''))
 
 
 

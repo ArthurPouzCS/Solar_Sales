@@ -99,7 +99,7 @@ def display_satellite_map_with_parcelles(latitude, longitude, parcelles):
             ).add_to(mymap)
 
 
-    folium_static(mymap, height=300, width=520)
+    folium_static(mymap, height=300, width=500)
 
 
 def map_api():

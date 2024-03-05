@@ -13,15 +13,27 @@ def render_page_book():
     page_icon="📖", layout="wide", initial_sidebar_state="collapsed"
 )
     afficher_frise_chronologique(5)
-    st.subheader("Book  📖")
-    styled_button()
-    background('maison_energie.jpg', 'center right')
-    
-    path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'book_compressed.pdf')
-    displayPDF_past(path, 720,570)
 
-    if st.button("Retour à l'accueil"):
-        switch_page("Accueil")
+    with stylable_container(key="book_style", css_styles=my_style_container()):
+        with st.container():
+            st.subheader("Book  📖")
+            #styled_button()
+            background('maison_energie.jpg', 'center right')
+            
+            path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'book_compressed.pdf')
+
+            if st.button("Retour à l'accueil", key='retour1'):
+                switch_page("Accueil")
+                
+            with stylable_container(key="book_style", css_styles="""
+            .e1nzilvr5 > p{
+                font-size: 20px;
+            }
+            """):
+                with st.expander("📖 Voir le Book"):
+                    displayPDF(path, 700,400)
+
+
 
    
     #### 

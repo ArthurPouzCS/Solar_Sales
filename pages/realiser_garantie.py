@@ -1,6 +1,8 @@
 import streamlit as st
 from pv_gis_function import get_solar_estimation, get_coordinates_from_address
 from functions import displayPDF, dont_forget_past_audit
+from streamlit_extras.switch_page_button import switch_page
+from streamlit_extras.stylable_container import stylable_container
 
 import os
 import sys
@@ -23,5 +25,20 @@ if lat is not None and lon is not None:
 path = generer_pvgis(solar_data)
 abs_path = os.path.join(os.path.dirname(os.path.dirname(__file__)),'generation_pdf',path)
 
+with stylable_container(key='titre_center', css_styles="""
+[data-testid="stButton"] {
+    text-align:right;
+    height: 50px;
+}
+[data-testid="baseButton-secondary"]{
+    width:120px;
+    height:60px;
+}
+"""):
+    if st.button("Accueil"):
+        switch_page('Accueil')
+
 displayPDF(abs_path, 400, 400)
+
+
 

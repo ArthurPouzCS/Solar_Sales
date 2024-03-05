@@ -10,7 +10,7 @@ from functions import valeur_tabulees
 from db_functions import *
 
 def audit_string_html(dic):
-    lettre_avant, lettre_apres = 'G', 'F'
+    lettre_avant, lettre_apres = dic['classe_dpe'], dic['nv_dpe_lettre']
     dic_etiquette_couleur = {'A':'#00A34B', 'B':'#00AF4C', 'C':'#ADD13D', 'D':'#E2E430', 'E':'#FDC41C' , 'F':'#F79344', 'G':'#EE3F3B'}
     couleur_avant, couleur_apres = dic_etiquette_couleur[lettre_avant], dic_etiquette_couleur[lettre_apres]
     dic_etiquette_hauteur = {'A':13, 'B':46, 'C':92, 'D':130, 'E':178 , 'F':215, 'G':253}
@@ -512,10 +512,10 @@ def audit_string_html(dic):
                 <h2>6. Les aides</h2>
                 <h3>Les aides pour financer votre projet</h3>
                 <table>
-                    <th>Ma prime rénov<div class="corps">{dic['MPR']} €</div></th>
-                    <th>Prime coup de pouce (CEE)<div class="corps">{dic['CEE']} €</div></th>
-                    <th>Prime EDF<div class="corps">{dic['EDF']} €</div></th>
-                    <th>Récupération de la TVA<div class="corps">{dic['TVA']} €</div></th>
+                    <th>Ma prime rénov<div class="corps">{dic['mpr']} €</div></th>
+                    <th>Prime coup de pouce (CEE)<div class="corps">{dic['cee']} €</div></th>
+                    <th>Prime EDF<div class="corps">{dic['edf']} €</div></th>
+                    <th>Récupération de la TVA<div class="corps">{dic['tva']} €</div></th>
                     <th>Déduction des crédits d'impôts<div class="corps">{dic['credit']} €</div></th>
                     <th>Total<div class="corps">{dic['total_aides']} €</div></th>
                 </tr>
@@ -592,11 +592,11 @@ def audit_string_html(dic):
             <div style="margin-left: 150px; margin-top:50px; position: relative;">
                 <img src="{os.path.join(os.path.dirname(__file__),'etiquette_energie.png')}" alt="Image Etiquette Energie" style="width: 300px; height: auto;">
 
-                <div style="position: absolute; top: {hauteur_avant}px; right: 160px; background-color: {couleur_avant}; text-align: center; padding: 5px; width: 120px; border-radius:5px; font-size:20px">
+                <div style="position: absolute; top: {hauteur_avant}px; right: 300px; background-color: {couleur_avant}; text-align: center; padding: 5px; width: 120px; border-radius:5px; font-size:20px">
                     Avant {int(dic['nbr_energie'])}
                 </div>
                 
-                <div style="position: absolute; top: {hauteur_apres}px; right: 300px; background-color: {couleur_apres}; text-align: center; padding: 5px; width: 120px;border-radius:5px; font-size:20px">
+                <div style="position: absolute; top: {hauteur_apres}px; right: 160px; background-color: {couleur_apres}; text-align: center; padding: 5px; width: 120px;border-radius:5px; font-size:20px">
                     Après {int(dic['nv_dpe'])}
                 </div>
             </div>

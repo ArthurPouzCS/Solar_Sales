@@ -46,12 +46,13 @@ def style_button_synchro():
                 width: 220px;
                 height: 50px;
                 display: inline;
-                margin-left: 20px; /* Centrer horizontalement */
+                margin-left: 20px; 
+                backround-color: rgba(102, 0, 204, 0.8);
             }
 
             div.stButton > button:hover {
-                background-color: #f2f2f2;
-                border: solid gray 1px;
+                background-color: rgba(102, 0, 204, 1);
+                border: solid white 1px;
             }
         </style>
         
@@ -64,10 +65,10 @@ def render_page_synchro():
     page_icon="🔄", layout="wide", initial_sidebar_state="collapsed")
     
     no_sidebar()
-    style_button_synchro()
+    #style_button_synchro()
+    styled_button()
     css()
     background('eolienne_rouge.jpg', 'bottom center')
-
     if 'data' in st.session_state:
         dic = st.session_state.data
         prenom, nom = dic['prenom'], dic['nom']
@@ -96,55 +97,61 @@ def render_page_synchro():
             key='adresse_container',
             css_styles = css_from_function(cadre=True)
             ):    
-        st.subheader("Informations clients et session  🧔")
-        col1, col2 = st.columns(2)
-        with col1:
-            show_text('Nom/Prénom', nom+'/'+prenom)
-            show_text('Email', mail)
-        with col2:
-            show_text('Etat de la connexion', connexion)
-            show_text('Etat de la session', statut)
-        space(1)
-        st.subheader("Type de synchronisation  🔄")
-        client_deja_cree = st.radio("Le client "+ dic['prenom'] +' '+dic['nom'] +" est-il déjà crée", ['Oui', 'Non'], index=1)
+        with stylable_container(key="infos_style", css_styles=my_style_container()):
+            with st.container():
+                st.subheader("Informations clients et session  🧔")
+                col1, col2 = st.columns(2)
+                with col1:
+                    show_text('Nom/Prénom', nom+'/'+prenom)
+                    show_text('Email', mail)
+                with col2:
+                    show_text('Etat de la connexion', connexion)
+                    show_text('Etat de la session', statut)
+                space(1)
+        with stylable_container(key="synchro_style", css_styles=my_style_container()):
+            with st.container():
+                st.subheader("Type de synchronisation  🔄")
+                client_deja_cree = st.radio("Le client "+ dic['prenom'] +' '+dic['nom'] +" est-il déjà crée", ['Oui', 'Non'], index=1)
 
         mispace()
-        st.subheader("Procédure de mise à jour client  ✅")
-        c1, c2 = st.columns(2)
-        if client_deja_cree == 'Oui':
-            with c1:
-                st.subheader("1/ Prénom / Nom du client")
-                a,b = st.columns(2)
-                with a:
-                    prenom = st.text_input("Prénom du client")
-                with b:
-                    nom = st.text_input("Nom du client")
-                if connecte_boolean:
-                    email_selectionne = get_user_info_by_nom_prenom(access_token, nom, prenom)
+        with stylable_container(key="materiel_style", css_styles=my_style_container()):
+            with st.container():
+                st.subheader("Procédure de mise à jour client  ✅")
+                c1, c2 = st.columns(2)
+                if client_deja_cree == 'Oui':
+                    with c1:
+                        st.subheader("1/ Prénom / Nom du client")
+                        a,b = st.columns(2)
+                        with a:
+                            prenom = st.text_input("Prénom du client")
+                        with b:
+                            nom = st.text_input("Nom du client")
+                        if connecte_boolean:
+                            email_selectionne = get_user_info_by_nom_prenom(access_token, nom, prenom)
+                        else:
+                            email_selectionne = None
+                    with c2:
+                        st.subheader("2/ Mise à jour du client")
+                        space(1)
+                        if email_selectionne!=None:
+                            st.success(email_selectionne)
+                            if st.button("Mettre à jour"):
+                                st.write()
+                                dic['nom'], dic['prenom'], dic['email'] = [nom], [prenom],  [email_selectionne]
+                                response = create_contact(access_token, dic)
                 else:
-                    email_selectionne = None
-            with c2:
-                st.subheader("2/ Mise à jour du client")
-                space(1)
-                if email_selectionne!=None:
-                    st.success(email_selectionne)
-                    if st.button("Mettre à jour"):
-                        st.write()
-                        dic['nom'], dic['prenom'], dic['email'] = [nom], [prenom],  [email_selectionne]
-                        response = create_contact(access_token, dic)
-        else:
-            st.subheader("2/ Création du client")
-            a, b = st.columns(2)
-            with a:
-                c,d = st.columns(2)
-                with c:
-                    show_text('Nom / Prénom du client', dic['nom'] + ' / ' + dic['prenom'])
-                    show_text('Mail du client', dic['email'])
-                with d:
-                    
-                    if st.button('Envoyer les données'):
-                        response = create_contact(access_token, dic)
-                        time.sleep(1)
+                    st.subheader("2/ Création du client")
+                    a, b = st.columns(2)
+                    with a:
+                        c,d = st.columns(2)
+                        with c:
+                            show_text('Nom / Prénom du client', dic['nom'] + ' / ' + dic['prenom'])
+                            show_text('Mail du client', dic['email'])
+                        with d:
+                            
+                            if st.button('Envoyer les données'):
+                                response = create_contact(access_token, dic)
+                                time.sleep(1)
 
    
         x,y,z = st.columns(3)

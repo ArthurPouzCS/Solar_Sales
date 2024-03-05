@@ -17,17 +17,20 @@ css()
 
 create_table_user_credentials()
 create_table_data()
-background('pv_authentif.jpg', 'top right')
+background('violet.jpg', 'top right')
 
 with stylable_container(
             key='authenthif',
             css_styles = """
             [data-testid="stVerticalBlockBorderWrapper"] {
-                background-color: rgba(200,200,200, 0.8);
+                background-color: rgba(116, 0, 248);
                 padding: 10px 10px;
                 border-radius: 8px;
                 }
-                
+            [data-testid="baseButton-secondaryFormSubmit"]{
+                background-color: rgba(102, 0, 204, 0.8);
+                border-radius: 8px;
+            }
             """
             ):
     
