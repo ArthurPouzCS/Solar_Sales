@@ -52,7 +52,10 @@ def get_location_options(address):
         "limit": 5,
         "countrycodes": "FR"
     }
-    response = requests.get(url, params=params)
+    headers = {
+        "User-Agent": "SolarSales/1.0"
+    }
+    response = requests.get(url, params=params, headers=headers)
     if response.status_code == 200:
         locations = response.json()
         return [location['display_name'] for location in locations] if locations else []
