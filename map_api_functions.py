@@ -39,10 +39,27 @@ def create_square_polygon(latitude, longitude):
     return square_polygon
 
 #@st.cache_data()
-def get_location_options(address):
+def get_location_options_past(address):
     geolocator = Nominatim(user_agent="geo_search")
     locations = geolocator.geocode(address, exactly_one=False, limit=5, country_codes='FR')
     return [location.address for location in locations] if locations else []
+
+def get_location_options(address):
+    url = "https://nominatim.openstreetmap.org/search"
+    params = {
+        "q": address,
+        "format": "json",
+        "limit": 5,
+        "countrycodes": "FR"
+    }
+    response = requests.get(url, params=params)
+    if response.status_code == 200:
+        locations = response.json()
+        return [location['display_name'] for location in locations] if locations else []
+    else:
+        # Gérer les erreurs de requête HTTP
+        print("Erreur lors de la requête HTTP :", response.status_code)
+        return []
 
 #@st.cache_data()
 def get_coordinates_from_address(address):
