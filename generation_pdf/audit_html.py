@@ -131,7 +131,7 @@ def audit_string_html(dic):
                     max-height: 200px;
                     float:right;
                     margin-right: 20%;
-                    margin-top: 1200px;
+                    margin-top: 800px;
                 }
 
                 div span {
@@ -604,11 +604,11 @@ def audit_string_html(dic):
             <div style="margin-left: 150px; margin-top:50px; position: relative;">
                 <img src="{os.path.join(os.path.dirname(__file__),'etiquette_energie.png')}" alt="Image Etiquette Energie" style="width: 300px; height: auto;">
 
-                <div style="position: absolute; top: {hauteur_avant}px; right: -100px; background-color: {couleur_avant}; text-align: center; padding: 5px; width: 120px; border-radius:5px; font-size:20px">
+                <div style="position: absolute; top: {hauteur_avant}px; right: 100px; background-color: {couleur_avant}; text-align: center; padding: 5px; width: 120px; border-radius:5px; font-size:20px">
                     Avant {int(dic['nbr_energie'])}
                 </div>
                 
-                <div style="position: absolute; top: {hauteur_apres}px; right: -240px; background-color: {couleur_apres}; text-align: center; padding: 5px; width: 120px;border-radius:5px; font-size:20px">
+                <div style="position: absolute; top: {hauteur_apres}px; right: -40px; background-color: {couleur_apres}; text-align: center; padding: 5px; width: 120px;border-radius:5px; font-size:20px">
                     Après {int(dic['nv_dpe'])}
                 </div>
             </div>
