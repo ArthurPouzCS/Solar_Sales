@@ -142,8 +142,18 @@ with stylable_container(
                             mdp_smtp = st.text_input("Mot de passe de votre adresse mail", type='password')
                             client = st.text_input("Client ID API Zoho")
                             space(1)
-                            st.link_button("Pour trouver vos ID :","https://accounts.zoho.com/signin?servicename=AaaServer&serviceurl=%2Fdeveloperconsole")
-                        confirmation_bouton = st.button('Confirmer')
+                            with stylable_container(key="link_button_style2", css_styles=f"""
+                            .e1nzilvr5{{
+                                color : {colors(0)};
+                            }}
+                            """):
+                                st.link_button("Pour trouver vos ID :","https://accounts.zoho.com/signin?servicename=AaaServer&serviceurl=%2Fdeveloperconsole")
+                        with stylable_container(key="confirmation_style", css_styles=f"""
+                            .e1nzilvr5{{
+                                color : {colors(0)};
+                            }}
+                            """):
+                            confirmation_bouton = st.button('Confirmer')
                 if confirmation_bouton:
                     #data = {
                     #    'mail': [mail],
