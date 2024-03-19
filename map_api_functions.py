@@ -117,8 +117,6 @@ def map_api():
 
     # Proposer des adresses en autocomplétion
     location_options = get_location_options(adresse)
-    st.write(location_options)
-    st.write('ça fonctionne ?')
     location_options = [ ''.join([loc.split(',')[:][i] for i in [0,1,3,7]]) for loc in location_options]
     selected_address = st.selectbox("Choisissez une adresse:", location_options, index=0)
 
@@ -133,10 +131,8 @@ def map_api():
         latitude, longitude = coordinates
 
         # Obtenez le code INSEE correspondant aux coordonnées
-        headers = {
-        'User-Agent': 'SolarSales/1.0'
-        }
-        response = requests.get(f"https://api-adresse.data.gouv.fr/reverse/?lat={latitude}&lon={longitude}", headers=headers)
+        
+        response = requests.get(f"https://api-adresse.data.gouv.fr/reverse/?lat={latitude}&lon={longitude}")
         
         if response.status_code == 200:
             data = response.json()
