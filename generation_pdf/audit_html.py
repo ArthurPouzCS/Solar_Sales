@@ -131,7 +131,7 @@ def audit_string_html(dic):
                     max-height: 200px;
                     float:right;
                     margin-right: 20%;
-                    margin-top: 700px;
+                    margin-top: 1200px;
                 }
 
                 div span {
@@ -291,7 +291,7 @@ def audit_string_html(dic):
                         <div>{dic['email']}</div>
                         <div>Parcelle {dic['parcelles']}</div>
                     </div>
-                    <div class="box_accueil" style="text-align: right;margin-left: 450px; margin-top:-100px">
+                    <div class="box_accueil" style="text-align: right;margin-left: 250px; margin-top:-100px">
                         <div>{nom_sales}</div>
                         <div>{prenom_sales}</div>
                         <div>{mail_sales}</div>
@@ -299,7 +299,7 @@ def audit_string_html(dic):
                 </div>
                 <span class="span_accueil"></span>
             </div>
-            <div style="margin-top: 200px;text-align: center;">
+            <div style="margin-top: 0px;text-align: center;">
                 <img src="{os.path.join(os.path.dirname(__file__),'logo_centre_energie.JPG')}" class="logo_accueil">
             </div>
             <div style="margin-top: 130px; margin-bottom:100px">
@@ -598,11 +598,11 @@ def audit_string_html(dic):
             <div style="margin-left: 150px; margin-top:50px; position: relative;">
                 <img src="{os.path.join(os.path.dirname(__file__),'etiquette_energie.png')}" alt="Image Etiquette Energie" style="width: 300px; height: auto;">
 
-                <div style="position: absolute; top: {hauteur_avant}px; right: 50px; background-color: {couleur_avant}; text-align: center; padding: 5px; width: 120px; border-radius:5px; font-size:20px">
+                <div style="position: absolute; top: {hauteur_avant}px; right: -100px; background-color: {couleur_avant}; text-align: center; padding: 5px; width: 120px; border-radius:5px; font-size:20px">
                     Avant {int(dic['nbr_energie'])}
                 </div>
                 
-                <div style="position: absolute; top: {hauteur_apres}px; right: -90px; background-color: {couleur_apres}; text-align: center; padding: 5px; width: 120px;border-radius:5px; font-size:20px">
+                <div style="position: absolute; top: {hauteur_apres}px; right: -240px; background-color: {couleur_apres}; text-align: center; padding: 5px; width: 120px;border-radius:5px; font-size:20px">
                     Après {int(dic['nv_dpe'])}
                 </div>
             </div>
