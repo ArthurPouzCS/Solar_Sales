@@ -71,6 +71,7 @@ def audit_string_html(dic):
                     display: flex;
                     justify-content: space-between; 
                     gap: 20px; 
+                    margin-bottom:0px;
                 }
 
                 .container_accueil {
@@ -291,7 +292,7 @@ def audit_string_html(dic):
                         <div>{dic['email']}</div>
                         <div>Parcelle {dic['parcelles']}</div>
                     </div>
-                    <div class="box_accueil" style="text-align: right;margin-right: 20px; margin-top:-100px">
+                    <div class="box_accueil" style="text-align: right;margin-right: 20px; margin-top:0px">
                         <div>{nom_sales}</div>
                         <div>{prenom_sales}</div>
                         <div>{mail_sales}</div>
