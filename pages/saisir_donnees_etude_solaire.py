@@ -44,7 +44,7 @@ def render_page_etude_solaire():
                         # Proposer des adresses en autocomplétion
                         
                         try:
-                        location_options = get_location_options(adresse)
+                            location_options = get_location_options(adresse)
                         except:
                             location_options = []
                         
