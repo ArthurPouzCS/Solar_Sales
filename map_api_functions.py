@@ -45,6 +45,9 @@ def get_location_options_past(address):
     return [location.address for location in locations] if locations else []
 
 def get_location_options(address):
+    st.write("""Les informations de localisation sont fournies par Nominatim, un service de géocodage fourni par OpenStreetMap (OSM). Les données sont mises à disposition sous licence Open Database License (ODbL). © OpenStreetMap contributeurs. 
+                Pour plus d'informations sur la licence ODbL et sur la manière d'attribuer correctement les données, veuillez consulter le site web d'OpenStreetMap : https://www.openstreetmap.org/copyright
+            """)
     url = "https://nominatim.openstreetmap.org/search"
     params = {
         "q": address,
@@ -53,7 +56,7 @@ def get_location_options(address):
         "countrycodes": "FR"
     }
     headers = {
-        "User-Agent": "SolarSales/1.0"
+        "User-Agent": 'SolarSales/1.0'
     }
     response = requests.get(url, params=params, headers=headers)
     if response.status_code == 200:
