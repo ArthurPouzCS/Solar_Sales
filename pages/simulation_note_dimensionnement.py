@@ -81,6 +81,9 @@ def render_page_note_dimensionnement():
                         .st-emotion-cache-123r4br{{
                             background-color={colors(1)};
                         }}
+                        [data-testid="baseButton-secondary"]{{
+                            background-color={colors(1)};
+                        }}
                         """):
                             st.download_button(
                                 label="Télécharger",

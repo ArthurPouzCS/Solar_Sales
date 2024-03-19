@@ -247,13 +247,12 @@ def pac_string_html(dic):
                         <div>{dic['email']}</div>
                         <div>Parcelle {dic['parcelles']}</div>
                     </div>
-                    <div class="box_accueil" style="text-align: right;margin-left: 450px; margin-top:-100px">
+                    <div class="box_accueil" style="text-align: right;margin-left: 240px; margin-top:0px">
                         <div>{nom_sales}</div>
                         <div>{prenom_sales}</div>
                         <div>{mail_sales}</div>
                     </div>
                 </div>
-                <span class="span_accueil"></span>
             </div>
             <div style="margin-top: 200px;text-align: center;">
                 <img src="{os.path.join(os.path.dirname(__file__),'logo_centre_energie.JPG')}" class="logo_accueil">

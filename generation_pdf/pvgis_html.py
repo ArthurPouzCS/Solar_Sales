@@ -102,15 +102,17 @@ def pvgis_html(dic):
             padding: 10px;
             margin-bottom: 10px;
             font-weight: bold;
+            width: 60%;
         }
         .blue-bg-horizon {
             background-color: #3498db;
             color: white;
             padding: 10px;
             margin-bottom: -150px;
+            margin-left: 30px;
             font-weight: bold;
             position:relative;
-            top:-104px;
+            top:-84px;
         }
         .blue-bg-chart {
             background-color: #3498db;
