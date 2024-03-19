@@ -42,7 +42,7 @@ def create_square_polygon(latitude, longitude):
 def get_location_options(address):
     geolocator = Nominatim(user_agent="geo_search")
     locations = geolocator.geocode(address, exactly_one=False, limit=5, country_codes='FR')
-    st.write(locations)
+    print(locations)
     return [location.address for location in locations] if locations else []
 
 #@st.cache_data()
