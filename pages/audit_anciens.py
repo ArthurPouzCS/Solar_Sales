@@ -16,7 +16,7 @@ def render_page_anciens_audit():
     no_sidebar()
     css()
     styled_button()
-    background('reseau_elec.jpg', 'top center')
+    #background('reseau_elec.jpg', 'top center')
 
 
     def retrieve_anciens_audit(mail_sales):
@@ -103,15 +103,16 @@ def render_page_anciens_audit():
                 }
                 """]
             ):
+        with stylable_container(key="adresse_style", css_styles=my_style_container()):
+            with st.container():
+                st.subheader('Mes anciens audits')
+                mail_sales = st.session_state.mail
+                liste_anciens_audit, from_db = retrieve_anciens_audit(mail_sales)
 
-        st.subheader('Mes anciens audits')
-        mail_sales = st.session_state.mail
-        liste_anciens_audit, from_db = retrieve_anciens_audit(mail_sales)
-
-        cols = st.columns(3)
-        for i,audit in enumerate(liste_anciens_audit):
-            with cols[i%3]:
-                display_ancien_audit(audit, from_db)
+                cols = st.columns(3)
+                for i,audit in enumerate(liste_anciens_audit):
+                    with cols[i%3]:
+                        display_ancien_audit(audit, from_db)
 
 
 render_page_anciens_audit()

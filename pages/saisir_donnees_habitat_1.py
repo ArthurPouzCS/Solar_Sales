@@ -19,7 +19,7 @@ def render_page_habitat_1():
     no_sidebar()
     styled_button()
     css()
-    background('mur.jpg', 'top right')
+    #background('mur.jpg', 'top right')
     afficher_frise_chronologique(2)
 
     if 'data' in st.session_state:

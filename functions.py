@@ -4,6 +4,8 @@ import base64
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 import re
 from calcul_aides import dic_aides_type_menage, subventionsMPR, translateMPR, subCEE, translateCEE
 import fitz  # PyMuPDF
@@ -14,6 +16,13 @@ import os
 from streamlit_extras.switch_page_button import switch_page
 from streamlit_extras.stylable_container import stylable_container
 #from streamlit_pdf_viewer import pdf_viewer
+from db_functions import retrieve_secrets
+
+
+def colors(i):
+    colors = ["#3354b5", "#5f91e2", "#d35959", "white", "#2e90f0", "#5dcaf9"]
+    # bleu profond, bleu clair, rouge, blanc, bleu ciel
+    return colors[i]
 
 
 def no_sidebar():
@@ -35,11 +44,12 @@ def is_valid_email(email):
     pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
     return re.match(pattern, email) is not None
 
-def send_email(expediteur, destinataire, cc, objet, corps):
+def send_email(expediteur, destinataire, cc, objet, corps, fichier_pdf):
     
-    df = pd.read_csv('./df_to_save/zoho_file.csv')
-    mail_smtp = df.mail_smtp.iloc[0]
-    mdp_smtp = df.mdp_smtp.iloc[0]
+    try :
+        client_id, secret_id, mail_smtp, mdp_smtp = retrieve_secrets(expediteur)
+    except:
+        st.error("Nous ne pouvons envoyer que depuis votre email")
 
     # Configurer les informations du serveur SMTP pour Outlook
     smtp_server = 'smtp-mail.outlook.com'
@@ -51,10 +61,25 @@ def send_email(expediteur, destinataire, cc, objet, corps):
     msg = MIMEMultipart()
     msg['From'] = expediteur
     msg['To'] = destinataire
-    msg['Subject'] = subject
-
+    msg['Subject'] = objet
     # Ajouter le corps du message
+    
     msg.attach(MIMEText(corps, 'plain'))
+
+## A tester
+     # Ajouter le fichier PDF en pièce jointe
+    with open(fichier_pdf, 'rb') as attachment:
+        part = MIMEBase('application', 'octet-stream')
+        part.set_payload(attachment.read())
+
+    encoders.encode_base64(part)
+    part.add_header(
+        'Content-Disposition',
+        f'attachment; filename= {fichier_pdf}',
+    )
+    msg.attach(part)
+
+## # Votre code pour envoyer l'e-mail ici...
 
     # Établir la connexion avec le serveur SMTP
     with smtplib.SMTP(smtp_server, smtp_port) as server:
@@ -66,6 +91,9 @@ def send_email(expediteur, destinataire, cc, objet, corps):
 
         # Envoyer l'e-mail
         server.sendmail(msg['From'], msg['To'], msg.as_string())
+    
+    st.success("Mail envoyé avec succès")
+    
 
 def dic_to_df(dic):
     keys, values = list(dic.keys()), list(dic.values())
@@ -132,48 +160,49 @@ def show_past(label, *entries):
 #anienne couleur_fond_show = #586e75
 
 def show(label, *entries):
-    st.markdown("""
+    st.markdown(f"""
         <style>
-            .info-box-container {
-                background-color: rgba(102, 0, 204, 0.8);
-                border: 1px solid rgb(130,0,255);
+            .info-box-container {{
+                background-color: {colors(0)};
+                border: 1px solid {colors(2)};
                 padding: 5px 5%;
                 margin: -10px 5px;
                 border-radius: 8px;
-            }
+                border-color : {colors(3)};
+            }}
 
-            .label {
+            .label {{
                 font-weight: bold;
                 font-size: 110%;
-                color: rgb(255, 255, 255);
-            }
+                color: white;
+            }}
 
-            .entry {
+            .entry {{
                 display: flex;
                 justify-content: space-between;
                 margin-top: 5px;
-            }
+            }}
 
-            .title {
-                color: rgb(220, 220, 220);
+            .title {{
+                color: white;
                 font-size: 110%;
-            }
+            }}
 
-            .value-unit {
+            .value-unit {{
                 display: flex;
                 flex-direction: row-reverse;
                 font-size: 110%;
                 margin-right:20px;
-            }
+            }}
 
-            .value {
-                color: rgb(220, 220, 220);
-            }
+            .value {{
+                color: white;
+            }}
 
-            .unit {
+            .unit {{
                 color: white;
                 margin-left: 5px;
-            }à
+            }}
         </style>
         """, unsafe_allow_html=True)
 
@@ -308,31 +337,31 @@ def style_table(table_data):
     st.markdown(table_content, unsafe_allow_html=True)
 
 def styled_button():
-    st.markdown("""
+    st.markdown(f"""
     <style>
-        div.stButton > button:first-child {
+        div.stButton > button:first-child {{
             margin-top : 30px;
             margin-right : 30px;
             width : 150px;
             height:60px;
             display : inline;
             float: right;
-            border : solid violet 1px;
-            background-color : rgba(102, 0, 204, 0.8);
-        }
-        div.stButton > button:hover {
-            background-color : #b366ff;
-            border : solid violet 2px;
+            border : solid {colors(3)} 1px;
+            background-color : {colors(0)};
+        }}
+        div.stButton > button:hover {{
+            background-color : {colors(1)};
+            border : solid {colors(2)} 2px;
             float: right;
-        }
+        }}
         
-        .st-emotion-cache-kjgucs {
-            color : rgba(102, 0, 204, 1);
-        }
+        .st-emotion-cache-kjgucs {{
+            color : {colors(0)};
+        }}
 
-        div.stButton > .e1nzilvr5{
+        div.stButton > .e1nzilvr5 {{
             color:white;
-        }
+        }}
     </style>
     
     """, unsafe_allow_html=True)
@@ -753,8 +782,8 @@ def afficher_frise_chronologique_outdated(partie_actuelle):
 def afficher_frise_chronologique(numero):
     l = ['Etude Solaire', 'Habitat 1', 'Habitat 2', 'Habitat 3', 'Book']
     p = ['saisir_donnees_etude_solaire', 'saisir_donnees_habitat_1', 'saisir_donnees_habitat_2', 'saisir_donnees_habitat_3', 'saisir_donnees_book']
-    style_normal = """
-            div.stButton > button:first-child {
+    style_normal = f"""
+            div.stButton > button:first-child {{
                 margin-top: -20px;
                 margin-right: -15px;
                 width: 119%;
@@ -765,13 +794,13 @@ def afficher_frise_chronologique(numero):
                 float: center;
                 position: relative;
                 top: -50px;
-                background-color: rgb(153,50,255);
+                background-color: {colors(1)};
                 color: white;
-            }
+            }}
 
             """
-    style_now = """
-            div.stButton > button:first-child {
+    style_now = f"""
+            div.stButton > button:first-child {{
                 margin-top: -20px;
                 margin-right: -15px;
                 width: 119%;
@@ -782,9 +811,9 @@ def afficher_frise_chronologique(numero):
                 float: center;
                 position: relative;
                 top: -50px;
-                background-color: rgb(102,0,204);
+                background-color: {colors(0)};
                 color: white;
-            }
+            }}
             
             """
 
@@ -860,7 +889,10 @@ def dont_forget_past_audit():
                     if dic_ancien_audit[key]!='{}':
                         return dic_ancien_audit[key]
         except:
-            return default_dic[key]
+            try:
+                return default_dic[key]
+            except:
+                return None
 
     def pas_last(key, my_type, options=None):
             if key in default_dic.keys():
@@ -901,7 +933,6 @@ def dont_forget_past_audit():
             else:
                 return None
 
-
     if 'ancien_audit' in st.session_state and not('nouvel_audit' in st.session_state):
         dic_ancien_audit = st.session_state.ancien_audit
 
@@ -911,7 +942,7 @@ def dont_forget_past_audit():
             height: 50px; 
             font-size:25px; 
             font-style:semi-bold;
-            background-color: rgba(191, 128, 255, 0.8); 
+            background-color: {colors(0)}; 
             padding: 10px 20px; 
             border-radius: 10px; 
             color: white;
@@ -925,6 +956,40 @@ def dont_forget_past_audit():
         past_audit = True
 
         return past_audit, last
+
+    elif 'data' in st.session_state:
+        if 'nom' in st.session_state.data and 'prenom' in st.session_state.data:
+            prenom, nom = st.session_state.data['prenom'], st.session_state.data['nom']
+            while type(prenom[0])!= str:
+                prenom = prenom[0]
+            while type(nom[0])!=str:
+                nom = nom[0]
+            if len(prenom[0])==1:
+                prenom, nom = prenom, nom
+            else:
+                prenom, nom = prenom[0], nom[0]
+
+            st.markdown(f"""
+                <dic id="ancien_audit_name" style="
+                width : 300px;
+                height: 50px; 
+                font-size:25px; 
+                font-style:semi-bold;
+                background-color: {colors(0)}; 
+                padding: 10px 20px; 
+                border-radius: 10px; 
+                color: white;
+                margin-bottom : 40px;
+                ">
+                    Audit de {prenom} {nom}
+                </div>
+            """, unsafe_allow_html=True)
+        space(1)
+        mispace()
+        past_audit = True
+
+        return past_audit, last
+
         
     elif 'data' in st.session_state:
         past_audit = False
@@ -1037,25 +1102,26 @@ def eolienne_qui_tourne():
 
 
 def my_style_container():
-    css_styles = """
-    .st-emotion-cache-0.e1f1d6gn0 {
-                background-color: rgba(102, 0, 204, 0.8);
+    css_styles = f"""
+    .st-emotion-cache-0.e1f1d6gn0 {{
+                background-color: {colors(4)};
                 padding: 5px 15px 20px 15px;
                 border-radius: 10px;
-            }
+            }}
 
-    [data-testid="baseButton-secondary"]{
+    [data-testid="baseButton-secondary"]{{
         color:#5900b3;
-    }
-    [data-testid="stVirtualDropdown"]{
-        background-color : rgba(102, 0, 204, 0.8);
-    }
-    .st-emotion-cache-kjgucs, .e1nzilvr5 >p {
+    }}
+    [data-testid="stVirtualDropdown"]{{
+        background-color : {colors(4)};
+    }}
+    .st-emotion-cache-kjgucs, .e1nzilvr5 >p {{
         color : white;
-    }
+    }}
     
-    div[data-testid="stVerticalBlock"]:has(> div.element-container > div.stMarkdown > div[data-testid="stMarkdownContainer"] > p > span.carte) div.stButton > button:first-child {
-        background-color : #b366ff;
-    }
+    div[data-testid="stVerticalBlock"]:has(> div.element-container > div.stMarkdown > div[data-testid="stMarkdownContainer"] > p > span.carte) div.stButton > button:first-child {{
+        background-color : {colors(0)};
+    }}
+    
     """
     return css_styles

@@ -31,22 +31,21 @@ def get_token():
         st.success('Connecté à Zoho')
 
 def show_title(text):
-    st.markdown("""
+    st.markdown(f"""
         <style>
-            .info-box-container {
-                background-color: rgba(255, 255, 255, 0.5);
-                background: linear-gradient(to right, transparent, rgba(174, 0, 255, 0.8), transparent);                
+            .info-box-container {{
+                background-color: {colors(0)};
                 padding: 5px 10px;
                 margin: 0px 5px 20px 5px;
                 border-radius: 8px;
                 width :  100%;
-            }
+            }}
 
-            .title {
+            .title {{
                 font-size : 400%;
                 font-weight : bold;
                 margin-left : 33%;
-            }
+            }}
         </style>
         """, unsafe_allow_html=True)
 
@@ -54,27 +53,27 @@ def show_title(text):
     st.markdown(content, unsafe_allow_html=True)
 
 def style_button():
-        st.markdown("""
+        st.markdown(f"""
         <style>
-            div.stButton > button:first-child {
+            div.stButton > button:first-child {{
                 width:250px;
                 height:150px;
                 margin : auto;
                 margin-top : 5px;
                 display:block;
-                background-color : rgba(174, 0, 255, 0.8);
+                background-color : {colors(0)};
                 color:white;
-            }
-            div.stButton > button:hover {
-                background-color : rgba(174, 0, 255, 0.8);
-                border : solid gray 2px;
+            }}
+            div.stButton > button:hover {{
+                background-color : {colors(0)};
+                border : solid {colors(3)} 2px;
                 color : white;
-            }
-            .st-emotion-cache-1vm1bj5:focus:not(:active) {
-                background-color : rgba(174, 0, 255, 1);
+            }}
+            .st-emotion-cache-1vm1bj5:focus:not(:active) {{
+                background-color : {colors(1)};
                 border : solid white 2px;
                 color : white;
-            }
+            }}
 
         </style>
         
@@ -96,8 +95,7 @@ past_audit, last = dont_forget_past_audit()
 show_title('FranceAudit ⚡')
 # eolienne_qui_tourne()
 #background('violet2.jpg', 'center right')
-backgroundColor("#F0B2FC")
-
+#backgroundColor(colors(5))
 
 
 with stylable_container(
@@ -203,9 +201,29 @@ with stylable_container(
                             nom, prenom = st.session_state.ancien_audit['nom'], st.session_state.ancien_audit['prenom']
                             switch_to_simuler = st.button(f"Réaliser la Garantie de {prenom} {nom}")
                         else:
-                            switch_to_simuler = st.button("Réaliser une Garantie")
+                            if 'data' in st.session_state:
+                                switch_to_simuler = st.button("Réaliser une Garantie")
+                            else:
+                                with stylable_container(key='bouton_simuler_rouge',css_styles=
+                                """
+                                .st-emotion-cache-1vm1bj5 {
+                                    background-color : gray;
+                                    pointer-events: none;
+                                    }
+                                """):
+                                    switch_to_simuler = st.button("Réaliser une garantie")
                     else:
-                        switch_to_simuler = st.button("Réaliser une Garantie")
+                        if 'data' in st.session_state:
+                                switch_to_simuler = st.button("Réaliser une garantie")
+                        else:
+                            with stylable_container(key='bouton_simuler_rouge',css_styles=
+                            """
+                            .st-emotion-cache-123r4br {
+                                background-color : gray;
+                                pointer-events: none;
+                                }
+                            """):
+                                switch_to_simuler = st.button("Réaliser une garantie")
                     if switch_to_simuler:
                         if 'data' in st.session_state:
                             switch_page("realiser_garantie")
@@ -219,9 +237,29 @@ with stylable_container(
                             nom, prenom = st.session_state.ancien_audit['nom'], st.session_state.ancien_audit['prenom']
                             switch_to_simuler = st.button(f"Simuler le projet de {prenom} {nom}")
                         else:
-                            switch_to_simuler = st.button("Simuler votre projet")
+                            if 'data' in st.session_state:
+                                switch_to_simuler = st.button("Simuler votre projet")
+                            else:
+                                with stylable_container(key='bouton_simuler_rouge',css_styles=
+                                """
+                                .st-emotion-cache-1vm1bj5 {
+                                    background-color : gray;
+                                    pointer-events: none;
+                                    }
+                                """):
+                                    switch_to_simuler = st.button("Simuler votre projet")
                     else:
-                        switch_to_simuler = st.button("Simuler votre projet")
+                        if 'data' in st.session_state:
+                                switch_to_simuler = st.button("Simuler votre projet")
+                        else:
+                            with stylable_container(key='bouton_simuler_rouge',css_styles=
+                            """
+                            .st-emotion-cache-1vm1bj5 {
+                                background-color : gray;
+                                pointer-events: none;
+                                }
+                            """):
+                                switch_to_simuler = st.button("Simuler votre projet")
                     if switch_to_simuler:
                         if 'data' in st.session_state:
                             switch_page("simulation_selection_materiels")
@@ -233,9 +271,29 @@ with stylable_container(
                             nom, prenom = st.session_state.ancien_audit['nom'], st.session_state.ancien_audit['prenom']
                             switch_to_simuler = st.button(f"Générer les documents de {prenom} {nom}")
                         else:
-                            switch_to_simuler = st.button("Générer vos documents")
+                            if 'data' in st.session_state:
+                                switch_to_simuler = st.button("Générer vos documents")
+                            else:
+                                with stylable_container(key='bouton_simuler_rouge',css_styles=
+                                """
+                                .st-emotion-cache-1vm1bj5 {
+                                    background-color : gray;
+                                    pointer-events: none;
+                                    }
+                                """):
+                                    switch_to_simuler = st.button("Générer vos documents")
                     else:
-                        switch_to_simuler = st.button("Générer vos documents")
+                        if 'data' in st.session_state:
+                                switch_to_simuler = st.button("Générer vos documents")
+                        else:
+                            with stylable_container(key='bouton_simuler_rouge',css_styles=
+                            """
+                            .st-emotion-cache-1vm1bj5 {
+                                background-color : gray;
+                                pointer-events: none;
+                                }
+                            """):
+                                switch_to_simuler = st.button("Générer vos documents")
                     
                     if switch_to_simuler:
                         if 'data' in st.session_state:

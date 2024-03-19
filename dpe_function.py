@@ -1,5 +1,6 @@
 import requests
 import streamlit as st
+from streamlit_extras.stylable_container import stylable_container
 
 def get_coordinates_from_address(address):
     response = requests.get(f"https://nominatim.openstreetmap.org/search?format=json&q={address}")
@@ -39,7 +40,12 @@ def obtenir_dpe_par_adresse(adresse):
         data = response.json()
         if 'results' in data and len(data['results']) > 0:
             dpe_info = data['results'][0]
-            st.success('Données DPE trouvées !')
+            with stylable_container(key='dpe_fonction', css_styles="""
+            .st-gm{
+                color:rgba(33, 195, 84, 1);
+            }
+            """):
+                st.success('Données DPE trouvées !')
             return dpe_info
         else:
             st.warning('Données DPE introuvables')

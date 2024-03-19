@@ -17,7 +17,7 @@ def render_page_habitat_2():
     no_sidebar()
     styled_button()
     css()
-    background('electricite.jpg', 'center left')
+    #background('electricite.jpg', 'center left')
     afficher_frise_chronologique(3)
 
     with stylable_container(
@@ -130,8 +130,12 @@ def render_page_habitat_2():
                 dic['age_chaudiere']=age_chaudiere
                 dic['chaudiere_electrique']=chaudiere_electrique
                 dic['autre_systeme_chauffage']=autre_systeme_chauffage
-                if autre_systeme_chauffage!=[] and autre_systeme_chauffage!=['Non']:
+                #if autre_systeme_chauffage!=[] and autre_systeme_chauffage!=['Non']:
+                try:
                     dic['facture_autre_syst_chauffage']=facture_autre_syst_chauffage
+                except:
+                    pass
+                
                 
                 
                 st.session_state.data = dic

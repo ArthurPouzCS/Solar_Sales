@@ -18,12 +18,18 @@ def render_page_book():
         with st.container():
             st.subheader("Book  📖")
             #styled_button()
-            background('maison_energie.jpg', 'center right')
+            #background('maison_energie.jpg', 'center right')
             
             path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'book_compressed.pdf')
-
-            if st.button("Retour à l'accueil", key='retour1'):
-                switch_page("Accueil")
+            with stylable_container(key="book_style1", css_styles=
+            f"""
+            [data-testid="stMarkdownContainer"]>p{{
+                color:{colors(0)};
+                margin-bottom : 0;
+            }}
+            """):
+                if st.button("Retour à l'accueil", key='retour1'):
+                    switch_page("Accueil")
                 
             with stylable_container(key="book_style", css_styles="""
             .e1nzilvr5 > p{
@@ -31,7 +37,8 @@ def render_page_book():
             }
             """):
                 with st.expander("📖 Voir le Book"):
-                    displayPDF(path, 700,400)
+                    with st.spinner('Chargement du Book...'):
+                        displayPDF(path, 700,400)
 
 
 

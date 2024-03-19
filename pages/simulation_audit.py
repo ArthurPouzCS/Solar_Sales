@@ -21,7 +21,7 @@ def render_page_audit():
     no_sidebar()
     styled_button()
     css()
-    background('eolienne_champs.jpg', 'center center')
+    #background('eolienne_champs.jpg', 'center center')
     
     with stylable_container(
             key='adresse_container',
@@ -36,24 +36,29 @@ def render_page_audit():
             displayPDF_basse_resol(real_path, 500,500)
         with col2:
             show("", ('Audit réalisant une synthèse des éléments essentiels des données utilisateurs à la simulation énergétique.', '', ''))
-            if st.button("Envoyer par mail"):
-                expediteur = st.text_input('Expéditeur', value='arthur.pouzargue@outlook.fr')
-                destinataire = st.text_input('Destinataire', value='arthur.pouzargue@outlook.fr')
-                cc = st.text_input('CC', value='arthur.pouzargue@outlook.fr')
-                objet = st.text_input('Objet', value='Audit énergétique')
-                ##pj = piece jointe !!
-                corps = st.text_area('', value="""
-                Bonjour,
 
-                Veuillez recevoir en PJ votre audit énergétique.
-                
-                Bonne réception,
-                
-                Cordialement
-                """, height=250)
-                if st.button("Envoyer"):
-                    mail(expediteur, destinataire, cc, objet, corps) #attention à mettre le mail comme il fait et mettre le mdp dans les réglages
+            with stylable_container(key="adresse_style", css_styles=my_style_container()):
+                with st.container():
+                    #if st.button("Envoyer par mail"):
+                    expediteur = st.text_input('Expéditeur', value='arthur.pouzargue@outlook.fr')
+                    destinataire = st.text_input('Destinataire', value='arthur.pouzargue@outlook.fr')
+                    #cc = st.text_input('CC', value='arthur.pouzargue@outlook.fr')
+                    cc = 'arthur.pouzargue@outlook.fr'
+                    objet = st.text_input('Objet', value='Audit énergétique')
+                    ##pj = piece jointe !!
+                    corps = st.text_area('', value="""
+                    Bonjour,
+
+                    Veuillez recevoir en PJ votre audit énergétique.
                     
+                    Bonne réception,
+                    
+                    Cordialement
+                    """, height=250)
+                    if st.button("Envoyer"):
+                        #try:
+                        send_email(expediteur, destinataire, cc, objet, corps, real_path) #attention à mettre le mail comme il fait et mettre le mdp dans les réglages
+                        
 
 
 

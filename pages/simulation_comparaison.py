@@ -17,7 +17,7 @@ def render_page_comparaison():
 )
     past_audit, last = dont_forget_past_audit()
     no_sidebar()
-    background('reno.jpg', 'center right')
+    #background('reno.jpg', 'center right')
 
     styled_button()
     css()
@@ -130,7 +130,7 @@ def render_page_comparaison():
                         show('',('Emission GES',nbr_ges, 'kCO2/m².an'))
                         show('',(commentaire_ges,'', ''))
         with col2:
-            with stylable_container(key="economies_style", css_styles=my_style_container()):
+            with stylable_container(key="economies_style2", css_styles=my_style_container()):
                 with st.container():
                     st.header("Après rénovation  ⏩")
                     tab1, tab2, tab3 = st.tabs(['Résumé', 'Energie', 'GES'])

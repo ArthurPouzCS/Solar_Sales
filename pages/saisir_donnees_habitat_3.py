@@ -17,7 +17,7 @@ def render_page_habitat_3():
     no_sidebar()
     styled_button()
     css()
-    background('plaque_cuisson.jpg', 'center center')
+    #background('plaque_cuisson.jpg', 'center center')
 
     afficher_frise_chronologique(4)
     
@@ -32,14 +32,14 @@ def render_page_habitat_3():
                 col1, col2 = st.columns(2)
                 with col1:
                     hauteur_ecs = st.selectbox("Quelle hauteur sous plafond du système de production d'ECS", ["Inférieur à 2m20", "Supérieur à 2m20"], index=last('hauteur_ecs', 'selectbox', ["Inférieur à 2m20", "Supérieur à 2m20"]))
-                    st.markdown(f'<p style="color: gray; font-size: 14px;">ECS : Eau chaude sanitaire (ballon..)</p>', unsafe_allow_html=True)
+                    st.markdown(f'<p style="color: white; font-size: 14px;">ECS : Eau chaude sanitaire (ballon..)</p>', unsafe_allow_html=True)
                     ballon_eau_chaude_electrique = st.radio("Avez-vous un ballon d'eau chaude électrique ?", ["Oui", "Oui, un thermodynamique", "Non", "Non, j'ai un système d'eau chaude instantanée"], index=last('ballon_eau_chaude_electrique', 'radio', ["Oui", "Oui, un thermodynamique", "Non", "Non, j'ai un système d'eau chaude instantanée"] ))
                 with col2:
                     climatisation = st.radio("Avez-vous une climatisation", ["Oui","Non"], index=last('climatisation', 'radio', ["Oui","Non"]))
                     if "Oui" == ballon_eau_chaude_electrique or "Oui, un thermodynamique"== ballon_eau_chaude_electrique:
                         capacite_ballon = st.selectbox("Quelle est la capacité de votre ballon (en L)", [50, 100, 150, 200, 250, 300, 350], index=last('capacite_ballon', 'selectbox', [50, 100, 150, 200, 250, 300, 350]))
-                    if ballon_eau_chaude_electrique == "Non, j'ai un système d'eau chaude instantanée":
-                        capacite_eau_chaude_elec = st.number_input("Quelle est sa capacité (en L)", value=last('capacite_eau_chaude_elec', 'number_input'), step=10)
+                    #if ballon_eau_chaude_electrique == "Non, j'ai un système d'eau chaude instantanée":
+                        #capacite_eau_chaude_elec = st.number_input("Quelle est sa capacité (en L)", value=last('capacite_eau_chaude_elec', 'number_input'), step=10)
         
         with stylable_container(key="materiel_style", css_styles=my_style_container()):
             with st.container():

@@ -37,11 +37,17 @@ def audit_string_html(dic):
         dic['puissance_deja_installee'] = 0
 
     if dic['autre_systeme_chauffage']!=[]:
-        chauffage_appoint = dic['autre_systeme_chauffage'][0][0]
+        chauffage_appoint = dic['autre_systeme_chauffage']
+        
         try:
             facture_autre_syst_chauffage = dic['facture_autre_syst_chauffage'][0]
         except:
-            facture_autre_syst_chauffage = dic['facture_autre_syst_chauffage']
+            try:
+                facture_autre_syst_chauffage = dic['facture_autre_syst_chauffage']
+            except:
+                facture_autre_syst_chauffage = 0
+
+            
     else:
         chauffage_appoint = 'Non'
         facture_autre_syst_chauffage = 0
@@ -479,8 +485,8 @@ def audit_string_html(dic):
                         <th>E.C.S/Chauffage **<div class="corps">{dic['eco_gaz_fioul_autres']} €</div></th>
                     </tr>
                     <tr>
-                        <th>Total Minimum / Mois<div class="corps">??? €</div></th>
-                        <th>Total Minimum N+1<div class="corps">??? €</div></th>
+                        <th>Total Minimum / Mois<div class="corps">{int(dic['economie_par_an_moyen'])} €</div></th>
+                        <th>Total Minimum N+1<div class="corps">{int(dic['economie_par_mois_moyen'])} €</div></th>
                     </tr>
                 </table>
                 <h2 style="margin-top:300px; margin-bottom:70px">4. Transition énergétique</h2>

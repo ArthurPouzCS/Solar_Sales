@@ -31,42 +31,47 @@ def render_page_generer_documents():
 
     styled_button()
     #css()
-    background("eoliennes_montagnes.jpg", 'center center')
+    #background("eoliennes_montagnes.jpg", 'center center')
     #sst.subheader("Création des documents réglementaire  📄")
     
     space(1)
-    css = ["""
-                [data-testid="stMarkdownContainer"] > p {
+    css = [f"""
+                [data-testid="stMarkdownContainer"] > p {{
                     font-size : 18px;
                     font-weight : bold;
                     color:white !important;
-                    }
+                    }}
                 
-                .st-emotion-cache-q8sbsg > p {
+                .st-emotion-cache-q8sbsg > p {{
                     font-size : 18px;
                     font-weight : bold;
-                }
-                .st-emotion-cache-jnd7a1 p {
+                }}
+                .st-emotion-cache-jnd7a1 p {{
                     font-size : 18px;
                     font-weight : bold;
-                }
+                }}
+                div[data-testid="stVerticalBlock"]:has(> div.element-container > div.stMarkdown > div[data-testid="stMarkdownContainer"] > p > span.materiel_style) .st-emotion-cache-0.e1f1d6gn0{{
+                    background-color: {colors(5)};
+                }}
                 """
                 ]
-    with stylable_container(
-            key='adresse_container',
-            css_styles = css
-            ):    
-        with st.spinner("Création des documents réglementaires ..."):
-            eolienne_qui_tourne()
-            audit_path, rapport_path = generer_les_2_pdf(dic)
-            if 'data' in st.session_state:
-                dic = st.session_state.data
-                dic['audit_path'] = audit_path
-                dic['rapport_path'] = rapport_path
-                st.session_state.data = dic
-        #st.balloons()
-        #st.success('Documents générés !')
-        #time.sleep(2)
-        switch_page('simulation_audit')
+    with stylable_container(key="materiel_style", css_styles=my_style_container()):
+        with st.container():
+            with stylable_container(
+                    key='adresse_container',
+                    css_styles = css
+                    ):    
+                with st.spinner("Création des documents réglementaires ..."):
+                    eolienne_qui_tourne()
+                    audit_path, rapport_path = generer_les_2_pdf(dic)
+                    if 'data' in st.session_state:
+                        dic = st.session_state.data
+                        dic['audit_path'] = audit_path
+                        dic['rapport_path'] = rapport_path 
+                        st.session_state.data = dic
+                #st.balloons()
+                #st.success('Documents générés !')
+                #time.sleep(2)
+                switch_page('simulation_audit')
 
 render_page_generer_documents()

@@ -81,6 +81,12 @@ def save_password(mail, password):
     query = f"INSERT INTO user_credentials (mail, mdp) VALUES ('{mail}', '{hashed_password}');"
     execute_query(query)
 
+def update_password(mail, password):
+    hashed_password = hash_password(password)
+
+    query = f"UPDATE user_credentials SET mdp = '{hashed_password}' WHERE mail = '{mail}';"
+    execute_query(query)
+
 def check_password(input_password, hashed_password):
     return bcrypt.checkpw(input_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
@@ -191,6 +197,8 @@ def create_table_data(): # les multiselect ne sont pas enregistrés comme des []
     CEE INT,
     EDF INT,
     TVA INT,
+    apport INT,
+    reste_a_eco_financer INT,
     credit INT,
     total_aides INT,
     ancienne_conso_elec FLOAT,
@@ -314,3 +322,22 @@ def get_refresh_token(mail):
     if result:
         result = result[0][0]
     return result
+
+
+def create_table_params():
+    ##### Des paramètres pour tout le monde
+    query = """
+    CREATE TABLE IF NOT EXISTS params_table (
+        id SERIAL PRIMARY KEY,
+        mail VARCHAR(100) UNIQUE NOT NULL,
+        mdp VARCHAR(100) NOT NULL,
+        nom VARCHAR(100),
+        prenom VARCHAR(100),
+        client_id VARCHAR(200),
+        secret_id VARCHAR(512),
+        mail_smtp VARCHAR(200),
+        mdp_smtp VARCHAR(512),
+        refresh_token VARCHAR(200)
+    );
+    """
+    execute_query(query)

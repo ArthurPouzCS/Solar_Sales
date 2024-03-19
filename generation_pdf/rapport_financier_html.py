@@ -356,10 +356,10 @@ def rapport_string_html(dic):
                 <th>Récupération TVA<div class="corps">{dic['tva']} €</div></th>
             </tr>
             <tr>
-                <th>Déduction crédit d'impôts<div class="corps">??? €</div></th>
-                <th>Apport personnel<div class="corps">??? €</div></th>
-                <th>Total<div class="corps">??? €</div></th>
-                <th>Reste à éco-financer<div class="corps">???? €</div></th>
+                <th>Déduction crédit d'impôts<div class="corps">{dic['credit']} €</div></th>
+                <th>Apport personnel<div class="corps">{dic['apport']} €</div></th>
+                <th>Total<div class="corps">{dic['total_aides']} €</div></th>
+                <th>Reste à éco-financer<div class="corps">{dic['reste_a_eco_financer']} €</div></th>
             </tr>
         </table>
         <h2>3. Éco-financement</h2>        

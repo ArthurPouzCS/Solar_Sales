@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_extras.stylable_container import stylable_container
 from streamlit_extras.switch_page_button import switch_page
-from functions import css_from_function, background, no_sidebar, css, styled_button
+from functions import css_from_function, background, no_sidebar, css, styled_button, my_style_container
 import os
 import sys
 path_generer_pdf_py = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'generation_pdf')
@@ -17,7 +17,7 @@ st.set_page_config(
 no_sidebar()
 css()
 styled_button()
-background('eolienne_champs.jpg', 'center center')
+#background('eolienne_champs.jpg', 'center center')
 
 if 'ancien_audit' in st.session_state:
     dic_ancien_audit = st.session_state.ancien_audit
@@ -27,17 +27,19 @@ if 'data' in st.session_state:
     dic = st.session_state.data
     dic = clean_dict(dic)
 
-with stylable_container(
-        key='adresse_container',
-        css_styles = css_from_function()
-        ):    
-    with st.spinner("Création des documents réglementaires ..."):
-        audit_path, rapport_path = generer_les_2_pdf(dic)
-        if 'data' in st.session_state:
-            dic['audit_path'] = audit_path
-            dic['rapport_path'] = rapport_path
-            st.session_state.data = dic
-    switch_page('simulation_audit')
+with stylable_container(key="economies_style", css_styles=my_style_container()):
+    with st.container():
+        with stylable_container(
+                key='adresse_container',
+                css_styles = css_from_function()
+                ):    
+            with st.spinner("Création des documents réglementaires ..."):
+                audit_path, rapport_path = generer_les_2_pdf(dic)
+                if 'data' in st.session_state:
+                    dic['audit_path'] = audit_path
+                    dic['rapport_path'] = rapport_path
+                    st.session_state.data = dic
+            switch_page('simulation_audit')
 
 st.write("# Générer vos Documents ! 👋")
 

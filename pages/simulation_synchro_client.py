@@ -10,19 +10,19 @@ from streamlit_extras.stylable_container import stylable_container
 from db_functions import *
 
 def show_text(label, info):
-    st.markdown("""
+    st.markdown(f"""
     <style>
-        .label_text {
+        .label_text {{
             font-weight: bold;
             font-size : 20px;
-            color: rgb(100,120, 240);
-        }
+            color: {colors(3)};
+        }}
 
-        .info_text {
-            color : rgb(240, 240, 240);
+        .info_text {{
+            color : {colors(3)};
             margin-left : 10px;
             font-size:18px;
-        }
+        }}
     </style>
     """, unsafe_allow_html=True)
 
@@ -68,7 +68,7 @@ def render_page_synchro():
     #style_button_synchro()
     styled_button()
     css()
-    background('eolienne_rouge.jpg', 'bottom center')
+    #background('eolienne_rouge.jpg', 'bottom center')
     if 'data' in st.session_state:
         dic = st.session_state.data
         prenom, nom = dic['prenom'], dic['nom']

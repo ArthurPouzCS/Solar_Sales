@@ -8,8 +8,10 @@ sys.path.insert(0,path_functions)
 from db_functions import *
 
 def pvgis_html(dic):
-    
-    nom, prenom = 'Beck', 'Martin' # à changer
+    if 'data' in st.session_state:
+        if 'nom' in st.session_state.data and 'prenom' in st.session_state.data :
+            prenom, nom = st.session_state.data['prenom'], st.session_state.data['nom']
+        
     date = datetime.now().strftime("%d-%m-%Y")
 
     mail_sales = st.session_state.mail
@@ -147,27 +149,27 @@ def pvgis_html(dic):
         <div class="blue-bg">Provided inputs</div>
         <ul>
             <li>Summary</li>
-            <li>Location [Lat/Lon]: 47.794, 2.472</li>
+            <li>Location : {dic['inputs']['location']['latitude']}, {dic['inputs']['location']['longitude']}</li>
             <li>Horizon: Calculated</li>
-            <li>Database used: PVGIS-SARAH2</li>
-            <li>PV technology: Crystalline silicon</li>
-            <li>PV installed [kWp]: 1</li>
-            <li>System loss [%]: 14</li>
+            <li>Database used: {dic['inputs']['meteo_data']['radiation_db']}</li>
+            <li>PV technology: {dic['inputs']['pv_module']['technology']}</li>
+            <li>PV installed : {dic['inputs']['pv_module']['peak_power']} kWp</li>
+            <li>System loss : {dic['inputs']['pv_module']['system_loss']*100} %</li>
         </ul>
         
         <div class="blue-bg">Simulation outputs</div>
         <ul>
-            <li>Slope angle [°]: 35</li>
-            <li>Azimuth angle [°]: 0</li>
-            <li>Yearly PV energy production [kWh]: 1187.45</li>
-            <li>Yearly in-plane irradiation [kWh/m2]: 1504.58</li>
-            <li>Year-to-year variability [kWh]: 53.41</li>
+            <li>Slope angle : {dic['inputs']['mounting_system']['fixed']['slope']['value']}°</li>
+            <li>Azimuth angle : {dic['inputs']['mounting_system']['fixed']['azimuth']['value']}°</li>
+            <li>Yearly PV energy production : {dic['outputs']['totals']['fixed']['E_y']} kWh</li>
+            <li>Yearly in-plane irradiation : {dic['outputs']['totals']['fixed']['H(i)_y']} kWh/m²</li>
+            <li>Year-to-year variability : {dic['outputs']['totals']['fixed']['SD_y']} kWh</li>
             <li>Changes in output due to:</li>
             <ul>
-                <li>Angle of incidence [%]: -2.95</li>
-                <li>Spectral effects [%]: 1.47</li>
-                <li>Temperature and low irradiance [%]: -6.81</li>
-                <li>Total loss [%]: -21.08</li>
+                <li>Angle of incidence : {dic['outputs']['totals']['fixed']['l_aoi']} %</li>
+                <li>Spectral effects : {dic['outputs']['totals']['fixed']['l_spec']} %</li>
+                <li>Temperature and low irradiance : {dic['outputs']['totals']['fixed']['l_tg']} %</li>
+                <li>Total loss : {dic['outputs']['totals']['fixed']['l_total']} %</li>
             </ul>
         </ul>
     </div>

@@ -21,7 +21,7 @@ def render_page_note_dimensionnement():
     no_sidebar()
     styled_button()
     css()
-    background('eoliennes.jpg', 'center center')
+    #background('eoliennes.jpg', 'center center')
 
     if 'data' in st.session_state:
         dic = st.session_state.data
@@ -94,8 +94,12 @@ def render_page_note_dimensionnement():
 
 
 
-        
-        if st.button("Suivant"):
-            switch_page('simulation_synchro_client')
+        with stylable_container(key="adresse_style", css_styles="""
+        .st-emotion-cache-kjgucs{
+            color:white;
+        }
+        """):
+            if st.button("Suivant"):
+                switch_page('simulation_synchro_client')
 
 render_page_note_dimensionnement()

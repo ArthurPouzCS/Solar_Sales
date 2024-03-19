@@ -10,7 +10,7 @@ import os
 from api_functions import *
 from streamlit_extras.stylable_container import stylable_container
 from db_functions import *
-from functions import styled_button
+from functions import styled_button, colors
 
 def render_page_selection_materiels():
     
@@ -21,7 +21,7 @@ def render_page_selection_materiels():
     past_audit, last = dont_forget_past_audit()
     no_sidebar()
     styled_button()
-    background('maison_panneaux.jpg', 'top center')
+    #background('maison_panneaux.jpg', 'top center')
     st.markdown("""
     <style>
         div.stButton > button:first-child {
@@ -128,10 +128,19 @@ def render_page_selection_materiels():
                     if 'Gaz' in val('gaz_fioul'):
                         gaz = val('gaz_facture')
                     if val('autre_systeme_chauffage') != []:
-                        autre = val('facture_autre_syst_chauffage')
+                        try:
+                            autre = val('facture_autre_syst_chauffage')
+                        except:
+                            autre = 0
                     
                     ############### Attention check les calculs pour les (1-Ri)^n ou Ri^n
                     #st.write(elec, gaz, fioul, autre)
+                    if gaz==None:
+                        gaz=0
+                    if fioul==None:
+                        fioul=0
+                    if autre==None:
+                        autre=0
                     total = elec+gaz+fioul+autre
                     conso_init = round(total/tab['prix_kwh'], 1)
                     r = 1
@@ -254,11 +263,11 @@ def render_page_selection_materiels():
             autoconso = autoconso_prct*prod_pv_annnee_unit
         
             with col2:   
-                with stylable_container(key="bouton_reglage_pv", css_styles="""
-                div.stButton > button:first-child {
+                with stylable_container(key="bouton_reglage_pv", css_styles=f"""
+                div.stButton > button:first-child {{
                     margin-right:0px;
-                    background-color: #b366ff;
-                    }
+                    background-color: {colors(0)};
+                    }}
                     """): 
                     st.button("Favoriser revente")
                     st.button("Modifier puissance")
@@ -281,13 +290,13 @@ def render_page_selection_materiels():
                             mispace()
                             with stylable_container(
                             key='authenthif',
-                            css_styles = """
-                            div.stButton > button:first-child {
+                            css_styles = f"""
+                            div.stButton > button:first-child {{
                                 height:70px;
-                                background-color : #b366ff;
+                                background-color : {colors(0)};
                                 position : absolute;
                                 left : -10px;
-                                }
+                                }}
                             """
                             ):
                                 st.button("Actualiser le coût du kwH")
@@ -339,12 +348,15 @@ def render_page_selection_materiels():
                             TVA = tva
                             credit = 0
                         
-                        if val('type_projet')=='Résidence Secondaire':
+                        if val('type_projet')=='Résidence Secondaire' or val('type_projet')=="Votre Local d'Activité":
                             MPR = 0
-                        
+                        if materiels == ['Ballon thermodynamique'] or materiels == ['Ballon électrique'] or materiels==[]:
+                            CEE=0
+
                         total_aides = MPR + CEE + EDF + TVA + credit
                         ## Finiiiir aides !!
                         MPR, CEE, EDF, TVA, credit, total_aides = int(MPR), int(CEE), int(EDF), int(TVA), int(credit), int(total_aides)
+                        
                         style_table([
                             ['MaPrimeRénov',str(MPR)+'€'],
                             ['CEE',str(CEE)+'€'],
@@ -356,7 +368,7 @@ def render_page_selection_materiels():
 
 
                         st.markdown("<sub>Les aides CEE et MaPrimeRénov sont exclusivement disponible dans le cadre de l'installation d'un ballon thermodynamique et/ou d'une pompe à chaleur</sub>", unsafe_allow_html=True)
-                        st.markdown("<a href='wwww.example.com'>Consultez le document explicatif</a>", unsafe_allow_html=True)
+                        st.markdown("<a href='https://www.hellowatt.fr/prime-energie/ma-prime-renov/cumulable-cee' style='color:white'>Consultez le document explicatif</a>", unsafe_allow_html=True)
 
 
                 
@@ -371,8 +383,8 @@ def render_page_selection_materiels():
                     
                     fig, ax = plt.subplots()
                     wedgeprops = {'edgecolor': 'white', 'linewidth': 1, 'antialiased': True}
-                    colors = ['#6eb52f', "#e0e0ef", 'lightcoral']
-                    pie = ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, wedgeprops=wedgeprops, colors=colors)
+                    colors_plot = ['#6eb52f', "#e0e0ef", 'lightcoral']
+                    pie = ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, wedgeprops=wedgeprops, colors=colors_plot)
                     for label in pie[1]:
                         label.set_color('white')
                     ax.axis('equal')  # Equal 
@@ -405,10 +417,15 @@ def render_page_selection_materiels():
                     
                     fig, ax = plt.subplots()
                     wedgeprops = {'edgecolor': 'grey', 'linewidth': 2, 'antialiased': True}
-                    colors = ['#6eb52f', "#e0e0ef", 'lightcoral']
+                    colors_plot = ['#6eb52f', "#e0e0ef", 'lightcoral']
+                    elec = elec*prix_achete/tab['prix_kwh']
                     sizes = [elec*(1+indexation/100)**i for i in range(annnees_prevision)]
-                    bars = ax.bar(range(annnees_prevision),sizes)
+                    bars = ax.bar(range(1,annnees_prevision+1),sizes)
                     ax.set_ylim(min(sizes) * 0.6, max(sizes) * 1.05)
+                    
+                    ax.set_xticks(range(1, annnees_prevision + 1))
+                    ax.set_xticklabels(range(1, annnees_prevision + 1))
+                    ax.set_xlim(0.4, annnees_prevision  + 0.6)
 
                     for i, bar in enumerate(bars):
                         if i % 2 == 0:  # Pour chaque deuxième barre
@@ -424,7 +441,7 @@ def render_page_selection_materiels():
             with stylable_container(key="economies_style", css_styles=my_style_container()):
                 with st.container():
                     mispace()
-                    st.subheader("Economies  🤑")
+                    st.subheader("Economies  👛")
                     economie_par_an = elec #*r  #Pas sur que ce soit la bonne chose
                     economie_total = sum([economie_par_an*(1+i)**(indexation/100) for i in range(annnees_prevision)])
                     economie_par_an_moyen = economie_total/annnees_prevision
