@@ -84,6 +84,17 @@ def render_page_note_dimensionnement():
                         [data-testid="baseButton-secondary"]{{
                             background-color={colors(1)};
                         }}
+                        .st-emotion-cache-kjgucs, .e1nzilvr5{{
+                            color:{colors(0)};
+                        }}
+                        """):
+                            st.download_button(
+                                label="Télécharger",
+                                data = pdf_data,
+                                file_name='note_dimensionnement_PAC.pdf',
+                                key='button'
+                            )
+                        }}
                         """):
                             st.download_button(
                                 label="Télécharger",
