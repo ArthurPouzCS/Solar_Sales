@@ -1,1 +1,1 @@
-wkhtmltopdf==0.12.5
+wkhtmltopdf = 0.12.5
