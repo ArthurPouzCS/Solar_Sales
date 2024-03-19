@@ -498,7 +498,7 @@ def audit_string_html(dic):
                         <th>Total Minimum N+1<div class="corps">{int(dic['economie_par_mois_moyen'])} €</div></th>
                     </tr>
                 </table>
-                <h2 style="margin-top:350px; margin-bottom:170px">4. Transition énergétique</h2>
+                <h2 style="margin-top:350px; margin-bottom:240px">4. Transition énergétique</h2>
                 <span>
                     <div style="width: 50%;">
                         <h3>Vous avez choisi l'autoconsommation</h3>
@@ -513,6 +513,7 @@ def audit_string_html(dic):
                 </span>
                 <br>
                 <br>
+                <div style="margin-top: 100px; margin-bottom:100px">
                 <h2>5. Prévisions</h2>
                 <h3>Prévision de l'évolution énergétique et vos gain/économies</h3>
                 <table>
