@@ -262,13 +262,13 @@ def rapport_string_html(dic):
                         <div>{dic['email']}</div>
                         <div>Parcelle {dic['parcelles']}</div>
                     </div>
-                    <div class="box_accueil" style="text-align: right;margin-left: 450px; margin-top:-100px">
+                    <div class="box_accueil" style="text-align: right;margin-left: 240px; margin-top:0px">
                         <div>{nom_sales}</div>
                         <div>{prenom_sales}</div>
                         <div>{mail_sales}</div>
                     </div>
                 </div>
-                <span class="span_accueil"></span>
+
             </div>
             <div style="margin-top: 200px;text-align: center;">
                 <img src="{os.path.join(os.path.dirname(__file__),'logo_centre_energie.JPG')}" class="logo_accueil">
@@ -323,7 +323,7 @@ def rapport_string_html(dic):
             <header style="margin-top:100px; text-align:center">
                 <span>
                     <img style="margin-left:5px; margin-top:-10px; height:36px; width:auto;" src="{os.path.join(os.path.dirname(__file__),'logo_centre_energie.JPG')}" alt="Votre Logo">
-                    <h1 style="margin-top:-35px; margin-right:5px; width:750px; font-size:26px">Nos conseils pour vous accompagner dans vos projets</h1>
+                    <h1 style="margin-top:-35px; margin-right:5px; width:750px; font-size:15px">Nos conseils pour vous accompagner dans vos projets</h1>
                 </span>
                 
             </header>
@@ -353,7 +353,7 @@ def rapport_string_html(dic):
                 <th>Ma prime rénov<div class="corps">{dic['mpr']} €</div></th>
                 <th>Prime coup de pouce (CEE)<div class="corps">{dic['cee']} €</div></th>
                 <th>EDF<div class="corps">{dic['edf']} €</div></th>
-                <th>Récupération TVA<div class="corps">{dic['tva']} €</div></th>
+                <th>Récupération TVA<div class="corps">{int(dic['tva'])} €</div></th>
             </tr>
             <tr>
                 <th>Déduction crédit d'impôts<div class="corps">{dic['credit']} €</div></th>
