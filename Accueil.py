@@ -143,14 +143,14 @@ with stylable_container(
                             client = st.text_input("Client ID API Zoho")
                             space(1)
                             with stylable_container(key="link_button_style2", css_styles=f"""
-                            .e1nzilvr5{{
+                            [data-testid="baseLinkButton-secondary"]{{
                                 color : {colors(0)};
                             }}
                             """):
                                 st.link_button("Pour trouver vos ID :","https://accounts.zoho.com/signin?servicename=AaaServer&serviceurl=%2Fdeveloperconsole")
                         with stylable_container(key="confirmation_style", css_styles=f"""
-                            .e1nzilvr5{{
-                                color : {colors(0)};
+                            [data-testid="baseButton-secondary"]{{
+                                background-color : {colors(0)};
                             }}
                             """):
                             confirmation_bouton = st.button('Confirmer')
