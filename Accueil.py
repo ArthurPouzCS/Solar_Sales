@@ -128,21 +128,23 @@ with stylable_container(
                     ):
                     st.image(rel_path, width=495)
             with col2:
-                a,b = st.columns(2)
-                with a:
-                    nom = st.text_input("Nom")
-                    mail_smtp = st.text_input("Email pour envoi depuis l'application")
-                    mail = st.text_input("Mail Zoho")
-                    secret = st.text_input("Mot de passe API Zoho", type='password')
-                with b:
-                    
-                    prenom = st.text_input("Prénom")
-                    mdp_smtp = st.text_input("Mot de passe de votre adresse mail", type='password')
-                    client = st.text_input("Client ID API Zoho")
-                    space(1)
-                    st.link_button("Pour trouver vos ID :","https://accounts.zoho.com/signin?servicename=AaaServer&serviceurl=%2Fdeveloperconsole")
-                
-                if st.button('Confirmer'):
+                with stylable_container(key="materiel_style", css_styles=my_style_container()):
+                    with st.container():
+                        a,b = st.columns(2)
+                        with a:
+                            nom = st.text_input("Nom")
+                            mail_smtp = st.text_input("Email pour envoi depuis l'application")
+                            mail = st.text_input("Mail Zoho")
+                            secret = st.text_input("Mot de passe API Zoho", type='password')
+                        with b:
+                            
+                            prenom = st.text_input("Prénom")
+                            mdp_smtp = st.text_input("Mot de passe de votre adresse mail", type='password')
+                            client = st.text_input("Client ID API Zoho")
+                            space(1)
+                            st.link_button("Pour trouver vos ID :","https://accounts.zoho.com/signin?servicename=AaaServer&serviceurl=%2Fdeveloperconsole")
+                        confirmation_bouton = st.button('Confirmer')
+                    if confirmation_bouton:
                     #data = {
                     #    'mail': [mail],
                     #    'nom' : [nom],

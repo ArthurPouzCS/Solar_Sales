@@ -79,13 +79,10 @@ def render_page_note_dimensionnement():
                                 pdf_data = pdf_file.read()
                         with stylable_container(key="telecharger_style", css_styles=f"""
                         .st-emotion-cache-123r4br{{
-                            background-color={colors(1)};
+                            background-color={colors(1)}!important;
                         }}
-                        [data-testid="baseButton-secondary"]{{
+                        [data-testid="stDownloadButton"]{{
                             background-color={colors(1)};
-                        }}
-                        .st-emotion-cache-kjgucs, .e1nzilvr5{{
-                            color:{colors(0)};
                         }}
                         """):
                             st.download_button(
