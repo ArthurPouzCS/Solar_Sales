@@ -132,7 +132,7 @@ def audit_string_html(dic):
                     max-height: 200px;
                     float:right;
                     margin-right: 20%;
-                    margin-top: 1200px;
+                    margin-top: 950px;
                 }
 
                 div span {
@@ -284,7 +284,7 @@ def audit_string_html(dic):
         <body>
 
             <div class="body_accueil">
-                <div class="container_accueil" style="margin-left: 0px;">
+                <div class="container_accueil" style="margin-left: 0px; margin-bottom:50px">
                     <div class="box_accueil">
                         <div>{nom}</div>
                         <div>{prenom}</div>
@@ -292,7 +292,7 @@ def audit_string_html(dic):
                         <div>{dic['email']}</div>
                         <div>Parcelle {dic['parcelles']}</div>
                     </div>
-                    <div class="box_accueil" style="text-align: right;margin-right: -20px; margin-top:0px">
+                    <div class="box_accueil" style="text-align: right;margin-left: 240px; margin-top:0px">
                         <div>{nom_sales}</div>
                         <div>{prenom_sales}</div>
                         <div>{mail_sales}</div>
