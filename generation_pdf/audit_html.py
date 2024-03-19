@@ -499,6 +499,7 @@ def audit_string_html(dic):
                     </tr>
                 </table>
                 <h2 style="margin-top:350px; margin-bottom:240px">4. Transition énergétique</h2>
+                <div style="margin-top: 100px; margin-bottom:100px">
                 <span>
                     <div style="width: 50%;">
                         <h3>Vous avez choisi l'autoconsommation</h3>
