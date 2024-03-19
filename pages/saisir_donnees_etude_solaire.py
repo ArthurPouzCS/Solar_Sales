@@ -43,10 +43,10 @@ def render_page_etude_solaire():
                         adresse = st.text_input("Rechercher une adresse:", value=last('adresse_postale', 'text_input'))
                         # Proposer des adresses en autocomplétion
                         
-                        try:
-                            location_options = get_location_options(adresse)
-                        except:
-                            location_options = []
+                        #try:
+                        location_options = get_location_options(adresse)
+                        #except:
+                        #    location_options = []
                         
                         
                         #st.write(location_options[0])

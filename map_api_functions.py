@@ -56,7 +56,12 @@ def get_location_options(address):
     headers = {
         "User-Agent": 'SolarSales/1.0'
     }
-    response = requests.get(url, params=params, headers=headers)
+    
+    try:
+        response = requests.get(url, params=params, headers=headers)
+    except requests.exceptions.RequestException as e:
+        st.write("Erreur de connexion :", e)
+
     if response.status_code == 200:
         locations = response.json()
         return [location['display_name'] for location in locations] if locations else []
