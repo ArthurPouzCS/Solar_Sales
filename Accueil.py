@@ -128,34 +128,7 @@ with stylable_container(
                     ):
                     st.image(rel_path, width=495)
             with col2:
-                with stylable_container(key="login_style", css_styles=f"""
-                    .st-emotion-cache-0.e1f1d6gn0 {{
-                                background-color: {colors(4)};
-                                padding: 5px 15px 20px 15px;
-                                border-radius: 10px;
-                            }}
-
-                    [data-testid="baseButton-secondary"]{{
-                        color:#5900b3;
-                    }}
-                    [data-testid="stVirtualDropdown"]{{
-                        background-color : {colors(4)};
-                    }}
-                    .st-emotion-cache-kjgucs, .e1nzilvr5 >p {{
-                        color : white;
-                    }}
-                    
-                    div[data-testid="stVerticalBlock"]:has(> div.element-container > div.stMarkdown > div[data-testid="stMarkdownContainer"] > p > span.carte) div.stButton > button:first-child {{
-                        background-color : {colors(0)};
-                    }}
-
-                    [data-testid="baseLinkButton-secondary"]{{
-                        color:{colors(0)};
-                    }}
-                    .st-emotion-cache-kjgucs, .e1nzilvr5{{
-                        color:{colors(0)};
-                    }}
-                    """):
+                with stylable_container(key="materiel_style", css_styles=my_style_container()):
                     with st.container():
                         a,b = st.columns(2)
                         with a:
