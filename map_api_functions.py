@@ -42,7 +42,6 @@ def create_square_polygon(latitude, longitude):
 def get_location_options(address):
     geolocator = Nominatim(user_agent="geo_search")
     locations = geolocator.geocode(address, exactly_one=False, limit=5, country_codes='FR')
-    print(locations)
     return [location.address for location in locations] if locations else []
 
 #@st.cache_data()
@@ -118,6 +117,8 @@ def map_api():
 
     # Proposer des adresses en autocomplétion
     location_options = get_location_options(adresse)
+    st.write(location_options)
+    st.write('ça fonctionne ?')
     location_options = [ ''.join([loc.split(',')[:][i] for i in [0,1,3,7]]) for loc in location_options]
     selected_address = st.selectbox("Choisissez une adresse:", location_options, index=0)
 
