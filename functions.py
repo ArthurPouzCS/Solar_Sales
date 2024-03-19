@@ -103,7 +103,7 @@ def send_email(expediteur, destinataire, cc, objet, corps, fichier_pdf):
         return
 
     # Configurer les informations du serveur SMTP pour Outlook
-    smtp_server = 'smtp-mail.outlook.com'
+    smtp_server = 'smtp.gmail.com'
     smtp_port = 587  # Utilisez le port 587 pour TLS (ou 25 pour non chiffré, mais 587 est recommandé)
     smtp_username = mail_smtp  # Remplacez par votre adresse e-mail Outlook
     smtp_password = mdp_smtp  # Remplacez par votre mot de passe Outlook
@@ -135,7 +135,7 @@ def send_email(expediteur, destinataire, cc, objet, corps, fichier_pdf):
             server.starttls()
 
             # Se connecter au serveur SMTP avec le mot de passe spécifique à l'application
-            server.login(smtp_username, smtp_password)
+            server.login(st.secrets["email"]["gmail"], st.secrets["email"]["password"])
 
             # Envoyer l'e-mail
             server.sendmail(msg['From'], msg['To'], msg.as_string())
