@@ -44,7 +44,7 @@ def is_valid_email(email):
     pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
     return re.match(pattern, email) is not None
 
-def send_email(expediteur, destinataire, cc, objet, corps, fichier_pdf):
+def send_email_past(expediteur, destinataire, cc, objet, corps, fichier_pdf):
     
     try :
         client_id, secret_id, mail_smtp, mdp_smtp = retrieve_secrets(expediteur)
@@ -94,6 +94,55 @@ def send_email(expediteur, destinataire, cc, objet, corps, fichier_pdf):
     
     st.success("Mail envoyé avec succès")
     
+def send_email(expediteur, destinataire, cc, objet, corps, fichier_pdf):
+    try:
+        # Récupérer les informations du compte SMTP depuis les secrets
+        client_id, secret_id, mail_smtp, mdp_smtp = retrieve_secrets(expediteur)
+    except:
+        st.error("Nous ne pouvons envoyer que depuis votre email")
+        return
+
+    # Configurer les informations du serveur SMTP pour Outlook
+    smtp_server = 'smtp-mail.outlook.com'
+    smtp_port = 587  # Utilisez le port 587 pour TLS (ou 25 pour non chiffré, mais 587 est recommandé)
+    smtp_username = mail_smtp  # Remplacez par votre adresse e-mail Outlook
+    smtp_password = mdp_smtp  # Remplacez par votre mot de passe Outlook
+
+    # Configurer le message
+    msg = MIMEMultipart()
+    msg['From'] = expediteur
+    msg['To'] = destinataire
+    msg['Subject'] = objet
+    # Ajouter le corps du message
+    msg.attach(MIMEText(corps, 'plain'))
+
+    # Ajouter le fichier PDF en pièce jointe
+    with open(fichier_pdf, 'rb') as attachment:
+        part = MIMEBase('application', 'octet-stream')
+        part.set_payload(attachment.read())
+
+    encoders.encode_base64(part)
+    part.add_header(
+        'Content-Disposition',
+        f'attachment; filename= {fichier_pdf}',
+    )
+    msg.attach(part)
+
+    try:
+        # Établir la connexion avec le serveur SMTP
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            # Commencer la connexion TLS (si nécessaire)
+            server.starttls()
+
+            # Se connecter au serveur SMTP avec le mot de passe spécifique à l'application
+            server.login(smtp_username, smtp_password)
+
+            # Envoyer l'e-mail
+            server.sendmail(msg['From'], msg['To'], msg.as_string())
+
+        st.success("Mail envoyé avec succès")
+    except Exception as e:
+        st.error(f"Échec de l'envoi du mail : {e}")
 
 def dic_to_df(dic):
     keys, values = list(dic.keys()), list(dic.values())
