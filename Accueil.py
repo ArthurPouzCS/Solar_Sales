@@ -144,7 +144,7 @@ with stylable_container(
                             space(1)
                             st.link_button("Pour trouver vos ID :","https://accounts.zoho.com/signin?servicename=AaaServer&serviceurl=%2Fdeveloperconsole")
                         confirmation_bouton = st.button('Confirmer')
-                    if confirmation_bouton:
+                if confirmation_bouton:
                     #data = {
                     #    'mail': [mail],
                     #    'nom' : [nom],
