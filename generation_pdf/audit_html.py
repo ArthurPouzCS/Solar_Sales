@@ -291,7 +291,7 @@ def audit_string_html(dic):
                         <div>{dic['email']}</div>
                         <div>Parcelle {dic['parcelles']}</div>
                     </div>
-                    <div class="box_accueil" style="text-align: right;margin-left: 250px; margin-top:-100px">
+                    <div class="box_accueil" style="text-align: right;margin-left: 50px; margin-top:-100px">
                         <div>{nom_sales}</div>
                         <div>{prenom_sales}</div>
                         <div>{mail_sales}</div>
