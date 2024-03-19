@@ -3,12 +3,18 @@ import streamlit as st
 from streamlit_extras.stylable_container import stylable_container
 
 def get_coordinates_from_address(address):
-    response = requests.get(f"https://nominatim.openstreetmap.org/search?format=json&q={address}")
-    st.write(response)
+    st.info('Les données de localisation sont fournies par Nominatim, un service de géocodage fourni par OpenStreetMap (OSM), et sont soumises à la licence Open Database License (ODbL). © OpenStreetMap contributeurs.')
+    headers = {
+        'User-Agent': 'SolarSales/1.0'
+    }
+    response = requests.get(f"https://nominatim.openstreetmap.org/search?format=json&q={address}", headers=headers)
     if response.status_code == 200:
         data = response.json()
         if data:
             return float(data[0]['lat']), float(data[0]['lon'])
+    else:
+        st.write(response.text)
+
     return None
 
 def obtenir_dpe_par_adresse(adresse):
