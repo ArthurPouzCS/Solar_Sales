@@ -93,14 +93,6 @@ def render_page_note_dimensionnement():
                                 data = pdf_data,
                                 file_name='note_dimensionnement_PAC.pdf',
                                 key='button'
-                            )
-                        }}
-                        """):
-                            st.download_button(
-                                label="Télécharger",
-                                data = pdf_data,
-                                file_name='note_dimensionnement_PAC.pdf',
-                                key='button'
                             )           
                     
         else:
