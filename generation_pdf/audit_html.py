@@ -131,7 +131,7 @@ def audit_string_html(dic):
                     max-height: 200px;
                     float:right;
                     margin-right: 20%;
-                    margin-top: -140px;
+                    margin-top: 700px;
                 }
 
                 div span {
@@ -351,7 +351,7 @@ def audit_string_html(dic):
 
             <header style="margin-top:100px; text-align:center">
                 <span>
-                    <img style="margin-left:60px; margin-top:-10px; width:fit-content" src="{os.path.join(os.path.dirname(__file__),'logo_centre_energie.JPG')}" alt="Votre Logo">
+                    <img style="margin-left:60px; margin-top:-10px; width:fit-content; display:none" src="{os.path.join(os.path.dirname(__file__),'logo_centre_energie.JPG')}" alt="Votre Logo">
                     <h1 style="margin-top:-26px; margin-right:1800px">Vous accompagne dans vos projets</h1>
                 </span>
                 
@@ -521,7 +521,7 @@ def audit_string_html(dic):
                     <th>Ma prime rénov<div class="corps">{dic['mpr']} €</div></th>
                     <th>Prime coup de pouce (CEE)<div class="corps">{dic['cee']} €</div></th>
                     <th>Prime EDF<div class="corps">{dic['edf']} €</div></th>
-                    <th>Récupération de la TVA<div class="corps">{dic['tva']} €</div></th>
+                    <th>Récupération de la TVA<div class="corps">{int(dic['tva'])} €</div></th>
                     <th>Déduction des crédits d'impôts<div class="corps">{dic['credit']} €</div></th>
                     <th>Total<div class="corps">{dic['total_aides']} €</div></th>
                 </tr>
@@ -598,11 +598,11 @@ def audit_string_html(dic):
             <div style="margin-left: 150px; margin-top:50px; position: relative;">
                 <img src="{os.path.join(os.path.dirname(__file__),'etiquette_energie.png')}" alt="Image Etiquette Energie" style="width: 300px; height: auto;">
 
-                <div style="position: absolute; top: {hauteur_avant}px; right: 300px; background-color: {couleur_avant}; text-align: center; padding: 5px; width: 120px; border-radius:5px; font-size:20px">
+                <div style="position: absolute; top: {hauteur_avant}px; right: 50px; background-color: {couleur_avant}; text-align: center; padding: 5px; width: 120px; border-radius:5px; font-size:20px">
                     Avant {int(dic['nbr_energie'])}
                 </div>
                 
-                <div style="position: absolute; top: {hauteur_apres}px; right: 160px; background-color: {couleur_apres}; text-align: center; padding: 5px; width: 120px;border-radius:5px; font-size:20px">
+                <div style="position: absolute; top: {hauteur_apres}px; right: -90px; background-color: {couleur_apres}; text-align: center; padding: 5px; width: 120px;border-radius:5px; font-size:20px">
                     Après {int(dic['nv_dpe'])}
                 </div>
             </div>

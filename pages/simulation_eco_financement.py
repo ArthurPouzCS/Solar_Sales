@@ -166,7 +166,7 @@ def render_page_ecofinancement():
                     ['MaPrimeRénov', str(dic['mpr'])+'€'],
                     ['Coup de Pouce', str(dic['cee'])+'€'],
                     ['EDF', str(dic['edf'])+'€'],
-                    ['Récupération de la TVA', str(dic['tva'])+'€'], 
+                    ['Récupération de la TVA', str(int(dic['tva']))+'€'], 
                     ["Déduction crédit d'impôts", str(dic['credit'])+'€'],
                     ["Apport personnel", str(apport)+'€'],
                     ['Total', str(total_aides)+'€'],
