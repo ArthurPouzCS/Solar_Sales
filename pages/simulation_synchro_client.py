@@ -136,7 +136,7 @@ def render_page_synchro():
                         if email_selectionne!=None:
                             st.success(email_selectionne)
                             if st.button("Mettre à jour"):
-                                st.write()
+                                
                                 dic['nom'], dic['prenom'], dic['email'] = [nom], [prenom],  [email_selectionne]
                                 response = create_contact(access_token, dic)
                 else:

@@ -100,7 +100,7 @@ with stylable_container(
                             st.error('Mot de passe incorrect')
                     else:
                         with st.form("connexion"):
-                            mail = st.text_input('Mail')
+                            mail = st.text_input('Mail', value='arthur.pouzargue@outlook.fr')
                             password = st.text_input('Password', type='password')
                             submitted_connexion = st.form_submit_button("Se connecter")
                         if submitted_connexion:

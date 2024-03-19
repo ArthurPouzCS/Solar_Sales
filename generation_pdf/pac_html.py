@@ -278,10 +278,6 @@ def pac_string_html(dic):
                         <tr>
                             <th>Surface chauffée<div class="corps">{dic['surface_chauffer']}m²</div></th>
                             <th>Hauteur sous plafond<div class="corps">{dic['hauteur_ss_plafond']}m</div></th>
-                            <th>Pertes thermiques<div class="corps">?? W/K</div></th>
-                        </tr>
-                        <tr>
-                            <th><div class="corps"></div></th>
                             <th>Besoins bruts<div class="corps">{dic['puissance_pac']}kWh</div></th>
                         </tr>
                     </table>

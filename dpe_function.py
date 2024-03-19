@@ -4,6 +4,7 @@ from streamlit_extras.stylable_container import stylable_container
 
 def get_coordinates_from_address(address):
     response = requests.get(f"https://nominatim.openstreetmap.org/search?format=json&q={address}")
+    st.write(response.json())
     if response.status_code == 200:
         data = response.json()
         if data:

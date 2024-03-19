@@ -209,7 +209,7 @@ def create_contact(access_token, dic):
         return response.json()
     else:
         st.error("Erreur lors de la création du contact")
-        st.write(response.json())
+        #st.write(response.json())
         return None
 
     
