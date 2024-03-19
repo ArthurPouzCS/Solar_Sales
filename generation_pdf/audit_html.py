@@ -291,7 +291,7 @@ def audit_string_html(dic):
                         <div>{dic['email']}</div>
                         <div>Parcelle {dic['parcelles']}</div>
                     </div>
-                    <div class="box_accueil" style="text-align: right;margin-left: 50px; margin-top:-100px">
+                    <div class="box_accueil" style="text-align: right;margin-right: 20px; margin-top:-100px">
                         <div>{nom_sales}</div>
                         <div>{prenom_sales}</div>
                         <div>{mail_sales}</div>
@@ -302,7 +302,7 @@ def audit_string_html(dic):
             <div style="margin-top: 0px;text-align: center;">
                 <img src="{os.path.join(os.path.dirname(__file__),'logo_centre_energie.JPG')}" class="logo_accueil">
             </div>
-            <div style="margin-top: 130px; margin-bottom:100px">
+            <div style="margin-top: 30px; margin-bottom:100px">
                 <section style="text-align: center;">
                     <h2 style="margin: auto;">Audit énergétique</h2>
                     <h3 style="margin: auto;">Simulation réalisée le 06/12/2023</h3>
