@@ -132,7 +132,9 @@ def audit_string_html(dic):
                     max-height: 200px;
                     float:right;
                     margin-right: 20%;
-                    margin-top: 250px;
+                    margin-top: 270px;
+                    margin-bottom: 50px;
+                    
                 }
 
                 div span {
