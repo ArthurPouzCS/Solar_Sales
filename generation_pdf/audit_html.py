@@ -381,6 +381,12 @@ def audit_string_html(dic):
                 <h1>Avantages de la rénovation énergétique</h1>
                 <p>Votre projet de rénovation touche à la dimension énérgétique de votre habitat.<br>
                     <span>Cela vous apporte de nombreux avantages :</span>
+                    <ul>
+                        <li>Vous réalisez des économies sur vos factures d'énergie.</li>
+                        <li>Vous augmentez la valeur de votre bien immobilier.</li>
+                        <li>Vous améliorez votre confort de vie.</li>
+                        <li>Vous participez à la transition énergétique.</li>
+                    </ul>
                 </p>
                 <img src="{os.path.join(os.path.dirname(__file__),'image.jpg')}" alt="Votre Photo">
                 <div>
