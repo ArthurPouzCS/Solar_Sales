@@ -140,7 +140,7 @@ with stylable_container(
                             
                             prenom = st.text_input("Prénom")
                             mdp_smtp = st.text_input("Mot de passe de votre adresse mail", type='password')
-                            client = st.text_input("Client ID API Zoho")
+                            client = st.text_input("Client ID API Zoho", help="Pour trouver vos ID, cliquez sur le bouton ci-dessous, connectez vous et cliquez sur Server-based Applications : Create Now, entrez FranceAudit dans Client Name, https://solar-sales-voltico-development.streamlit.app dans Homepage URL, et https://solar-sales-voltico-development.streamlit.app/ dans Authorized Redirect URIs")
                             space(1)
                             with stylable_container(key="link_button_style2", css_styles=f"""
                             [data-testid="baseLinkButton-secondary"]{{

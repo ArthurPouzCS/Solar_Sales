@@ -131,7 +131,11 @@ def map_api():
         latitude, longitude = coordinates
 
         # Obtenez le code INSEE correspondant aux coordonnées
-        response = requests.get(f"https://api-adresse.data.gouv.fr/reverse/?lat={latitude}&lon={longitude}")
+        headers = {
+        'User-Agent': 'SolarSales/1.0'
+        }
+        response = requests.get(f"https://api-adresse.data.gouv.fr/reverse/?lat={latitude}&lon={longitude}", headers=headers)
+        
         if response.status_code == 200:
             data = response.json()
             try:
