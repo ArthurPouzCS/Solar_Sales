@@ -44,7 +44,7 @@ def is_valid_email(email):
     pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
     return re.match(pattern, email) is not None
 
-def send_email(expediteur, destinataire, cc, objet, corps, fichier_pdf):
+def send_email_past(expediteur, destinataire, cc, objet, corps, fichier_pdf):
     
     try :
         client_id, secret_id, mail_smtp, mdp_smtp = retrieve_secrets(expediteur)
@@ -66,8 +66,7 @@ def send_email(expediteur, destinataire, cc, objet, corps, fichier_pdf):
     
     msg.attach(MIMEText(corps, 'plain'))
 
-## A tester
-     # Ajouter le fichier PDF en pièce jointe
+    # Ajouter le fichier PDF en pièce jointe
     with open(fichier_pdf, 'rb') as attachment:
         part = MIMEBase('application', 'octet-stream')
         part.set_payload(attachment.read())
@@ -78,8 +77,6 @@ def send_email(expediteur, destinataire, cc, objet, corps, fichier_pdf):
         f'attachment; filename= {fichier_pdf}',
     )
     msg.attach(part)
-
-## # Votre code pour envoyer l'e-mail ici...
 
     # Établir la connexion avec le serveur SMTP
     with smtplib.SMTP(smtp_server, smtp_port) as server:
@@ -94,6 +91,37 @@ def send_email(expediteur, destinataire, cc, objet, corps, fichier_pdf):
     
     st.success("Mail envoyé avec succès")
     
+
+def send_email(expediteur, destinataire, cc, objet, corps, fichier_pdf):
+    
+    try:
+        with st.spinner("Envoi de l\'email..."):
+            msg = MIMEMultipart()
+            msg['From'] = expediteur
+            msg['To'] = destinataire
+            msg['Subject'] = objet
+            msg.attach(MIMEText(corps, 'plain'))
+
+            with open(fichier_pdf, 'rb') as attachment:
+                part = MIMEBase('application', 'octet-stream')
+                part.set_payload(attachment.read())
+            encoders.encode_base64(part)
+            part.add_header(
+                'Content-Disposition',
+                f'attachment; filename= {fichier_pdf}',
+            )
+            msg.attach(part)
+
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            server.login(st.secrets["email"]["gmail"], st.secrets["email"]["password"])
+            server.sendmail(expediteur, destinataire, msg.as_string())
+            server.quit()
+
+        st.success('Email envoyé ! 🚀')
+    except Exception as e:
+        st.error(f"Erreur lors de l'envoi : {e}")
+
 
 def dic_to_df(dic):
     keys, values = list(dic.keys()), list(dic.values())
@@ -951,6 +979,7 @@ def dont_forget_past_audit():
                 Audit de {dic_ancien_audit['prenom']} {dic_ancien_audit['nom']}
             </div>
         """, unsafe_allow_html=True)
+        
         space(1)
         mispace()
         past_audit = True

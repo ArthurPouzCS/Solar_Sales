@@ -54,7 +54,7 @@ def render_page_note_dimensionnement():
                         
                         space(2)
                         
-                        expediteur = st.text_input('Expéditeur', value='arthur.pouzargue@outlook.fr')
+                        expediteur = st.text_input('Expéditeur', value='arthur.pouzargue@gmail.fr')
                         destinataire = st.text_input('Destinataire', value='arthur.pouzargue@outlook.fr')
                         #cc = st.text_input('CC', value='arthur.pouzargue@outlook.fr')
                         cc = 'arthur.pouzargue@outlook.fr'

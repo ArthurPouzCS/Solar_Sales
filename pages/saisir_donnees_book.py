@@ -39,10 +39,18 @@ def render_page_book():
                 with st.expander("📖 Voir le Book"):
                     with st.spinner('Chargement du Book...'):
                         displayPDF(path, 700,400)
+            with stylable_container(key="book_style1", css_styles=
+            f"""
+            [data-testid="stMarkdownContainer"]>p{{
+                color:{colors(0)};
+                margin-bottom : 0;
+            }}
+            """):
+                if st.button('Suivant', key='suivant1'):
+                    switch_page('simulation_selection_materiels')
 
-
-
-   
+            
+        
     #### 
 
 render_page_book()

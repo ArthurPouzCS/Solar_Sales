@@ -180,5 +180,8 @@ def render_page_habitat_1():
                 update_or_insert_data(dic)
 
             switch_page("saisir_donnees_habitat_2")
+        
+        if st.button("Accueil"):
+            switch_page('Accueil')
     
 render_page_habitat_1()

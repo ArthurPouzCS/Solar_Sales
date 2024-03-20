@@ -144,5 +144,7 @@ def render_page_habitat_2():
 
 
             switch_page('saisir_donnees_habitat_3')
+        if st.button("Accueil"):
+            switch_page('Accueil')
 
 render_page_habitat_2()

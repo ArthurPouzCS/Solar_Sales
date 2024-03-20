@@ -72,7 +72,7 @@ def render_page_rapport_financier():
                         """):
                         condition_accepte = st.radio("J'accepte les conditions", ['Oui', 'Non'], index=0)
                     if condition_accepte=='Oui':
-                        expediteur = st.text_input('Expéditeur', value='arthur.pouzargue@outlook.fr')
+                        expediteur = st.text_input('Expéditeur', value='arthur.pouzargue@gmail.fr')
                         destinataire = st.text_input('Destinataire', value='arthur.pouzargue@outlook.fr')
                         #cc = st.text_input('CC', value='arthur.pouzargue@outlook.fr')
                         cc = 'arthur.pouzargue@outlook.fr'
@@ -92,16 +92,8 @@ def render_page_rapport_financier():
                         """, height=500)
                         if st.button("Envoyer"):
                             send_email(expediteur, destinataire, cc, objet, corps, real_path) #attention à mettre le mail comme il fait et mettre le mdp dans les réglages
-                            
+                if st.button("Suivant"):
+                    switch_page('simulation_note_dimensionnement')
                     
-
-
-                
-
-
-
-        
-        if st.button("Suivant"):
-            switch_page('simulation_note_dimensionnement')
 
 render_page_rapport_financier()

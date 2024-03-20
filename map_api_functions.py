@@ -59,8 +59,9 @@ def get_location_options(address):
     
     try:
         response = requests.get(url, params=params, headers=headers)
-    except requests.exceptions.RequestException as e:
-        st.write("Erreur de connexion :", e)
+    except : # requests.exceptions.RequestException as e:
+        #st.write("Erreur de connexion :", e)
+        pass
 
     if response.status_code == 200:
         locations = response.json()

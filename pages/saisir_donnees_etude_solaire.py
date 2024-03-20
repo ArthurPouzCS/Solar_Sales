@@ -20,12 +20,13 @@ def render_page_etude_solaire():
     page_icon="☀", layout="wide", initial_sidebar_state="collapsed"
 )
     past_audit, last = dont_forget_past_audit()
+    
     no_sidebar()
     css()
     styled_button()    
     #background('maison_energie.jpg', 'bottom right')
-
     afficher_frise_chronologique(1)
+    
     
     with stylable_container(
             key='adresse_container',
@@ -127,6 +128,8 @@ def render_page_etude_solaire():
                     type_personne = st.selectbox("Vous êtes :", options_type_personne, index=last('type_personne', 'selectbox', options_type_personne))
                 
         submitted = st.button("Suivant")
+        if st.button("Accueil"):
+            switch_page('Accueil')
         if submitted:
             dic = {
                 "adresse_postale":adresse_postale, 

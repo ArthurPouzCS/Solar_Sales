@@ -29,7 +29,8 @@ styled_button()
   
 #dic = retrieve_data_params()
 dic = {'param_ballon_thermo_tt_elec': 55, 'param_pac_air_air_tt_elec': 25, 'param_led_non_tt_elec': 10, 'param_ballon_thermo': 30}
-
+if st.button('Accueil'):
+    switch_page('Accueil')
 with stylable_container(key='reglages_container', css_styles = my_style_container()):
     with st.container():
         tab1, tab2, tab3 = st.tabs(['Paramètres généraux', 'Paramètres financiers', 'Changer mon mot de passe'])
@@ -60,5 +61,3 @@ with stylable_container(key='reglages_container', css_styles = my_style_containe
                     if st.button("Changer le mot de passe"):
                         changer_mdp(last_password, new_password1)
 
-if st.button('Accueil'):
-    switch_page('Accueil')
