@@ -112,7 +112,12 @@ with stylable_container(
         jamais_fait = (client_id == None)
         #jamais_fait = not(os.path.exists(chemin_fichier)) ## Avant
         if jamais_fait:
-            st.info('Connectez vous à votre CRM Zoho')
+            with stylable_container(key='authentification', css_styles=f"""
+            [data-testid="stNotification"]{{
+                background-color:{colors(1)};
+            }}
+            """):
+                st.info('Connectez vous à votre CRM Zoho')
             space(1)
             col1, col2 = st.columns(2)
             with col1:
@@ -139,9 +144,13 @@ with stylable_container(
                         with b:
                             
                             prenom = st.text_input("Prénom")
-                            mdp_smtp = st.text_input("Mot de passe de votre adresse mail", type='password')
-                            client = st.text_input("Client ID API Zoho", help="Pour trouver vos ID, cliquez sur le bouton ci-dessous, connectez vous et cliquez sur Server-based Applications : Create Now, entrez FranceAudit dans Client Name, https://solar-sales-voltico-development.streamlit.app dans Homepage URL, et https://solar-sales-voltico-development.streamlit.app/ dans Authorized Redirect URIs")
                             space(1)
+                            mdp_smtp = st.text_input("Mot de passe de votre adresse mail", type='password')
+                            client = st.text_input("Client ID API Zoho")
+                            space(1)
+                        with st.expander('Comment trouver mes ID ?'):
+                            st.info(r"Pour trouver vos ID, cliquez sur le bouton ci-dessus, connectez vous et cliquez sur Server-based Applications : Create Now, entrez FranceAudit dans Client Name, https://solar-sales-voltico-development.streamlit.app dans Homepage URL, et https://solar-sales-voltico-development.streamlit.app/ dans Authorized Redirect URIs")
+                        with b:
                             with stylable_container(key="link_button_style2", css_styles=f"""
                             [data-testid="baseLinkButton-secondary"]{{
                                 background-color : {colors(0)};

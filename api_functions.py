@@ -53,7 +53,7 @@ def access_token_by_user():
 
         with stylable_container(key='lien_container',css_styles = ["""
         [data-testid="stMarkdownContainer"] > a  {
-            font-color:white;
+            font-color:lightblue;
         }
         [data-testid="stMarkdownContainer"] > p  {
             font-size: 16px;
