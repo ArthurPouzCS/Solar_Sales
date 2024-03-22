@@ -56,7 +56,7 @@ if adresse is not None:
                     destinataire = st.text_input('Destinataire', value='arthur.pouzargue@outlook.fr')
                     #cc = st.text_input('CC', value='arthur.pouzargue@outlook.fr')
                     cc = 'arthur.pouzargue@outlook.fr'
-                    objet = st.text_input('Objet', value='Note de dimensionnement')
+                    objet = st.text_input('Objet', value='Garantie de production photovoltaïque')
                     ##pj = piece jointe !!
                     corps = st.text_area('', value="""
                     Bonjour,

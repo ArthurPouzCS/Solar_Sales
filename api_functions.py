@@ -139,6 +139,7 @@ def get_user_info_by_email(access_token, email):
     # Endpoint pour récupérer la liste des utilisateurs
     endpoint = 'https://www.zohoapis.eu/crm/v2/Contacts/search?'
     headers = {
+        "User-Agent": 'SolarSales/1.0',
         "Authorization": f"Bearer {access_token}",
     }
     #params = {"email":email}
@@ -160,6 +161,7 @@ def get_user_info_by_nom_prenom(access_token, nom, prenom):
     # Endpoint pour récupérer la liste des utilisateurs
     endpoint = 'https://www.zohoapis.eu/crm/v2/Contacts/search?'
     headers = {
+        "User-Agent": 'SolarSales/1.0',
         "Authorization": f"Bearer {access_token}",
     }
     #params = {"email":email}
@@ -200,12 +202,16 @@ def create_contact(access_token, dic):
     }
 
     headers = {
+        "User-Agent": 'SolarSales/1.0',
         "Authorization": f"Bearer {access_token}",
         "Content-Type": "application/json",
     }
 
     # Envoie de la demande pour créer un nouveau contact
     response = requests.post(endpoint, headers=headers, json=data)
+
+    #st.write(access_token, response.status_code, response.json())
+
     if response.status_code == 201 or response.status_code == 200:
         st.success("Données envoyées  🥳")
         return response.json()
