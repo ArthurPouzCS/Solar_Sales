@@ -895,7 +895,8 @@ def dont_forget_past_audit():
                 'capacite_eau_chaude_elec':100,
                 'ressources_annuelles':20000,
                 'conso_kwh':5000,
-                'pente_toit':0
+                'pente_toit':0,
+                'voiture_electrique':1,
                 }
 
     def last(key, my_type, options=None):

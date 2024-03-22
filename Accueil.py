@@ -97,7 +97,6 @@ show_title('FranceAudit ⚡')
 #background('violet2.jpg', 'center right')
 #backgroundColor(colors(5))
 
-
 with stylable_container(
         key='adresse_container',
         css_styles = ["""
@@ -349,16 +348,36 @@ with stylable_container(
             with stylable_container(key='bouton_reglages',
             css_styles = ["""
             div.stButton > button:first-child  {
-                width : 10%;
+                width : 40%;
                 height : 20px;
                 font-size : 25px;
                 font-weight : semi-bold;
                 font-family: 'Calibri', sans-serif; 
                 text-align:center;
+                position:relative;
+                float:right;
                 }
             """]):
-                if st.button("Réglages"):
-                    switch_page("reglages")
+                a,b = st.columns(2)
+                with a:
+                    if st.button("Réglages"):
+                        switch_page("reglages")
+                with b:
+                    with stylable_container(key='bouton_annexe',
+                    css_styles = ["""
+                    div.stButton > button:first-child  {
+                        width : 40%;
+                        height : 20px;
+                        font-size : 25px;
+                        font-weight : semi-bold;
+                        font-family: 'Calibri', sans-serif; 
+                        text-align:center;
+                        position:relative;
+                        float:left;
+                        }
+                    """]):
+                        if st.button("Documentation"):
+                            switch_page("documentation")
 
 
             # if st.button('Configurations'):

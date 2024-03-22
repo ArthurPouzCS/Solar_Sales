@@ -53,6 +53,7 @@ def render_page_habitat_3():
                 with col2:    
                     type_four = st.selectbox("Quel type de four possédez-vous :", ["Electrique", "Non électrique", "Aucun four"], index=last('type_four', 'selectbox', ["Electrique", "Non électrique", "Aucun four"]))
                     lave_linge = st.selectbox("Avez-vous un lave-linge ?", ["Oui", "Non"], index=last('lave_linge', 'selectbox', ["Oui", "Non"]))
+                    
                     voiture_electrique = st.selectbox("Possédez-vous une voiture électrique ?", ["Oui", "Non"], index=last('voiture_electrique', 'selectbox', ["Oui", "Non"]))
                     piscine_chauffee = st.selectbox("Possédez-vous une piscine chauffée ?", ["Oui", "Non"], index=last('piscine_chauffee', 'selectbox', ["Oui", "Non"]))
                 

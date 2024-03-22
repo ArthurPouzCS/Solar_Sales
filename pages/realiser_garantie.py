@@ -52,7 +52,7 @@ if adresse is not None:
             with stylable_container(key="adresse_style", css_styles=my_style_container()):
                 with st.container():
                     #if st.button("Envoyer par mail"):
-                    expediteur = st.text_input('Expéditeur', value='arthur.pouzargue@outlook.fr')
+                    expediteur = st.text_input('Expéditeur', value='arthur.pouzargue@gmail.com')
                     destinataire = st.text_input('Destinataire', value='arthur.pouzargue@outlook.fr')
                     #cc = st.text_input('CC', value='arthur.pouzargue@outlook.fr')
                     cc = 'arthur.pouzargue@outlook.fr'
@@ -61,7 +61,7 @@ if adresse is not None:
                     corps = st.text_area('', value="""
                     Bonjour,
 
-                    Veuillez recevoir en PJ la note de dimensionnement de votre pompe à chaleur.
+                    Veuillez recevoir en PJ l'estimation de production de vos panneaux photovoltaïques.
                     
                     Bonne réception,
                     

@@ -44,6 +44,10 @@ with stylable_container(
                 background-color : {colors(0)};
                 border-radius: 8px;
             }}
+
+            [data-testid="stNotification"]{{
+                color: lightgreen;
+            }}
             
             """
             ):
