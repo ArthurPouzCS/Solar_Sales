@@ -99,6 +99,10 @@ def send_email(expediteur, destinataire, cc, objet, corps, fichier_pdf):
             msg = MIMEMultipart()
             msg['From'] = expediteur
             msg['To'] = destinataire
+            
+            #cc = 'arthur.pouzargue@student-cs.fr'
+            #msg['Cc'] = cc
+            
             msg['Subject'] = objet
             msg.attach(MIMEText(corps, 'plain'))
 
@@ -115,6 +119,9 @@ def send_email(expediteur, destinataire, cc, objet, corps, fichier_pdf):
             server = smtplib.SMTP('smtp.gmail.com', 587)
             server.starttls()
             server.login(st.secrets["email"]["gmail"], st.secrets["email"]["password"])
+            
+            #destinataires = [destinataire] + cc.split(',')
+            
             server.sendmail(expediteur, destinataire, msg.as_string())
             server.quit()
 

@@ -73,7 +73,11 @@ def get_location_options(address):
 
 #@st.cache_data()
 def get_coordinates_from_address(address):
-    response = requests.get(f"https://nominatim.openstreetmap.org/search?format=json&q={address}")
+    headers = {
+        "User-Agent": 'SolarSales/1.0'
+    }
+    response = requests.get(f"https://nominatim.openstreetmap.org/search?format=json&q={address}", headers=headers)
+    st.write(response.status_code,  response.json()) ##
     if response.status_code == 200:
         data = response.json()
         if data:
@@ -88,7 +92,9 @@ def get_parcelles(latitude, longitude):
     geometry_point = create_square_polygon(latitude, longitude)
 
     params = {"geom":json.dumps(geometry_point)}
-    response =  requests.get(url, params=params)
+    response =  requests.get(url, params=params, headers={"User-Agent": 'SolarSales/1.0'})
+    
+    st.write(response.status_code,  response.json()) ##
     
     if response.status_code == 200:
         parcelles = response.json()
@@ -159,8 +165,10 @@ def map_api():
 
         # Obtenez le code INSEE correspondant aux coordonnées
         
-        response = requests.get(f"https://api-adresse.data.gouv.fr/reverse/?lat={latitude}&lon={longitude}")
+        response = requests.get(f"https://api-adresse.data.gouv.fr/reverse/?lat={latitude}&lon={longitude}", headers={"User-Agent": 'SolarSales/1.0'})
         
+        st.write(response.status_code,  response.json()) ##
+
         if response.status_code == 200:
             data = response.json()
             try:
@@ -172,5 +180,8 @@ def map_api():
 
         # Affichez la carte satellite avec les parcelles
         display_satellite_map_with_parcelles(latitude, longitude, parcelles)
+
+
+############# Nouveau
         
 
