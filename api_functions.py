@@ -12,7 +12,8 @@ def get_keys():
     id = df.client_id.iloc[0]
     secret = df.secret_id.iloc[0]
     mail = df.mail.iloc[0]
-    redirect_uri = "http://localhost:8501/"
+    #redirect_uri = "http://localhost:8501/"
+    redirect_uri = "https://solar-sales-voltico-development.streamlit.app/"
     return mail, id, secret, redirect_uri
 
 def get_keys_from_bdd():
@@ -22,7 +23,8 @@ def get_keys_from_bdd():
     #id = result[0][5]
     #secret = result[0][6]
 
-    redirect_uri = "http://localhost:8501/"
+    #redirect_uri = "http://localhost:8501/"
+    redirect_uri = "https://solar-sales-voltico-development.streamlit.app/"
     id, secret, mail_smtp, mdp_smtp = retrieve_secrets(mail)
     return mail, id, secret, redirect_uri
 
