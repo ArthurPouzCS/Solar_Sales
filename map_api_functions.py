@@ -77,7 +77,7 @@ def get_coordinates_from_address(address):
         "User-Agent": 'SolarSales/1.0'
     }
     response = requests.get(f"https://nominatim.openstreetmap.org/search?format=json&q={address}", headers=headers)
-    st.write(response.status_code,  response.json()) ##
+    st.write(response.status_code) ##
     if response.status_code == 200:
         data = response.json()
         if data:
@@ -94,7 +94,7 @@ def get_parcelles(latitude, longitude):
     params = {"geom":json.dumps(geometry_point)}
     response =  requests.get(url, params=params, headers={"User-Agent": 'SolarSales/1.0'})
     
-    st.write(response.status_code,  response.json()) ##
+    st.write(response.status_code) ##
     
     if response.status_code == 200:
         parcelles = response.json()
@@ -167,7 +167,7 @@ def map_api():
         
         response = requests.get(f"https://api-adresse.data.gouv.fr/reverse/?lat={latitude}&lon={longitude}", headers={"User-Agent": 'SolarSales/1.0'})
         
-        st.write(response.status_code,  response.json()) ##
+        st.write(response.status_code) ##
 
         if response.status_code == 200:
             data = response.json()
