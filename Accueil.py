@@ -14,7 +14,7 @@ from db_functions import *
 
 
 def get_token():
-    return None
+    #return None
     #chemin_fichier = os.path.join(os.path.join(os.path.dirname(__file__),'df_to_save'),'zoho_file.csv')
     #df = pd.read_csv(chemin_fichier)
     mail = st.session_state.mail
