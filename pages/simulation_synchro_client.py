@@ -140,7 +140,7 @@ def render_page_synchro():
                                 dic['nom'], dic['prenom'], dic['email'] = [nom], [prenom],  [email_selectionne]
                                 response = create_contact(access_token, dic)
                 else:
-                    st.subheader("2/ Création du client")
+                    st.subheader("2/ Création du client") 
                     a, b = st.columns(2)
                     with a:
                         c,d = st.columns(2)
@@ -152,6 +152,7 @@ def render_page_synchro():
                             if st.button('Envoyer les données'):
                                 response = create_contact(access_token, dic)
                                 time.sleep(1)
+                        
 
    
         x,y,z = st.columns(3)

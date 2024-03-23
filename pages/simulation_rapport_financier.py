@@ -65,6 +65,8 @@ def render_page_rapport_financier():
                         """):
                         date_rdv = st.date_input('Date du RDV')
                         heure_rdv = st.time_input("Heure du RDV")
+                        st.session_state.data['date_rdv'] = date_rdv
+                        st.session_state.data['heure_rdv'] = heure_rdv
                     with stylable_container(key="condition_style", css_styles="""
                         .st-emotion-cache-kjgucs{
                             color:white

@@ -5,6 +5,7 @@ import socket
 import os
 from db_functions import *
 from streamlit_extras.stylable_container import stylable_container
+import datetime
 
 def get_keys():
     path = os.path.join(os.path.join(os.path.dirname(__file__), 'df_to_save'),'zoho_file.csv')
@@ -182,24 +183,50 @@ def get_user_info_by_nom_prenom(access_token, nom, prenom):
 def create_contact(access_token, dic):
     # Endpoint pour créer un nouveau contact
     endpoint = "https://www.zohoapis.eu/crm/v2/Contacts/upsert"
-    dic['adresse_postale'] = [["425 Route de Soucieu 69440 Saint Laurent d'Agny"]]
-    dic['departement'] = [["69 - Rhône"]]
-    dic['materiels'] = [[['PAC air-eau', 'Domotique']]]
+
+    dic = clean_dict(dic)
     
     # Données du nouveau contact
+
+    dic_to_send = {
+        "Email": dic['email'],          #Mandatory
+        "First_Name": dic['prenom'],    #Mandatory
+        "Last_Name":dic['prenom']+' '+dic['nom'],         #Mandatory
+
+        "date_creation_prospect" : datetime.datetime.today().strftime("%Y-%m-%d"),
+        "Mailing_Street" : dic['adresse_postale'],
+        "Departement":dic['departement'],
+        "Proprietaire_de_r_sidence":dic['type_personne'],
+        "Facture_electrique_par_ans":dic['montant_facture'],
+        "Orientation_du_toit":dic['orientation_toit'],
+        ##ne fonctionne que si le champ d'entrée est déjà présent sur le CRM -> pas grave juste faut le mettre
+        #faut le mettre sous le bon format je crois
+    }
+
+
+    try:
+        dic_to_send['Nom_du_contact'] = str(dic['prenom']) + ' ' + str(dic['nom'])
+    except:
+        pass
+    try:
+        date_heure_rdv = (datetime.datetime.combine(st.session_state.data['date_rdv'], st.session_state.data['heure_rdv']) - datetime.timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M:%S+00:00")
+        dic_to_send["Date_et_heure_du_RDV"] = date_heure_rdv
+        st.write(date_heure_rdv)
+    except:
+        pass
+    try:
+        dic_to_send["Syst_me_de_chauffage_secondaire"]=dic['autre_systeme_chauffage']
+    except:
+        pass
+
+
     data = {
         "data": [
-            {
-                "First_Name": dic['prenom'][0],
-                "Last_Name": dic['nom'][0],
-                "Email": dic['email'][0],
-                "Adresse de correspondance":dic['adresse_postale'][0], ##ne fonctionne que si le champ d'entrée est déjà présent sur le CRM -> pas grave juste faut le mettre
-                "Code postale de correspondance":dic['departement'][0], #faut le mettre sous le bon format je crois
-                "Description":dic['materiels'][0][0]
-                
-            }
+            dic_to_send
         ]
     }
+
+    #st.write(data)
 
     headers = {
         "User-Agent": 'SolarSales/1.0',
@@ -214,6 +241,7 @@ def create_contact(access_token, dic):
 
     if response.status_code == 201 or response.status_code == 200:
         st.success("Données envoyées  🥳")
+        #st.write(response.json())
         return response.json()
     else:
         st.error("Erreur lors de la création du contact")
