@@ -60,8 +60,11 @@ def render_page_audit():
                     if st.button("Envoyer"):
                         #try:
                         send_email(expediteur, destinataire, cc, objet, corps, real_path) #attention à mettre le mail comme il fait et mettre le mdp dans les réglages
+                
                 if st.button("Suivant"):
                     switch_page('simulation_rapport_financier')
+                if st.button("Accueil"):
+                    switch_page('Accueil')
                         
 
 render_page_audit()

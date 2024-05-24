@@ -156,8 +156,9 @@ def render_page_comparaison():
 
 
 
-        
-        if st.button("Suivant"):
+        suivant = st.button("Suivant")
+        accueil = st.button("Accueil")
+        if suivant or accueil:
             if 'data' in st.session_state:
                 dic = st.session_state.data
                 dic['classe_dpe'] = classe_dpe
@@ -173,7 +174,10 @@ def render_page_comparaison():
 
                 st.session_state.data = dic
                 update_or_insert_data(dic)
-                
-            switch_page('simulation_eco_financement')
+            
+            if suivant:
+                switch_page('simulation_eco_financement')
+            elif accueil:
+                switch_page('Accueil')
 
 render_page_comparaison()

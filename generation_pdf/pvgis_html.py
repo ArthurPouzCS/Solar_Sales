@@ -148,30 +148,30 @@ def pvgis_html(dic):
         <div class="sous-titre">Réalisation le {date} pour {prenom} {nom}</div>
             <div class="container">
     <div class="column_text">
-        <div class="blue-bg">Provided inputs</div>
+        <div class="blue-bg">Entrées du client</div>
         <ul>
-            <li>Summary</li>
-            <li>Location : {dic['inputs']['location']['latitude']}, {dic['inputs']['location']['longitude']}</li>
+            <li>Résumé</li>
+            <li>Localisation : {dic['inputs']['location']['latitude']}, {dic['inputs']['location']['longitude']}</li>
             <li>Horizon: Calculated</li>
-            <li>Database used: {dic['inputs']['meteo_data']['radiation_db']}</li>
-            <li>PV technology: {dic['inputs']['pv_module']['technology']}</li>
-            <li>PV installed : {dic['inputs']['pv_module']['peak_power']} kWp</li>
-            <li>System loss : {dic['inputs']['pv_module']['system_loss']*100} %</li>
+            <li>Données utilisées: {dic['inputs']['meteo_data']['radiation_db']}</li>
+            <li>Technologie PV: {dic['inputs']['pv_module']['technology']}</li>
+            <li>PV installée : {dic['inputs']['pv_module']['peak_power']} kWp</li>
+            <li>Pertes Système : {dic['inputs']['pv_module']['system_loss']*100} %</li>
         </ul>
         
-        <div class="blue-bg">Simulation outputs</div>
+        <div class="blue-bg">Simulation</div>
         <ul>
-            <li>Slope angle : {dic['inputs']['mounting_system']['fixed']['slope']['value']}°</li>
-            <li>Azimuth angle : {dic['inputs']['mounting_system']['fixed']['azimuth']['value']}°</li>
-            <li>Yearly PV energy production : {dic['outputs']['totals']['fixed']['E_y']} kWh</li>
-            <li>Yearly in-plane irradiation : {dic['outputs']['totals']['fixed']['H(i)_y']} kWh/m²</li>
-            <li>Year-to-year variability : {dic['outputs']['totals']['fixed']['SD_y']} kWh</li>
-            <li>Changes in output due to:</li>
+            <li>Angle de pente : {dic['inputs']['mounting_system']['fixed']['slope']['value']}°</li>
+            <li>Angle d'Azimuth : {dic['inputs']['mounting_system']['fixed']['azimuth']['value']}°</li>
+            <li>Production annuelle d'énergie PV : {dic['outputs']['totals']['fixed']['E_y']} kWh</li>
+            <li>Radiation annuelle : {dic['outputs']['totals']['fixed']['H(i)_y']} kWh/m²</li>
+            <li>Variabilité annuelle : {dic['outputs']['totals']['fixed']['SD_y']} kWh</li>
+            <li>Facteurs d'influence dans la simulation to:</li>
             <ul>
-                <li>Angle of incidence : {dic['outputs']['totals']['fixed']['l_aoi']} %</li>
-                <li>Spectral effects : {dic['outputs']['totals']['fixed']['l_spec']} %</li>
-                <li>Temperature and low irradiance : {dic['outputs']['totals']['fixed']['l_tg']} %</li>
-                <li>Total loss : {dic['outputs']['totals']['fixed']['l_total']} %</li>
+                <li>Angle d'incidence : {dic['outputs']['totals']['fixed']['l_aoi']} %</li>
+                <li>Effets spectrales : {dic['outputs']['totals']['fixed']['l_spec']} %</li>
+                <li>Température et faible radiance : {dic['outputs']['totals']['fixed']['l_tg']} %</li>
+                <li>Pertes totales : {dic['outputs']['totals']['fixed']['l_total']} %</li>
             </ul>
         </ul>
     </div>

@@ -94,8 +94,11 @@ def render_page_rapport_financier():
                         """, height=500)
                         if st.button("Envoyer"):
                             send_email(expediteur, destinataire, cc, objet, corps, real_path) #attention à mettre le mail comme il fait et mettre le mdp dans les réglages
+                
                 if st.button("Suivant"):
                     switch_page('simulation_note_dimensionnement')
+                if st.button('Accueil'):
+                    switch_page('Accueil')
                     
 
 render_page_rapport_financier()

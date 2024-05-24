@@ -17,6 +17,7 @@ css()
 
 create_table_user_credentials()
 create_table_data()
+create_table_params()
 #background('eolienne_rouge.jpg', 'bottom right')
 
 with stylable_container(

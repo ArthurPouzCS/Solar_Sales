@@ -30,15 +30,7 @@ def render_page_book():
             """):
                 if st.button("Retour à l'accueil", key='retour1'):
                     switch_page("Accueil")
-                
-            with stylable_container(key="book_style", css_styles="""
-            .e1nzilvr5 > p{
-                font-size: 20px;
-            }
-            """):
-                with st.expander("📖 Voir le Book"):
-                    with st.spinner('Chargement du Book...'):
-                        displayPDF(path, 700,400)
+
             with stylable_container(key="book_style1", css_styles=
             f"""
             [data-testid="stMarkdownContainer"]>p{{
@@ -48,6 +40,16 @@ def render_page_book():
             """):
                 if st.button('Suivant', key='suivant1'):
                     switch_page('simulation_selection_materiels')
+
+            with stylable_container(key="book_style", css_styles="""
+            .e1nzilvr5 > p{
+                font-size: 20px;
+            }
+            """):
+                with st.expander("📖 Voir le Book"):
+                    with st.spinner('Chargement du Book...'):
+                        displayPDF(path, 700,400)
+           
 
             
         

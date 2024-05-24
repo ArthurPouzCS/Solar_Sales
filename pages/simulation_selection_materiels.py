@@ -96,8 +96,12 @@ def render_page_selection_materiels():
                 dic_amelioration_percent["PAC air-eau"] = tab["tx_pac_air_eau_qd_tt_elec"]
                 dic_amelioration_percent["Pack LED"] = tab["tx_pack_led_qd_tt_elec"]
                 #dic_amelioration_percent["Ballon(s)"] = tab["tx_ballon_thermo_qd_tt_elec"]
+        
+        if 'Ballon thermodynamique' not in materiels and 'Ballon électrique' not in materiels:
+            return 1 # Pas d'économies du tout
             
-            
+        
+        #st.write(dic_amelioration_percent)            
         return 1-dic_amelioration_percent[label]
 
     #st.write(val('adresse_postale'), val('montant_facture'),tab['prix_kwh'])
@@ -226,7 +230,7 @@ def render_page_selection_materiels():
                         panneaux_sol = st.radio('Pose des panneaux au sol', ['Oui', 'Non'], index=1)
                         nbr_panneaux = int(puissance_panneaux*1000/int(pv_unitaire.split('W')[0]))
                         surface_panneaux = nbr_panneaux*tab["surface_panneau"]
-                    st.markdown("<sub>Quantité panneau et superficie : "+str(nbr_panneaux)+" panneaux ("+str(round(surface_panneaux,1))+"m²)</sub>", unsafe_allow_html=True)
+                    st.markdown("<sub style='font-size:16px'>Quantité panneau et superficie : "+str(nbr_panneaux)+" panneaux ("+str(round(surface_panneaux,1))+"m²)</sub>", unsafe_allow_html=True)
                     if val('compteur')=='Monophasé':
                         st.markdown("<div style=color:red;font-size:12px><bold>Compteur en monophasé : Raccordement réseau plafonné à 6.0 kWc</bold></div>", unsafe_allow_html=True)
                         if puissance_panneaux>=6:    
@@ -482,7 +486,9 @@ def render_page_selection_materiels():
         gain_et_eco_elec_par_an = eco_elec_par_an + gain_elec_par_an_pv
         
     
-        if st.button("Suivant"):
+        suivant = st.button("Suivant")
+        accueil = st.button("Accueil")
+        if suivant or accueil:
             if 'data' in st.session_state:
                 dic = st.session_state.data
                 
@@ -535,6 +541,11 @@ def render_page_selection_materiels():
                 st.session_state.data = dic
                 update_or_insert_data(dic)
 
-            switch_page('simulation_comparaison')
+            if suivant:
+                switch_page('simulation_comparaison')
+            elif accueil:
+                switch_page('Accueil')
+
+        
 
 render_page_selection_materiels()

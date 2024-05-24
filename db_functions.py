@@ -326,20 +326,126 @@ def get_refresh_token(mail):
     return result
 
 
-def create_table_params():
+def create_table_params(): # On l'appelle dans authentification
     ##### Des paramètres pour tout le monde
     query = """
     CREATE TABLE IF NOT EXISTS params_table (
         id SERIAL PRIMARY KEY,
-        mail VARCHAR(100) UNIQUE NOT NULL,
-        mdp VARCHAR(100) NOT NULL,
-        nom VARCHAR(100),
-        prenom VARCHAR(100),
-        client_id VARCHAR(200),
-        secret_id VARCHAR(512),
-        mail_smtp VARCHAR(200),
-        mdp_smtp VARCHAR(512),
-        refresh_token VARCHAR(200)
-    );
-    """
+        prix_kwh FLOAT,
+        prix_kwh_revendu_part FLOAT,
+        prix_kwh_revendu_pro_0_3 FLOAT,
+        prix_kwh_revendu_pro_3_9 FLOAT,
+        prix_kwh_revendu_pro_9_36 FLOAT,
+        prix_kwh_revendu_pro_36_100 FLOAT,
+        rendement_paneaux FLOAT,
+        heures_ensoleillement INT,
+        coef_meteorologique FLOAT,
+        coef_performance FLOAT,
+        perte_systeme FLOAT,
+        nbr_mois INT,
+        surface_panneau FLOAT,
+        tx_pac_air_air_qd_tt_elec FLOAT,
+        tx_pac_air_eau_qd_tt_elec FLOAT,
+        tx_pack_led_qd_tt_elec FLOAT,
+        tx_pack_led_qd_tt_nn_elec FLOAT,
+        tx_pac_air_air_qd_gaz_fioul FLOAT,
+        tx_pac_air_eau_qd_gaz_fioul FLOAT,
+        tx_ballon_thermo_qd_gaz_fioul_elec_ballon_sur_elec FLOAT,
+        tx_pac_air_air_qd_gaz_fioul_ballon_sur_elec FLOAT,
+        tx_pac_air_eau_qd_gaz_fioul_elec_ballon_sur_elec FLOAT,
+        tx_ballon_thermo_qd_gaz_fioul_elec_ballon_sur_gaz FLOAT,
+        tx_pac_air_air_qd_gaz_fioul_elec_ballon_sur_gaz FLOAT,
+        tx_pac_air_eau_qd_gaz_fioul_elec_ballon_sur_gaz FLOAT,
+        tx_domotique FLOAT,
+        tx_micro_onduleur FLOAT,
+        tx_batterie_stockage FLOAT,
+        tx_vehicule_elec FLOAT,
+        tx_masque_solaire FLOAT,
+        conso_pac_air_air INT,
+        conso_pac_air_eau INT,
+        conso_ballon_thermo INT
+        );
+        """
     execute_query(query)
+
+    # On initialise la table
+    query = "SELECT prix_kwh FROM params_table"
+    il_y_a_qqchose_dedans = execute_query(query, fetch=True)
+    if not(il_y_a_qqchose_dedans):
+        default_data_dict = {
+                    'prix_kwh':0.23, #prix_kwh_consomme_part
+                    'prix_kwh_revendu_part':0.10, #Fait
+
+                    'prix_kwh_revendu_pro_0_3':0.13, #Fait
+                    'prix_kwh_revendu_pro_3_9':0.13, #Fait
+                    'prix_kwh_revendu_pro_9_36':0.078, #Fait
+                    'prix_kwh_revendu_pro_36_100':0.078, #Fait
+
+
+                    'rendement_paneaux':0.14,
+                    'heures_ensoleillement':1180,
+                    #'puissance_restituée':10620, inutile
+                    'coef_meteorologique':0.8,
+                    'coef_performance':1.0,
+                    'perte_systeme':0.14,
+                    'nbr_mois':10,
+                    "surface_panneau":2.4,
+
+                    # Pourcentage d'économie : si tu installes un ballon thermo quand tu n'as que de l'elec tu fais 25% d'économie sur ta facture par exemple
+                    # Si tu fais 30% d'éco avec le m1 et 20% avec le M2 tu fais 30% puis 20% donc = 1 - 0.7*0.8 = 44% d'économie !
+                    # Si M1 = 20%, M2=100% en théorie tu fais 100% d'économie donc 0 sur ta facture donc ta facture vaut (1-0.2)*(1-1)=0%=0€ ok
+                    # Si M1=20%, M2=0% tu ne fais que 20% en théorie donc ta facture vaut (1-0.2)*(1-0)*€=80% de € donc ok 
+                    #'tx_ballon_thermo_qd_tt_elec':0.25, #Fait # Outdated
+                    'tx_pac_air_air_qd_tt_elec':0.55, #Fait
+                    'tx_pac_air_eau_qd_tt_elec':0.25, #Fait
+                    'tx_pack_led_qd_tt_elec':0.09, #Fait
+                    'tx_pack_led_qd_tt_nn_elec':0.1, #Fait
+                    #'tx_ballon_thermo_qd_gaz_fioul':0.3, #Fait # Outdated
+                    'tx_pac_air_air_qd_gaz_fioul':0.7, #Fait
+                    'tx_pac_air_eau_qd_gaz_fioul':0.7, #Fait
+
+                    'tx_ballon_thermo_qd_gaz_fioul_elec_ballon_sur_elec':0.5, #Fait
+                    'tx_pac_air_air_qd_gaz_fioul_ballon_sur_elec':0, #Fait
+                    'tx_pac_air_eau_qd_gaz_fioul_elec_ballon_sur_elec':0, #Fait
+                    'tx_ballon_thermo_qd_gaz_fioul_elec_ballon_sur_gaz':0, #Fait
+                    'tx_pac_air_air_qd_gaz_fioul_elec_ballon_sur_gaz':1, #Fait
+                    'tx_pac_air_eau_qd_gaz_fioul_elec_ballon_sur_gaz':1, #Fait
+
+                    'tx_domotique':0, #Fait
+                    'tx_micro_onduleur':0, #Fait
+                    'tx_batterie_stockage':0, #Fait
+                    'tx_vehicule_elec':0, #Fait
+                    'tx_masque_solaire':0.002, #Fait
+
+                    'conso_pac_air_air':2600, #Fait
+                    'conso_pac_air_eau':2600, #Fait
+                    'conso_ballon_thermo':400, #Fait
+                }
+        columns = ', '.join(default_data_dict.keys())
+        placeholders = ', '.join(['%s' for _ in default_data_dict])
+        insert_query = f"INSERT INTO params_table ({columns}) VALUES ({placeholders})"
+        execute_query(insert_query, tuple(default_data_dict.values()))
+
+def retrieve_data_params(column):
+    query = f"SELECT {column} FROM params_table;" 
+    result = execute_query(query, fetch=True)
+    if result:
+        result = result[0][0]
+    return result
+    
+
+def update_or_insert_params_data(data_dict):
+        create_table_params()
+        data_dict = clean_dict(data_dict)
+        data_dict.pop('id', None)
+        # Vérification si l'email existe déjà dans la table
+        #email = data_dict.get('email', None)
+        
+        query = "SELECT prix_kwh FROM params_table"
+        existing_entry = execute_query(query, fetch=True)
+        # Si l'entrée existe, mise à jour des données
+        if existing_entry:
+            update_query = "UPDATE params_table SET "
+            update_query += ', '.join([f"{key} = %s" for key in data_dict.keys()])
+            update_data = list(data_dict.values())
+            execute_query(update_query, tuple(update_data))

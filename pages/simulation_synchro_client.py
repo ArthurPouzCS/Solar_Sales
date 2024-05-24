@@ -157,7 +157,11 @@ def render_page_synchro():
    
         x,y,z = st.columns(3)
         with z:   
-            if st.button("Suivant"):
+            if st.button("Accueil"):
+                if 'ancien_audit' in st.session_state:
+                    del st.session_state.ancien_audit
+                if 'data' in st.session_state:
+                    del st.session_state.data
                 switch_page('Accueil')
 
 render_page_synchro()

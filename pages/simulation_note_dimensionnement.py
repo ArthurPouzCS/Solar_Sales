@@ -105,5 +105,7 @@ def render_page_note_dimensionnement():
         """):
             if st.button("Suivant"):
                 switch_page('simulation_synchro_client')
-
+            if st.button('Accueil'):
+                switch_page('Accueil')
+                
 render_page_note_dimensionnement()

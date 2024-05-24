@@ -421,6 +421,10 @@ def valeur_tabulees():
         'nbr_mois':10,
         "surface_panneau":2.4,
 
+        # Pourcentage d'économie : si tu installes un ballon thermo quand tu n'as que de l'elec tu fais 25% d'économie sur ta facture par exemple
+        # Si tu fais 30% d'éco avec le m1 et 20% avec le M2 tu fais 30% puis 20% donc = 1 - 0.7*0.8 = 44% d'économie !
+        # Si M1 = 20%, M2=100% en théorie tu fais 100% d'économie donc 0 sur ta facture donc ta facture vaut (1-0.2)*(1-1)=0%=0€ ok
+        # Si M1=20%, M2=0% tu ne fais que 20% en théorie donc ta facture vaut (1-0.2)*(1-0)*€=80% de € donc ok 
         #'tx_ballon_thermo_qd_tt_elec':0.25, #Fait # Outdated
         'tx_pac_air_air_qd_tt_elec':0.55, #Fait
         'tx_pac_air_eau_qd_tt_elec':0.25, #Fait
@@ -447,6 +451,13 @@ def valeur_tabulees():
         'conso_pac_air_eau':2600, #Fait
         'conso_ballon_thermo':400, #Fait
     }
+
+    for key in constantes.keys():
+        try:
+            constantes[key] = retrieve_data_params(key)
+        except:
+            pass
+    
     return constantes
 
 def type_menage_fct(salaire, nbr_personnes, depart):

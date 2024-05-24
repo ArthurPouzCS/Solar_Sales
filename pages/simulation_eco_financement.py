@@ -269,8 +269,9 @@ def render_page_ecofinancement():
 
 
         
-        
-        if st.button("Suivant"):
+        suivant = st.button("Suivant")
+        accueil = st.button("Accueil")
+        if suivant or accueil:
             if 'data' in st.session_state:
                 dic = st.session_state.data
 
@@ -299,7 +300,9 @@ def render_page_ecofinancement():
                 st.session_state.data = dic
                 update_or_insert_data(dic)         
 
-
-            switch_page('simulation_generer_documents')
+            if suivant:
+                switch_page('simulation_generer_documents')
+            elif accueil:
+                switch_page('Accueil')
 
 render_page_ecofinancement()

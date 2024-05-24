@@ -14,6 +14,7 @@ from generer_pdf_app import generer_pvgis
 past_audit, last = dont_forget_past_audit()
 
 
+
 if 'data' in st.session_state:
     if 'adresse_postale' in st.session_state.data:
         adresse = st.session_state.data['adresse_postale']
@@ -25,6 +26,9 @@ if adresse is not None:
     lat, lon = get_coordinates_from_address(adresse)
     system_loss = 0.08 
     peak_power = 1.0 
+    if 'data' in st.session_state:
+        if 'puissance_panneaux' in st.session_state.data:
+            peak_power = st.session_state.data['puissance_panneaux']
     if lat is not None and lon is not None:
         solar_data = get_solar_estimation(lat, lon, peak_power, system_loss)
 

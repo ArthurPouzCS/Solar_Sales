@@ -139,8 +139,8 @@ def render_page_habitat_1():
                 space(1)
                 #"{:,}".format(int(kwh_elec)).replace(",", " ")
                 
-        
-        if st.button('Suivant'):    
+        suivant, accueil = st.button('Suivant'), st.button('Accueil')
+        if suivant or accueil:    
             if 'data' in st.session_state:
                 dic = st.session_state.data
                 
@@ -179,9 +179,10 @@ def render_page_habitat_1():
                 st.session_state.data = dic
                 update_or_insert_data(dic)
 
-            switch_page("saisir_donnees_habitat_2")
+            if suivant:
+                switch_page('saisir_donnees_habitat_2')
+            elif accueil:
+                switch_page('Accueil')
         
-        if st.button("Accueil"):
-            switch_page('Accueil')
     
 render_page_habitat_1()

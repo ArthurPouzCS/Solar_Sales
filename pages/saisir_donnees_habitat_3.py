@@ -69,9 +69,9 @@ def render_page_habitat_3():
                 interesse = st.multiselect("Vous êtes plutôt intéressé(e) par :", ["L'autoconsommation", "La vente totale", "Je ne sais pas encore"], default=last('interesse', 'multiselect'))
 
 
-        #st.json(st.session_state.data)
         
-        if st.button("Suivant"):
+        suivant, accueil = st.button('Suivant'), st.button('Accueil')
+        if suivant or accueil:
             
             if 'data' in st.session_state:
                 dic = st.session_state.data
@@ -101,9 +101,10 @@ def render_page_habitat_3():
                 st.session_state.data = dic
                 update_or_insert_data(dic)
 
-            switch_page('saisir_donnees_traitement_donnees')
-
-        if st.button("Accueil"):
-            switch_page('Accueil')
+            if suivant:
+                switch_page('saisir_donnees_traitement_donnees')
+            elif accueil:
+                switch_page('Accueil')
+        
 
 render_page_habitat_3()

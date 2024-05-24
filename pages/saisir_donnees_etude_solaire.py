@@ -127,10 +127,10 @@ def render_page_etude_solaire():
                     options_type_personne = ["Particulier", "Professionnel", "Autre"]
                     type_personne = st.selectbox("Vous êtes :", options_type_personne, index=last('type_personne', 'selectbox', options_type_personne))
                 
-        submitted = st.button("Suivant")
-        if st.button("Accueil"):
-            switch_page('Accueil')
-        if submitted:
+        suivant = st.button("Suivant")
+        accueil = st.button("Accueil")
+        
+        if suivant or accueil:
             dic = {
                 "adresse_postale":adresse_postale, 
                 "departement":departement, 
@@ -142,6 +142,10 @@ def render_page_etude_solaire():
                 "type_personne":type_personne
             }
             st.session_state.data = dic
-            switch_page('saisir_donnees_habitat_1')
+
+            if suivant:
+                switch_page('saisir_donnees_habitat_1')
+            elif accueil:
+                switch_page('Accueil')
 
 render_page_etude_solaire()

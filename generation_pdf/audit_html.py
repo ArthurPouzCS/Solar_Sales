@@ -361,7 +361,7 @@ def audit_string_html(dic):
             </header>
 
             <section>
-                <img src="{os.path.join(os.path.dirname(__file__),'image.jpg')}" alt="Votre Photo">
+                <img src="{os.path.join(os.path.dirname(__file__),'maison_panneaux.jpg')}" alt="Votre Photo">
                 <h1>Le but de ce document</h1>
                 <p>Ce document vous permet de conserver les informations essentielles renseignées lors de l’étude effectuée avec notre
                     conseiller Centre énergie.<br>
@@ -391,7 +391,7 @@ def audit_string_html(dic):
                         <li>Vous participez à la transition énergétique.</li>
                     </ul>
                 </p>
-                <img src="{os.path.join(os.path.dirname(__file__),'image.jpg')}" alt="Votre Photo">
+                <img src="{os.path.join(os.path.dirname(__file__),'maison_panneaux.jpg')}" alt="Votre Photo">
                 <div>
                     <span>
                         <img style="height:auto; margin:5px 15px 10px 30px" src="{os.path.join(os.path.dirname(__file__),'logo_centre_energie.JPG')}" alt="Votre Photo">
@@ -405,7 +405,7 @@ def audit_string_html(dic):
             </section>
             <section>
                 <h1>A. CARACTÉRISTIQUES HABITAT</h1>
-                <img src="{os.path.join(os.path.dirname(__file__),'image.jpg')}" alt="Votre Photo">
+                <img src="{os.path.join(os.path.dirname(__file__),'maison_panneaux.jpg')}" alt="Votre Photo">
                 <h3>Les informations sur votre habitation son budget et sa consommation</h3>
             
                 <table>
@@ -454,7 +454,7 @@ def audit_string_html(dic):
             </section>
             <section>
                 <h1>B. SÉLECTION DE MATÉRIELS ET SERVICES</h1>
-                <img src="{os.path.join(os.path.dirname(__file__),'image.jpg')}" alt="Votre Photo">
+                <img src="{os.path.join(os.path.dirname(__file__),'maison_panneaux.jpg')}" alt="Votre Photo">
                 <h2>1. Matériels et services</h2>
                 <p>
                     <span>Liste de matériels et services préconisés pour la rénovation :</span>
@@ -541,7 +541,7 @@ def audit_string_html(dic):
             </section>
             <section>
                 <h1>C.COMPARAISON</h1>
-                <img src="{os.path.join(os.path.dirname(__file__),'image.jpg')}" alt="Votre Photo">
+                <img src="{os.path.join(os.path.dirname(__file__),'maison_panneaux.jpg')}" alt="Votre Photo">
                 <p>Diagnostic indicatif réalisé selon les dépenses énergétiques liées au chauffage et à l'eau chaude sanitaire. Ce diagnostic,
                     établit ci-dessous ne peut se substituer à un DPE réalisé par un bureau d'étude.
                 </p>
