@@ -63,12 +63,14 @@ def get_location_options(address):
         #st.write("Erreur de connexion :", e)
         pass
 
-    if response.status_code == 200:
+    #if response.status_code == 200:
+    try:
         locations = response.json()
         return [location['display_name'] for location in locations] if locations else []
-    else:
+    #else:
+    except:
         # Gérer les erreurs de requête HTTP
-        print("Erreur lors de la requête HTTP :", response.status_code)
+        #print("Erreur lors de la requête HTTP :", response.status_code)
         return []
 
 #@st.cache_data()
